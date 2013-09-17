@@ -89,7 +89,7 @@ public class GeoBatchClientTest {
             throw new RuntimeException("Unexpected exception: " + ex.getMessage(), ex);
         }
     }
-    
+    @Ignore
     @Test
     public void testGetFlows() {
         GeoBatchRESTClient client = createClient();

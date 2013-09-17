@@ -21,6 +21,11 @@
             <id>offtherailz</id>
             <organization>GeoSolutions</organization>
         </developer>
+        <developer>
+            <name>Lorenzo Pini</name>
+            <id>Gnafu</id>
+            <organization>GeoSolutions</organization>
+        </developer>
     </developers>
     
     <!-- properties -->
@@ -29,7 +34,8 @@
         <geostore.version>1.2-SNAPSHOT</geostore.version>
         <nrl.version>1.0-SNAPSHOT</nrl.version>
         <jetty.version>6.1.14</jetty.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.2.4.RELEASE</spring.version>
+        <spring.security.version>3.1.4.RELEASE</spring.security.version>
         <geobatch.version>1.4-SNAPSHOT</geobatch.version>   
         <slf4j.version>1.7.2</slf4j.version>   
 <!--        <hibernate.version>3.3.2.GA</hibernate.version>
@@ -51,6 +57,7 @@
         </repository>
         
     </repositories>
+    
     <!-- Dependencies -->
      <dependencyManagement>
         <dependencies>
@@ -340,28 +347,28 @@
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-core</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-taglibs</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-acl</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring.security.version}</version>
             </dependency>
  
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-config</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring.security.version}</version>
             </dependency>
             <!-- =========================================================== -->
             <!--     TEST                                                    -->

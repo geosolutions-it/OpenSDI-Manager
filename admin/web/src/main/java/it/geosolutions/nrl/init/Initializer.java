@@ -6,7 +6,6 @@ import java.io.File;
 
 import javax.xml.bind.JAXB;
 
-import it.geosolutions.nrl.mvc.model.statistics.InputSelectorConfig;
 import it.geosolutions.nrl.mvc.model.statistics.StatisticsConfigList;
 
 import org.slf4j.Logger;

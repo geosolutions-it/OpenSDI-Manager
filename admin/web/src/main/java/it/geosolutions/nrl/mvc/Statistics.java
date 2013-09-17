@@ -1,17 +1,10 @@
 package it.geosolutions.nrl.mvc;
 
-import it.geosolutions.nrl.init.Initializer;
-import it.geosolutions.nrl.mvc.model.statistics.FileBrowser;
-import it.geosolutions.nrl.mvc.model.statistics.FileBrowserManager;
 import it.geosolutions.nrl.mvc.model.statistics.InputSelectorConfig;
 import it.geosolutions.nrl.mvc.model.statistics.StatisticsConfigList;
 import it.geosolutions.nrl.utils.ControllerUtils;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

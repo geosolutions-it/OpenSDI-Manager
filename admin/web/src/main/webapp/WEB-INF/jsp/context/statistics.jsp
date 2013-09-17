@@ -41,7 +41,7 @@
 					</label>
 					<select name="region_file" id="region_file"
 						class="input-block-level" disabled>
-						<c:forEach items="${regions.fileBrowser.files}" var="file">
+						<c:forEach items="${regions.fileBrowser.fileNames}" var="file">
 							<option value="${file}">${file}</option>
 						</c:forEach>
 					</select>
@@ -63,7 +63,7 @@
 					</label>
 					<select name="mask_file" id="mask_file" class="input-block-level"
 						disabled>
-						<c:forEach items="${masks.fileBrowser.files}" var="file">
+						<c:forEach items="${masks.fileBrowser.fileNames}" var="file">
 							<option value="${file}">${file}</option>
 						</c:forEach>
 					</select>
