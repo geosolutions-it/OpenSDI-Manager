@@ -1,0 +1,19 @@
+ID_met;distr;prov;year;mon;dec;factor;Tmax_avg
+1;Bagh;AJK;2000;Apr;1;Tmax_avg;31.2644
+2;Bhimber;AJK;2000;Apr;1;Tmax_avg;33.0867
+3;Hattian;AJK;2000;Apr;1;Tmax_avg;
+4;Haveli;AJK;2000;Apr;1;Tmax_avg;
+5;Kotli;AJK;2000;Apr;1;Tmax_avg;31.876
+6;Mirpur;AJK;2000;Apr;1;Tmax_avg;32.2505
+7;Muzaffarabad;AJK;2000;Apr;1;Tmax_avg;30.8727
+8;Neelam;AJK;2000;Apr;1;Tmax_avg;30.6496
+9;Poonch;AJK;2000;Apr;1;Tmax_avg;31.2941
+10;Sudhnoti;AJK;2000;Apr;1;Tmax_avg;31.2483
+11;Awaran;BALOCHISTAN;2000;Apr;1;Tmax_avg;33.6204
+12;Barkhan;BALOCHISTAN;2000;Apr;1;Tmax_avg;33.9041
+13;Bolan;BALOCHISTAN;2000;Apr;1;Tmax_avg;34.8103
+14;Chagai;BALOCHISTAN;2000;Apr;1;Tmax_avg;31.5836
+15;Dera Bugti;BALOCHISTAN;2000;Apr;1;Tmax_avg;35.4012
+16;Gwadar;BALOCHISTAN;2000;Apr;1;Tmax_avg;33.7533
+17;Jafarabad;BALOCHISTAN;2000;Apr;1;Tmax_avg;35.5672
+18;Jhal Magsi;BALOCHISTAN;2000;Apr;1;Tmax_avg;32.9736

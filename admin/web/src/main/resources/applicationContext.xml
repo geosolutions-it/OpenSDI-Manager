@@ -1,0 +1,65 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+	   xmlns:cxf="http://cxf.apache.org/core"
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://cxf.apache.org/jaxws                     http://cxf.apache.org/schemas/jaxws.xsd
+            http://cxf.apache.org/jaxrs                     http://cxf.apache.org/schemas/jaxrs.xsd
+            http://cxf.apache.org/core                      http://cxf.apache.org/schemas/core.xsd
+            http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+       default-autowire="byName">
+       
+       
+       <!-- ==================================================================== -->
+	    <!-- PLEASE DO NO CHANGE THE PROPERTIES IN THIS FILE                      -->
+	    <!-- ==================================================================== -->
+	    <!-- If you need to customize something for your junit tests, create a file test/resources/nrl-config-ovr.properties -->
+	    <!-- If you need to customize something in the running application, define the java arg -Dnrl-ovr=/PATH/TO/YOUR/OVR -->
+	    <!-- ==================================================================== -->
+	
+	    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	        <property name="order" value="0"/>
+	        <property name="locations">
+	            <list>
+	                <value>classpath:nrl-config.properties</value>
+	            </list>
+	        </property>
+	        <property name="ignoreResourceNotFound" value="true"/>
+	    </bean>
+	
+	    <bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+	        <property name="ignoreResourceNotFound" value="true"/>
+	        <property name="order" value="5"/>
+	        <property name="locations">
+	            <list>
+	                <!-- used for overriding props during maven tests -->
+	                <value>classpath*:nrl-config-ovr.properties</value>
+	                <!-- used for externalized override -->
+	                <value>${nrl-ovr}</value>
+	            </list>
+	        </property>
+	    </bean>
+	    <!-- Imports -->
+<!-- 		<import resource="statistics.xml"/> -->
+		<!-- Statistics -->
+ 		<bean id="statisticsConfigs" class="it.geosolutions.nrl.mvc.model.statistics.StatisticsConfigList"></bean>
+   		
+		<!--  Inizializer -->
+       <bean id="initializer" class="it.geosolutions.nrl.init.Initializer" lazy-init="false"> 
+       		<property name="statisticsConfigFileName" value="classpath:StatisticsConfig.xml"></property>
+   		    <property name="statisticsConfigs" ref="statisticsConfigs"></property>
+       		
+       </bean>
+		<!-- GeoStore REST Client -->
+		<bean id="geoStoreClient" class="it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient">
+			<property name="geostoreRestUrl" value="${geostore.resturl}"></property>
+			<property name="username" value="${geostore.user}"></property>
+			<property name="password" value="${geostore.password}"></property>
+		</bean> 
+		
+</beans>

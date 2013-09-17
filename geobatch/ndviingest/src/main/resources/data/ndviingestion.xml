@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowConfiguration>
+
+    <id>ndviingestion</id>
+    <name>NDVI file ingestion</name>
+    <description>Ingest geotiff file and add them to a NDVI mosaic</description>
+	
+    <corePoolSize>2</corePoolSize>
+    <maximumPoolSize>2</maximumPoolSize>
+    <keepAliveTime>1500</keepAliveTime>
+    <workQueueSize>100</workQueueSize>
+	
+    <autorun>true</autorun>
+	
+    <EventGeneratorConfiguration>
+        <id>ndvi_event_gen</id>
+        <serviceID>fsEventGeneratorService</serviceID>
+        <wildCard>*.tif</wildCard>
+        <watchDirectory>ndviingestion/in</watchDirectory>
+        <osType>OS_UNDEFINED</osType>
+        <eventType>FILE_ADDED</eventType>
+        <interval>0 0/15 4-6 * * ?</interval>
+    </EventGeneratorConfiguration>
+
+    <EventConsumerConfiguration>
+        <id>ndvi_consumer</id>
+		
+        <listenerId>LoggingListener</listenerId>
+        <listenerId>CumulatingListener</listenerId>
+
+        <performBackup>false</performBackup>
+        <preserveInput>true</preserveInput>
+
+
+        <NDVIIngestConfiguration>
+            <id>NDVIIngestConfiguration</id>
+            <name>NDVI file preparation</name>
+            <description>Prepare time interval in TIF filenames </description>
+
+            <destinationDir>/tmp/ndvi</destinationDir>
+        </NDVIIngestConfiguration>
+
+        <ImageMosaicActionConfiguration>
+
+            <id>ImageMosaicService</id>
+
+            <name>NDVI image mosaic</name>
+            <description>Add geotiff to the NDVI mosaic</description>
+
+            <listenerId>LoggingListener</listenerId>
+            <listenerId>CumulatingListener</listenerId>
+            <listenerId>StatusListener</listenerId>
+
+            <crs>EPSG:4326</crs>
+            <envelope/>
+
+            <dataTransferMethod>EXTERNAL</dataTransferMethod>
+
+            <geoserverUID>admin</geoserverUID>
+            <geoserverPWD>geoserver</geoserverPWD>
+            <geoserverURL>http://localhost:8080/geoserver</geoserverURL>
+
+            <defaultNamespace>ndvi</defaultNamespace>
+            <defaultStyle>raster</defaultStyle>
+
+            <wmsPath>/</wmsPath>
+            <backgroundValue>NaN</backgroundValue>
+            <outputTransparentColor/>
+            <inputTransparentColor/>
+            <allowMultithreading>true</allowMultithreading>
+            <useJaiImageRead>false</useJaiImageRead>
+
+            <tileSizeH>256</tileSizeH>
+            <tileSizeW>256</tileSizeW>
+            <NativeMinBoundingBoxX>-30</NativeMinBoundingBoxX>
+            <NativeMinBoundingBoxY>25</NativeMinBoundingBoxY>
+            <NativeMaxBoundingBoxX>45</NativeMaxBoundingBoxX>
+            <NativeMaxBoundingBoxY>70</NativeMaxBoundingBoxY>
+
+            <latLonMinBoundingBoxX>-30</latLonMinBoundingBoxX>
+            <latLonMinBoundingBoxY>25</latLonMinBoundingBoxY>
+            <latLonMaxBoundingBoxX>45</latLonMaxBoundingBoxX>
+            <latLonMaxBoundingBoxY>70</latLonMaxBoundingBoxY>
+
+            <!--NONE, REPROJECT_TO_DECLARED, FORCE_DECLARED-->
+            <projectionPolicy>NONE</projectionPolicy>
+
+            <!-- METADATA -->
+            <!-- file name is file_20130201_20130210.tif -->
+            <DomainAttribute>
+                <dimensionName>time</dimensionName>
+                <attribName>time</attribName>
+                <regEx><![CDATA[(?<=dv_)[0-9]{8}(?=_.*tif)]]></regEx>
+                <endRangeAttribName>endtime</endRangeAttribName>
+                <endRangeRegEx><![CDATA[(?<=dv_[0-9]{8}_)[0-9]{8}(?=.*tif)]]></endRangeRegEx>
+            </DomainAttribute>
+
+        </ImageMosaicActionConfiguration>
+
+    </EventConsumerConfiguration>
+
+    <ListenerConfigurations>
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>LoggingListener</id>
+            <loggerName>it.geosolutions.geobatch</loggerName>
+        </LoggingProgressListener>
+        <CumulatingProgressListener>
+            <serviceID>cumulatingListenerService</serviceID>
+            <id>CumulatingListener</id>
+        </CumulatingProgressListener>
+        <StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>StatusListener</id>
+        </StatusProgressListener>
+    </ListenerConfigurations>
+</FlowConfiguration>

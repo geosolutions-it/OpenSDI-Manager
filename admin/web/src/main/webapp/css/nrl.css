@@ -1,0 +1,71 @@
+div.login-form-controls{
+	
+	width:500px;
+}
+
+.login-container{
+	
+	width:700px;
+}
+
+.width700{
+	width:700px;
+}
+.modal form {
+	margin:0px;
+}
+body{
+	background-color:#FAFAFA;
+}
+
+/* FOOTER */
+html,body{
+    height: 100%
+}
+
+#holder{
+    min-height: 100%;
+    position:relative;
+}
+
+#body{
+    padding-bottom: 100px;    /* height of footer */
+}
+
+#footer{
+    height: 35px; 
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; 
+}
+
+#footer{
+	text-align: center;
+	font-size:12px;
+}
+#footer .geosolutions-logo{
+	font-size:14px;
+}
+#footer a.geosolutions-logo:hover{
+	font-size:15px;
+}
+a.geosolutions-logo{
+	font-weight: bold;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-style: italic;
+	
+}
+a.geosolutions-logo:hover{
+	text-decoration:none;
+	position:relative;
+	top:-1px;
+}
+.geosolutions-logo .Geo-logo {
+	
+	color: #3381FF
+}
+
+.geosolutions-logo .Solutions-logo{
+	color: #33DD66
+}

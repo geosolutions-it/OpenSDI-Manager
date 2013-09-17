@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowConfiguration>
+
+	<id>csvingestion</id>
+	<description>Ingest CSV files (cropdata and agromet)</description>
+	<name>CSV file ingestion</name>
+
+	<autorun>true</autorun>
+
+	<EventGeneratorConfiguration>
+		<serviceID>fsEventGeneratorService</serviceID>
+		<wildCard>*.csv</wildCard>
+		<watchDirectory>csvingestion/in</watchDirectory>
+		<osType>OS_UNDEFINED</osType>
+		<eventType>FILE_ADDED</eventType>
+	</EventGeneratorConfiguration>
+
+	<EventConsumerConfiguration>
+
+		<listenerId>ConsumerLogger0</listenerId>
+		<listenerId>Cumulator</listenerId> 	
+		
+		<CSVIngestConfiguration>
+			<id>csv</id>
+			<name>CSVIngestion</name>
+			<description>Ingest cropdata, cropdescriptor, agromet</description>
+		</CSVIngestConfiguration>
+
+	</EventConsumerConfiguration>
+
+
+	<ListenerConfigurations>
+<!--		<StatusProgressListener>
+			<serviceID>statusListenerService</serviceID>
+			<id>StatusActionLogger0</id>
+		</StatusProgressListener>
+
+		<LoggingProgressListener>
+			<serviceID>loggingListenerService</serviceID>
+			<id>ActionLogger0</id>
+
+			<loggerName>it.geosolutions.ActionLogger</loggerName>
+		</LoggingProgressListener>-->
+
+		<LoggingProgressListener>
+			<serviceID>loggingListenerService</serviceID>
+			<id>ConsumerLogger0</id>
+
+			<loggerName>it.geosolutions.ConsLogger</loggerName>
+		</LoggingProgressListener>
+
+		<CumulatingProgressListener>
+			<serviceID>cumulatingListenerService</serviceID>
+			<id>Cumulator</id>
+		</CumulatingProgressListener>
+
+	</ListenerConfigurations>
+
+</FlowConfiguration>

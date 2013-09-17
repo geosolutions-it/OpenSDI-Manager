@@ -1,0 +1,600 @@
+ID_met;distr;prov;year;mon;dec;factor;Tmin_avg
+1;Bagh;AJK;2000;Apr;1;Tmin_avg;14.1036
+2;Bhimber;AJK;2000;Apr;1;Tmin_avg;15.8365
+3;Hattian;AJK;2000;Apr;1;Tmin_avg;
+4;Haveli;AJK;2000;Apr;1;Tmin_avg;
+5;Kotli;AJK;2000;Apr;1;Tmin_avg;14.5912
+6;Mirpur;AJK;2000;Apr;1;Tmin_avg;14.8738
+7;Muzaffarabad;AJK;2000;Apr;1;Tmin_avg;13.8561
+8;Neelam;AJK;2000;Apr;1;Tmin_avg;13.9262
+9;Poonch;AJK;2000;Apr;1;Tmin_avg;14.0565
+10;Sudhnoti;AJK;2000;Apr;1;Tmin_avg;13.9434
+11;Awaran;BALOCHISTAN;2000;Apr;1;Tmin_avg;17.1464
+62;Karak;KPK;2000;Apr;1;Tmin_avg;14.8665
+63;Kohat;KPK;2000;Apr;1;Tmin_avg;14.6995
+64;Kohistan;KPK;2000;Apr;1;Tmin_avg;12.1946
+65;Lakki Marwat;KPK;2000;Apr;1;Tmin_avg;15.1427
+66;Lower Dir;KPK;2000;Apr;1;Tmin_avg;12.6575
+67;Malakand;KPK;2000;Apr;1;Tmin_avg;13.9421
+68;Mansehra;KPK;2000;Apr;1;Tmin_avg;13.5689
+69;Mardan;KPK;2000;Apr;1;Tmin_avg;14.2124
+70;Nowshera;KPK;2000;Apr;1;Tmin_avg;14.5421
+71;Peshawar;KPK;2000;Apr;1;Tmin_avg;14.7777
+72;Shangla;KPK;2000;Apr;1;Tmin_avg;12.8563
+73;Swabi;KPK;2000;Apr;1;Tmin_avg;13.9421
+74;Swat;KPK;2000;Apr;1;Tmin_avg;11.0666
+75;Tank;KPK;2000;Apr;1;Tmin_avg;14.9828
+76;Upper Dir;KPK;2000;Apr;1;Tmin_avg;10.0918
+77;Attock;PUNJAB;2000;Apr;1;Tmin_avg;14.2088
+78;Bahawalnagar;PUNJAB;2000;Apr;1;Tmin_avg;17.3921
+79;Bahawalpur;PUNJAB;2000;Apr;1;Tmin_avg;16.8058
+80;Bhakkar;PUNJAB;2000;Apr;1;Tmin_avg;15.8931
+81;Chakwal;PUNJAB;2000;Apr;1;Tmin_avg;15.3051
+82;Chiniot;PUNJAB;2000;Apr;1;Tmin_avg;15.9699
+83;Dera Ghazi Khan;PUNJAB;2000;Apr;1;Tmin_avg;16.1145
+84;Faisalabad;PUNJAB;2000;Apr;1;Tmin_avg;16.1957
+85;Gujranwala;PUNJAB;2000;Apr;1;Tmin_avg;17.6647
+86;Gujrat;PUNJAB;2000;Apr;1;Tmin_avg;16.3946
+87;Hafizabad;PUNJAB;2000;Apr;1;Tmin_avg;16.6865
+88;Jhang;PUNJAB;2000;Apr;1;Tmin_avg;16.3099
+89;Jhelum;PUNJAB;2000;Apr;1;Tmin_avg;16.006
+90;Kasur;PUNJAB;2000;Apr;1;Tmin_avg;18.2722
+91;Khanewal;PUNJAB;2000;Apr;1;Tmin_avg;16.6568
+92;Khushab;PUNJAB;2000;Apr;1;Tmin_avg;15.7867
+93;Lahore;PUNJAB;2000;Apr;1;Tmin_avg;19.7341
+94;Layyah;PUNJAB;2000;Apr;1;Tmin_avg;16.2928
+95;Lodhran;PUNJAB;2000;Apr;1;Tmin_avg;16.6279
+96;Mandi Bahauddin;PUNJAB;2000;Apr;1;Tmin_avg;16.5183
+97;Mianwali;PUNJAB;2000;Apr;1;Tmin_avg;15.2428
+98;Multan;PUNJAB;2000;Apr;1;Tmin_avg;16.5504
+99;Muzaffargarh;PUNJAB;2000;Apr;1;Tmin_avg;16.5517
+100;Nankana Sahib;PUNJAB;2000;Apr;1;Tmin_avg;17.6869
+101;Narowal;PUNJAB;2000;Apr;1;Tmin_avg;17.6625
+102;Okara;PUNJAB;2000;Apr;1;Tmin_avg;17.2673
+103;Pakpattan;PUNJAB;2000;Apr;1;Tmin_avg;17.461
+104;Rahim Yar Khan;PUNJAB;2000;Apr;1;Tmin_avg;16.9844
+105;Rajanpur;PUNJAB;2000;Apr;1;Tmin_avg;16.8062
+106;Rawalpindi;PUNJAB;2000;Apr;1;Tmin_avg;13.7429
+107;Sahiwal;PUNJAB;2000;Apr;1;Tmin_avg;16.984
+108;Sargodha;PUNJAB;2000;Apr;1;Tmin_avg;16.1274
+109;Sheikhupura;PUNJAB;2000;Apr;1;Tmin_avg;18.3903
+110;Sialkot;PUNJAB;2000;Apr;1;Tmin_avg;17.2282
+111;Toba Tek Singh;PUNJAB;2000;Apr;1;Tmin_avg;16.4914
+112;Vehari;PUNJAB;2000;Apr;1;Tmin_avg;17.0061
+113;Badin;SINDH;2000;Apr;1;Tmin_avg;18.8365
+114;Dadu;SINDH;2000;Apr;1;Tmin_avg;16.9038
+115;Ghotki;SINDH;2000;Apr;1;Tmin_avg;18.0983
+116;Hyderabad;SINDH;2000;Apr;1;Tmin_avg;18.9335
+117;Jacobabad;SINDH;2000;Apr;1;Tmin_avg;17.9478
+118;Jamshoro;SINDH;2000;Apr;1;Tmin_avg;19.1727
+119;Karachi Central;SINDH;2000;Apr;1;Tmin_avg;22.119
+120;Karachi East;SINDH;2000;Apr;1;Tmin_avg;22.1363
+121;Karachi South;SINDH;2000;Apr;1;Tmin_avg;22.098
+122;Karachi West;SINDH;2000;Apr;1;Tmin_avg;21.9494
+123;Kashmore;SINDH;2000;Apr;1;Tmin_avg;18.1065
+124;Khairpur;SINDH;2000;Apr;1;Tmin_avg;17.8975
+125;Larkana;SINDH;2000;Apr;1;Tmin_avg;16.9679
+126;Malir;SINDH;2000;Apr;1;Tmin_avg;21.5916
+127;Matiari;SINDH;2000;Apr;1;Tmin_avg;18.3096
+128;Mirpur Khas;SINDH;2000;Apr;1;Tmin_avg;18.1685
+129;Naushahro Feroze;SINDH;2000;Apr;1;Tmin_avg;17.2928
+130;Qambar Shahdadkot;SINDH;2000;Apr;1;Tmin_avg;16.6574
+131;Sanghar;SINDH;2000;Apr;1;Tmin_avg;17.7864
+132;Shaheed Benazirabad;SINDH;2000;Apr;1;Tmin_avg;17.6943
+133;Shikarpur;SINDH;2000;Apr;1;Tmin_avg;18.9472
+134;Sukkur;SINDH;2000;Apr;1;Tmin_avg;19.0606
+135;Tando Allahyar;SINDH;2000;Apr;1;Tmin_avg;18.3829
+136;Tando Muhammad Khan;SINDH;2000;Apr;1;Tmin_avg;19.2781
+137;Tharparkar;SINDH;2000;Apr;1;Tmin_avg;17.7595
+138;Thatta;SINDH;2000;Apr;1;Tmin_avg;20.3745
+139;Umerkot;SINDH;2000;Apr;1;Tmin_avg;17.7826
+140;Bagh;AJK;2000;Apr;2;Tmin_avg;19.0152
+141;Bhimber;AJK;2000;Apr;2;Tmin_avg;20.1215
+142;Hattian;AJK;2000;Apr;2;Tmin_avg;
+143;Haveli;AJK;2000;Apr;2;Tmin_avg;
+144;Kotli;AJK;2000;Apr;2;Tmin_avg;19.3598
+145;Mirpur;AJK;2000;Apr;2;Tmin_avg;19.5004
+146;Muzaffarabad;AJK;2000;Apr;2;Tmin_avg;18.7459
+147;Neelam;AJK;2000;Apr;2;Tmin_avg;18.5394
+148;Poonch;AJK;2000;Apr;2;Tmin_avg;19.0158
+149;Sudhnoti;AJK;2000;Apr;2;Tmin_avg;18.9657
+150;Awaran;BALOCHISTAN;2000;Apr;2;Tmin_avg;21.097
+151;Barkhan;BALOCHISTAN;2000;Apr;2;Tmin_avg;21.0565
+152;Bolan;BALOCHISTAN;2000;Apr;2;Tmin_avg;21.0806
+153;Chagai;BALOCHISTAN;2000;Apr;2;Tmin_avg;18.6502
+154;Dera Bugti;BALOCHISTAN;2000;Apr;2;Tmin_avg;21.7337
+155;Gwadar;BALOCHISTAN;2000;Apr;2;Tmin_avg;20.8905
+156;Jafarabad;BALOCHISTAN;2000;Apr;2;Tmin_avg;21.3079
+157;Jhal Magsi;BALOCHISTAN;2000;Apr;2;Tmin_avg;19.2246
+158;Kalat;BALOCHISTAN;2000;Apr;2;Tmin_avg;13.2816
+159;Kech;BALOCHISTAN;2000;Apr;2;Tmin_avg;20.5101
+160;Kharan;BALOCHISTAN;2000;Apr;2;Tmin_avg;18.3264
+161;Khuzdar;BALOCHISTAN;2000;Apr;2;Tmin_avg;19.4955
+262;Kashmore;SINDH;2000;Apr;2;Tmin_avg;22.4546
+263;Khairpur;SINDH;2000;Apr;2;Tmin_avg;22.041
+264;Larkana;SINDH;2000;Apr;2;Tmin_avg;20.7998
+265;Malir;SINDH;2000;Apr;2;Tmin_avg;24.7576
+266;Matiari;SINDH;2000;Apr;2;Tmin_avg;22.2265
+267;Mirpur Khas;SINDH;2000;Apr;2;Tmin_avg;22.1883
+268;Naushahro Feroze;SINDH;2000;Apr;2;Tmin_avg;21.2764
+269;Qambar Shahdadkot;SINDH;2000;Apr;2;Tmin_avg;20.6401
+270;Sanghar;SINDH;2000;Apr;2;Tmin_avg;21.9253
+271;Shaheed Benazirabad;SINDH;2000;Apr;2;Tmin_avg;21.7166
+272;Shikarpur;SINDH;2000;Apr;2;Tmin_avg;23.1059
+273;Sukkur;SINDH;2000;Apr;2;Tmin_avg;23.2991
+274;Tando Allahyar;SINDH;2000;Apr;2;Tmin_avg;22.3178
+275;Tando Muhammad Khan;SINDH;2000;Apr;2;Tmin_avg;22.989
+276;Tharparkar;SINDH;2000;Apr;2;Tmin_avg;21.9654
+277;Thatta;SINDH;2000;Apr;2;Tmin_avg;23.8258
+278;Umerkot;SINDH;2000;Apr;2;Tmin_avg;21.9614
+279;Bagh;AJK;2000;Apr;3;Tmin_avg;20.9782
+280;Bhimber;AJK;2000;Apr;3;Tmin_avg;22.0626
+281;Hattian;AJK;2000;Apr;3;Tmin_avg;
+282;Haveli;AJK;2000;Apr;3;Tmin_avg;
+283;Kotli;AJK;2000;Apr;3;Tmin_avg;21.3543
+284;Mirpur;AJK;2000;Apr;3;Tmin_avg;21.5051
+285;Muzaffarabad;AJK;2000;Apr;3;Tmin_avg;20.6484
+286;Neelam;AJK;2000;Apr;3;Tmin_avg;20.2948
+287;Poonch;AJK;2000;Apr;3;Tmin_avg;21.006
+288;Sudhnoti;AJK;2000;Apr;3;Tmin_avg;20.9783
+289;Awaran;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.1365
+290;Barkhan;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.4226
+291;Bolan;BALOCHISTAN;2000;Apr;3;Tmin_avg;22.7887
+292;Chagai;BALOCHISTAN;2000;Apr;3;Tmin_avg;20.6514
+293;Dera Bugti;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.9359
+294;Gwadar;BALOCHISTAN;2000;Apr;3;Tmin_avg;22.9169
+295;Jafarabad;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.3872
+296;Jhal Magsi;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.2012
+297;Kalat;BALOCHISTAN;2000;Apr;3;Tmin_avg;14.8962
+298;Kech;BALOCHISTAN;2000;Apr;3;Tmin_avg;22.5728
+299;Kharan;BALOCHISTAN;2000;Apr;3;Tmin_avg;20.3946
+300;Khuzdar;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.8442
+301;Kohlu;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.8873
+302;Lasbela;BALOCHISTAN;2000;Apr;3;Tmin_avg;24.3921
+303;Loralai;BALOCHISTAN;2000;Apr;3;Tmin_avg;22.8902
+304;Mastung;BALOCHISTAN;2000;Apr;3;Tmin_avg;17.709
+305;Musakhel;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.9354
+306;Nasirabad;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.0368
+307;Nushki;BALOCHISTAN;2000;Apr;3;Tmin_avg;16.0667
+308;Panjgur;BALOCHISTAN;2000;Apr;3;Tmin_avg;22.1789
+309;Pishin;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.3861
+310;Qilla Abdullah;BALOCHISTAN;2000;Apr;3;Tmin_avg;20.7544
+311;Qilla Saifullah;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.9322
+312;Quetta;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.1714
+313;Sibi;BALOCHISTAN;2000;Apr;3;Tmin_avg;24.5944
+314;Zhob;BALOCHISTAN;2000;Apr;3;Tmin_avg;21.0021
+315;Ziarat;BALOCHISTAN;2000;Apr;3;Tmin_avg;23.1739
+316;Disputed Area;DISPUTED AREA;2000;Apr;3;Tmin_avg;21.9479
+317;Bajaur Agency;FATA;2000;Apr;3;Tmin_avg;19.3672
+318;Khyber Agency;FATA;2000;Apr;3;Tmin_avg;21.5627
+319;Kurrum Agency;FATA;2000;Apr;3;Tmin_avg;21.2734
+320;Mohmand Agency;FATA;2000;Apr;3;Tmin_avg;20.9889
+321;North Waziristan Agency;FATA;2000;Apr;3;Tmin_avg;21.4924
+322;Orakzai Agency;FATA;2000;Apr;3;Tmin_avg;21.5507
+323;South Waziristan Agency;FATA;2000;Apr;3;Tmin_avg;21.7111
+324;Islamabad;FEDERAL;2000;Apr;3;Tmin_avg;20.5145
+325;Astore;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;20.3412
+326;Baltistan;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;20.6507
+327;Diamir;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;18.6266
+328;Ghanche;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;21.1733
+329;Ghizer;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;16.2806
+330;Gilgit;GILGIT BALTISTAN;2000;Apr;3;Tmin_avg;19.2438
+331;Abbottabad;KPK;2000;Apr;3;Tmin_avg;20.635
+332;Bannu;KPK;2000;Apr;3;Tmin_avg;21.7862
+333;Battagram;KPK;2000;Apr;3;Tmin_avg;19.5712
+334;Buner;KPK;2000;Apr;3;Tmin_avg;20.2402
+335;Charsadda;KPK;2000;Apr;3;Tmin_avg;21.6435
+336;Chitral;KPK;2000;Apr;3;Tmin_avg;12.544
+337;Dera Ismail Khan;KPK;2000;Apr;3;Tmin_avg;22.3089
+338;Hangu;KPK;2000;Apr;3;Tmin_avg;21.5707
+339;Haripur;KPK;2000;Apr;3;Tmin_avg;20.6251
+340;Karak;KPK;2000;Apr;3;Tmin_avg;21.7471
+341;Kohat;KPK;2000;Apr;3;Tmin_avg;21.6372
+342;Kohistan;KPK;2000;Apr;3;Tmin_avg;17.6694
+343;Lakki Marwat;KPK;2000;Apr;3;Tmin_avg;22.1049
+344;Lower Dir;KPK;2000;Apr;3;Tmin_avg;18.4609
+345;Malakand;KPK;2000;Apr;3;Tmin_avg;20.5237
+346;Mansehra;KPK;2000;Apr;3;Tmin_avg;20.1002
+347;Mardan;KPK;2000;Apr;3;Tmin_avg;21.0137
+348;Nowshera;KPK;2000;Apr;3;Tmin_avg;21.5352
+349;Peshawar;KPK;2000;Apr;3;Tmin_avg;21.8432
+350;Shangla;KPK;2000;Apr;3;Tmin_avg;18.8577
+351;Swabi;KPK;2000;Apr;3;Tmin_avg;20.8679
+352;Swat;KPK;2000;Apr;3;Tmin_avg;15.9468
+353;Tank;KPK;2000;Apr;3;Tmin_avg;21.9749
+354;Upper Dir;KPK;2000;Apr;3;Tmin_avg;14.399
+355;Attock;PUNJAB;2000;Apr;3;Tmin_avg;21.237
+356;Bahawalnagar;PUNJAB;2000;Apr;3;Tmin_avg;25.3457
+357;Bahawalpur;PUNJAB;2000;Apr;3;Tmin_avg;24.7452
+358;Bhakkar;PUNJAB;2000;Apr;3;Tmin_avg;23.2769
+359;Chakwal;PUNJAB;2000;Apr;3;Tmin_avg;21.8899
+458;Kurrum Agency;FATA;2000;Aug;1;Tmin_avg;24.7902
+459;Mohmand Agency;FATA;2000;Aug;1;Tmin_avg;24.8913
+460;North Waziristan Agency;FATA;2000;Aug;1;Tmin_avg;24.1744
+461;Orakzai Agency;FATA;2000;Aug;1;Tmin_avg;25.1271
+462;South Waziristan Agency;FATA;2000;Aug;1;Tmin_avg;24.7442
+463;Islamabad;FEDERAL;2000;Aug;1;Tmin_avg;22.8703
+464;Astore;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;24.0586
+465;Baltistan;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;24.3066
+466;Diamir;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;23.1672
+467;Ghanche;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;24.643
+468;Ghizer;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;22.0286
+469;Gilgit;GILGIT BALTISTAN;2000;Aug;1;Tmin_avg;23.5773
+470;Abbottabad;KPK;2000;Aug;1;Tmin_avg;23.417
+471;Bannu;KPK;2000;Aug;1;Tmin_avg;24.9461
+472;Battagram;KPK;2000;Aug;1;Tmin_avg;23.4699
+473;Buner;KPK;2000;Aug;1;Tmin_avg;23.9227
+474;Charsadda;KPK;2000;Aug;1;Tmin_avg;25.3325
+475;Chitral;KPK;2000;Aug;1;Tmin_avg;20.108
+476;Dera Ismail Khan;KPK;2000;Aug;1;Tmin_avg;24.8612
+477;Hangu;KPK;2000;Aug;1;Tmin_avg;25.0044
+478;Haripur;KPK;2000;Aug;1;Tmin_avg;23.356
+479;Karak;KPK;2000;Aug;1;Tmin_avg;25.0167
+480;Kohat;KPK;2000;Aug;1;Tmin_avg;25.0809
+481;Kohistan;KPK;2000;Aug;1;Tmin_avg;22.6483
+482;Lakki Marwat;KPK;2000;Aug;1;Tmin_avg;25.0691
+483;Lower Dir;KPK;2000;Aug;1;Tmin_avg;23.2997
+484;Malakand;KPK;2000;Aug;1;Tmin_avg;24.5012
+485;Mansehra;KPK;2000;Aug;1;Tmin_avg;23.6359
+486;Mardan;KPK;2000;Aug;1;Tmin_avg;24.6983
+487;Nowshera;KPK;2000;Aug;1;Tmin_avg;25.0558
+488;Peshawar;KPK;2000;Aug;1;Tmin_avg;25.4817
+489;Shangla;KPK;2000;Aug;1;Tmin_avg;23.2366
+490;Swabi;KPK;2000;Aug;1;Tmin_avg;24.1445
+491;Swat;KPK;2000;Aug;1;Tmin_avg;21.8538
+492;Tank;KPK;2000;Aug;1;Tmin_avg;24.754
+493;Upper Dir;KPK;2000;Aug;1;Tmin_avg;21.093
+494;Attock;PUNJAB;2000;Aug;1;Tmin_avg;24.2133
+495;Bahawalnagar;PUNJAB;2000;Aug;1;Tmin_avg;27.4753
+496;Bahawalpur;PUNJAB;2000;Aug;1;Tmin_avg;26.9599
+497;Bhakkar;PUNJAB;2000;Aug;1;Tmin_avg;25.881
+498;Chakwal;PUNJAB;2000;Aug;1;Tmin_avg;24.8124
+499;Chiniot;PUNJAB;2000;Aug;1;Tmin_avg;26.7037
+500;Dera Ghazi Khan;PUNJAB;2000;Aug;1;Tmin_avg;25.955
+501;Faisalabad;PUNJAB;2000;Aug;1;Tmin_avg;26.897
+502;Gujranwala;PUNJAB;2000;Aug;1;Tmin_avg;26.0613
+503;Gujrat;PUNJAB;2000;Aug;1;Tmin_avg;25.2512
+504;Hafizabad;PUNJAB;2000;Aug;1;Tmin_avg;26.035
+505;Jhang;PUNJAB;2000;Aug;1;Tmin_avg;26.6216
+506;Jhelum;PUNJAB;2000;Aug;1;Tmin_avg;24.938
+507;Kasur;PUNJAB;2000;Aug;1;Tmin_avg;26.7296
+508;Khanewal;PUNJAB;2000;Aug;1;Tmin_avg;27.0351
+509;Khushab;PUNJAB;2000;Aug;1;Tmin_avg;25.6535
+510;Lahore;PUNJAB;2000;Aug;1;Tmin_avg;26.828
+511;Layyah;PUNJAB;2000;Aug;1;Tmin_avg;26.4223
+512;Lodhran;PUNJAB;2000;Aug;1;Tmin_avg;27.3507
+513;Mandi Bahauddin;PUNJAB;2000;Aug;1;Tmin_avg;25.2612
+514;Mianwali;PUNJAB;2000;Aug;1;Tmin_avg;25.1902
+515;Multan;PUNJAB;2000;Aug;1;Tmin_avg;27.1385
+516;Muzaffargarh;PUNJAB;2000;Aug;1;Tmin_avg;26.8669
+517;Nankana Sahib;PUNJAB;2000;Aug;1;Tmin_avg;26.7125
+518;Narowal;PUNJAB;2000;Aug;1;Tmin_avg;26.0973
+519;Okara;PUNJAB;2000;Aug;1;Tmin_avg;26.9507
+520;Pakpattan;PUNJAB;2000;Aug;1;Tmin_avg;27.4743
+521;Rahim Yar Khan;PUNJAB;2000;Aug;1;Tmin_avg;26.3321
+522;Rajanpur;PUNJAB;2000;Aug;1;Tmin_avg;26.1044
+523;Rawalpindi;PUNJAB;2000;Aug;1;Tmin_avg;23.474
+524;Sahiwal;PUNJAB;2000;Aug;1;Tmin_avg;27.1112
+525;Sargodha;PUNJAB;2000;Aug;1;Tmin_avg;25.8712
+526;Sheikhupura;PUNJAB;2000;Aug;1;Tmin_avg;26.6252
+527;Sialkot;PUNJAB;2000;Aug;1;Tmin_avg;25.844
+528;Toba Tek Singh;PUNJAB;2000;Aug;1;Tmin_avg;26.8566
+529;Vehari;PUNJAB;2000;Aug;1;Tmin_avg;27.2903
+530;Badin;SINDH;2000;Aug;1;Tmin_avg;25.5689
+531;Dadu;SINDH;2000;Aug;1;Tmin_avg;25.0541
+532;Ghotki;SINDH;2000;Aug;1;Tmin_avg;25.8961
+533;Hyderabad;SINDH;2000;Aug;1;Tmin_avg;25.56
+534;Jacobabad;SINDH;2000;Aug;1;Tmin_avg;25.6139
+535;Jamshoro;SINDH;2000;Aug;1;Tmin_avg;25.5448
+536;Karachi Central;SINDH;2000;Aug;1;Tmin_avg;26.1722
+537;Karachi East;SINDH;2000;Aug;1;Tmin_avg;26.1766
+538;Karachi South;SINDH;2000;Aug;1;Tmin_avg;26.167
+539;Karachi West;SINDH;2000;Aug;1;Tmin_avg;26.1286
+540;Kashmore;SINDH;2000;Aug;1;Tmin_avg;25.8184
+541;Khairpur;SINDH;2000;Aug;1;Tmin_avg;25.7552
+542;Larkana;SINDH;2000;Aug;1;Tmin_avg;26.0409
+543;Malir;SINDH;2000;Aug;1;Tmin_avg;26.0435
+544;Matiari;SINDH;2000;Aug;1;Tmin_avg;25.4752
+545;Mirpur Khas;SINDH;2000;Aug;1;Tmin_avg;25.5157
+546;Naushahro Feroze;SINDH;2000;Aug;1;Tmin_avg;25.6077
+547;Qambar Shahdadkot;SINDH;2000;Aug;1;Tmin_avg;25.2942
+548;Sanghar;SINDH;2000;Aug;1;Tmin_avg;25.5434
+549;Shaheed Benazirabad;SINDH;2000;Aug;1;Tmin_avg;25.4537
+550;Shikarpur;SINDH;2000;Aug;1;Tmin_avg;25.9324
+551;Sukkur;SINDH;2000;Aug;1;Tmin_avg;25.9334
+552;Tando Allahyar;SINDH;2000;Aug;1;Tmin_avg;25.511
+553;Tando Muhammad Khan;SINDH;2000;Aug;1;Tmin_avg;25.619
+554;Tharparkar;SINDH;2000;Aug;1;Tmin_avg;25.5637
+555;Thatta;SINDH;2000;Aug;1;Tmin_avg;25.8037
+556;Umerkot;SINDH;2000;Aug;1;Tmin_avg;25.5547
+557;Bagh;AJK;2000;Aug;2;Tmin_avg;24.1374
+558;Bhimber;AJK;2000;Aug;2;Tmin_avg;24.9698
+559;Hattian;AJK;2000;Aug;2;Tmin_avg;
+560;Haveli;AJK;2000;Aug;2;Tmin_avg;
+561;Kotli;AJK;2000;Aug;2;Tmin_avg;24.3406
+562;Mirpur;AJK;2000;Aug;2;Tmin_avg;24.4365
+563;Muzaffarabad;AJK;2000;Aug;2;Tmin_avg;24.0428
+564;Neelam;AJK;2000;Aug;2;Tmin_avg;24.105
+565;Poonch;AJK;2000;Aug;2;Tmin_avg;24.0745
+566;Sudhnoti;AJK;2000;Aug;2;Tmin_avg;23.9744
+567;Awaran;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.3833
+568;Barkhan;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.7408
+569;Bolan;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.5775
+570;Chagai;BALOCHISTAN;2000;Aug;2;Tmin_avg;22.7154
+571;Dera Bugti;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.9906
+572;Gwadar;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.4652
+573;Jafarabad;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.8104
+574;Jhal Magsi;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.5055
+575;Kalat;BALOCHISTAN;2000;Aug;2;Tmin_avg;17.4565
+576;Kech;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.2103
+577;Kharan;BALOCHISTAN;2000;Aug;2;Tmin_avg;22.2364
+578;Khuzdar;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.0777
+579;Kohlu;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.825
+580;Lasbela;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.175
+581;Loralai;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.0994
+582;Mastung;BALOCHISTAN;2000;Aug;2;Tmin_avg;20.0947
+583;Musakhel;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.4818
+584;Nasirabad;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.2275
+585;Nushki;BALOCHISTAN;2000;Aug;2;Tmin_avg;18.6041
+586;Panjgur;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.7766
+587;Pishin;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.6126
+588;Qilla Abdullah;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.0514
+589;Qilla Saifullah;BALOCHISTAN;2000;Aug;2;Tmin_avg;24.2768
+590;Quetta;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.2322
+591;Sibi;BALOCHISTAN;2000;Aug;2;Tmin_avg;26.1482
+592;Zhob;BALOCHISTAN;2000;Aug;2;Tmin_avg;23.5471
+593;Ziarat;BALOCHISTAN;2000;Aug;2;Tmin_avg;25.0719
+594;Disputed Area;DISPUTED AREA;2000;Aug;2;Tmin_avg;25.1446
+595;Bajaur Agency;FATA;2000;Aug;2;Tmin_avg;24.4137
+596;Khyber Agency;FATA;2000;Aug;2;Tmin_avg;26.0283
+597;Kurrum Agency;FATA;2000;Aug;2;Tmin_avg;25.2816
+598;Mohmand Agency;FATA;2000;Aug;2;Tmin_avg;25.6599
+599;North Waziristan Agency;FATA;2000;Aug;2;Tmin_avg;24.4065
+600;Orakzai Agency;FATA;2000;Aug;2;Tmin_avg;25.8511
+601;South Waziristan Agency;FATA;2000;Aug;2;Tmin_avg;25.0623
+602;Islamabad;FEDERAL;2000;Aug;2;Tmin_avg;23.2897
+603;Astore;GILGIT BALTISTAN;2000;Aug;2;Tmin_avg;24.23
+604;Baltistan;GILGIT BALTISTAN;2000;Aug;2;Tmin_avg;24.4502
+752;Charsadda;KPK;2000;Aug;3;Tmin_avg;26.5102
+753;Chitral;KPK;2000;Aug;3;Tmin_avg;18.4206
+754;Dera Ismail Khan;KPK;2000;Aug;3;Tmin_avg;25.7612
+755;Hangu;KPK;2000;Aug;3;Tmin_avg;25.8917
+756;Haripur;KPK;2000;Aug;3;Tmin_avg;24.2339
+757;Karak;KPK;2000;Aug;3;Tmin_avg;25.8466
+758;Kohat;KPK;2000;Aug;3;Tmin_avg;26.0738
+759;Kohistan;KPK;2000;Aug;3;Tmin_avg;22.3701
+760;Lakki Marwat;KPK;2000;Aug;3;Tmin_avg;25.8402
+761;Lower Dir;KPK;2000;Aug;3;Tmin_avg;23.3785
+762;Malakand;KPK;2000;Aug;3;Tmin_avg;25.2478
+763;Mansehra;KPK;2000;Aug;3;Tmin_avg;24.1113
+764;Mardan;KPK;2000;Aug;3;Tmin_avg;25.6024
+765;Nowshera;KPK;2000;Aug;3;Tmin_avg;26.1462
+766;Peshawar;KPK;2000;Aug;3;Tmin_avg;26.7348
+767;Shangla;KPK;2000;Aug;3;Tmin_avg;23.3735
+768;Swabi;KPK;2000;Aug;3;Tmin_avg;24.9849
+769;Swat;KPK;2000;Aug;3;Tmin_avg;21.1576
+770;Tank;KPK;2000;Aug;3;Tmin_avg;25.6024
+771;Upper Dir;KPK;2000;Aug;3;Tmin_avg;19.9672
+772;Attock;PUNJAB;2000;Aug;3;Tmin_avg;25.0691
+773;Bahawalnagar;PUNJAB;2000;Aug;3;Tmin_avg;27.8169
+774;Bahawalpur;PUNJAB;2000;Aug;3;Tmin_avg;27.7542
+775;Bhakkar;PUNJAB;2000;Aug;3;Tmin_avg;26.6292
+776;Chakwal;PUNJAB;2000;Aug;3;Tmin_avg;25.3732
+777;Chiniot;PUNJAB;2000;Aug;3;Tmin_avg;27.0512
+778;Dera Ghazi Khan;PUNJAB;2000;Aug;3;Tmin_avg;26.9977
+779;Faisalabad;PUNJAB;2000;Aug;3;Tmin_avg;27.252
+780;Gujranwala;PUNJAB;2000;Aug;3;Tmin_avg;26.5455
+781;Gujrat;PUNJAB;2000;Aug;3;Tmin_avg;25.6035
+782;Hafizabad;PUNJAB;2000;Aug;3;Tmin_avg;26.4027
+783;Jhang;PUNJAB;2000;Aug;3;Tmin_avg;27.2544
+784;Jhelum;PUNJAB;2000;Aug;3;Tmin_avg;25.264
+785;Kasur;PUNJAB;2000;Aug;3;Tmin_avg;27.2828
+786;Khanewal;PUNJAB;2000;Aug;3;Tmin_avg;27.8852
+787;Khushab;PUNJAB;2000;Aug;3;Tmin_avg;26.2124
+788;Lahore;PUNJAB;2000;Aug;3;Tmin_avg;27.5034
+789;Layyah;PUNJAB;2000;Aug;3;Tmin_avg;27.3818
+790;Lodhran;PUNJAB;2000;Aug;3;Tmin_avg;28.0602
+791;Mandi Bahauddin;PUNJAB;2000;Aug;3;Tmin_avg;25.4814
+792;Mianwali;PUNJAB;2000;Aug;3;Tmin_avg;25.9024
+793;Multan;PUNJAB;2000;Aug;3;Tmin_avg;28.1696
+794;Muzaffargarh;PUNJAB;2000;Aug;3;Tmin_avg;27.9324
+795;Nankana Sahib;PUNJAB;2000;Aug;3;Tmin_avg;27.2094
+796;Narowal;PUNJAB;2000;Aug;3;Tmin_avg;26.6486
+797;Okara;PUNJAB;2000;Aug;3;Tmin_avg;27.3851
+798;Pakpattan;PUNJAB;2000;Aug;3;Tmin_avg;27.7351
+799;Rahim Yar Khan;PUNJAB;2000;Aug;3;Tmin_avg;27.5101
+800;Rajanpur;PUNJAB;2000;Aug;3;Tmin_avg;27.2658
+801;Rawalpindi;PUNJAB;2000;Aug;3;Tmin_avg;24.3156
+802;Sahiwal;PUNJAB;2000;Aug;3;Tmin_avg;27.5563
+803;Sargodha;PUNJAB;2000;Aug;3;Tmin_avg;26.2601
+804;Sheikhupura;PUNJAB;2000;Aug;3;Tmin_avg;27.1828
+805;Sialkot;PUNJAB;2000;Aug;3;Tmin_avg;26.3417
+806;Toba Tek Singh;PUNJAB;2000;Aug;3;Tmin_avg;27.3926
+807;Vehari;PUNJAB;2000;Aug;3;Tmin_avg;27.848
+808;Badin;SINDH;2000;Aug;3;Tmin_avg;26.4024
+809;Dadu;SINDH;2000;Aug;3;Tmin_avg;26.0592
+810;Ghotki;SINDH;2000;Aug;3;Tmin_avg;27.5311
+811;Hyderabad;SINDH;2000;Aug;3;Tmin_avg;26.4163
+812;Jacobabad;SINDH;2000;Aug;3;Tmin_avg;27.3428
+813;Jamshoro;SINDH;2000;Aug;3;Tmin_avg;26.3458
+814;Karachi Central;SINDH;2000;Aug;3;Tmin_avg;26.6147
+815;Karachi East;SINDH;2000;Aug;3;Tmin_avg;26.6177
+816;Karachi South;SINDH;2000;Aug;3;Tmin_avg;26.6112
+817;Karachi West;SINDH;2000;Aug;3;Tmin_avg;26.5842
+818;Kashmore;SINDH;2000;Aug;3;Tmin_avg;27.4916
+819;Khairpur;SINDH;2000;Aug;3;Tmin_avg;27.3368
+820;Larkana;SINDH;2000;Aug;3;Tmin_avg;27.7612
+821;Malir;SINDH;2000;Aug;3;Tmin_avg;26.5332
+822;Matiari;SINDH;2000;Aug;3;Tmin_avg;26.4821
+823;Mirpur Khas;SINDH;2000;Aug;3;Tmin_avg;26.5087
+824;Naushahro Feroze;SINDH;2000;Aug;3;Tmin_avg;27.0709
+825;Qambar Shahdadkot;SINDH;2000;Aug;3;Tmin_avg;26.5964
+826;Sanghar;SINDH;2000;Aug;3;Tmin_avg;26.7219
+827;Shaheed Benazirabad;SINDH;2000;Aug;3;Tmin_avg;26.7002
+828;Shikarpur;SINDH;2000;Aug;3;Tmin_avg;27.9832
+829;Sukkur;SINDH;2000;Aug;3;Tmin_avg;27.9349
+830;Tando Allahyar;SINDH;2000;Aug;3;Tmin_avg;26.4844
+831;Tando Muhammad Khan;SINDH;2000;Aug;3;Tmin_avg;26.4044
+832;Tharparkar;SINDH;2000;Aug;3;Tmin_avg;26.5364
+833;Thatta;SINDH;2000;Aug;3;Tmin_avg;26.4236
+834;Umerkot;SINDH;2000;Aug;3;Tmin_avg;26.609
+835;Bagh;AJK;2000;Dec;1;Tmin_avg;4.13247
+836;Bhimber;AJK;2000;Dec;1;Tmin_avg;5.04554
+837;Hattian;AJK;2000;Dec;1;Tmin_avg;
+838;Haveli;AJK;2000;Dec;1;Tmin_avg;
+839;Kotli;AJK;2000;Dec;1;Tmin_avg;4.35931
+840;Mirpur;AJK;2000;Dec;1;Tmin_avg;4.47412
+841;Muzaffarabad;AJK;2000;Dec;1;Tmin_avg;4.02824
+842;Neelam;AJK;2000;Dec;1;Tmin_avg;4.11312
+843;Poonch;AJK;2000;Dec;1;Tmin_avg;4.07983
+844;Sudhnoti;AJK;2000;Dec;1;Tmin_avg;3.99152
+845;Awaran;BALOCHISTAN;2000;Dec;1;Tmin_avg;7.87189
+846;Barkhan;BALOCHISTAN;2000;Dec;1;Tmin_avg;5.87214
+847;Bolan;BALOCHISTAN;2000;Dec;1;Tmin_avg;5.74213
+848;Chagai;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.86653
+849;Dera Bugti;BALOCHISTAN;2000;Dec;1;Tmin_avg;7.06952
+850;Gwadar;BALOCHISTAN;2000;Dec;1;Tmin_avg;7.37223
+851;Jafarabad;BALOCHISTAN;2000;Dec;1;Tmin_avg;7.49313
+852;Jhal Magsi;BALOCHISTAN;2000;Dec;1;Tmin_avg;5.40567
+853;Kalat;BALOCHISTAN;2000;Dec;1;Tmin_avg;0.180892
+854;Kech;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.91507
+855;Kharan;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.8054
+856;Khuzdar;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.15305
+857;Kohlu;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.48628
+858;Lasbela;BALOCHISTAN;2000;Dec;1;Tmin_avg;9.98728
+859;Loralai;BALOCHISTAN;2000;Dec;1;Tmin_avg;5.52979
+860;Mastung;BALOCHISTAN;2000;Dec;1;Tmin_avg;2.11216
+861;Musakhel;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.50874
+862;Nasirabad;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.78055
+863;Nushki;BALOCHISTAN;2000;Dec;1;Tmin_avg;1.07469
+864;Panjgur;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.53331
+865;Pishin;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.65024
+866;Qilla Abdullah;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.27365
+867;Qilla Saifullah;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.79627
+868;Quetta;BALOCHISTAN;2000;Dec;1;Tmin_avg;4.55612
+869;Sibi;BALOCHISTAN;2000;Dec;1;Tmin_avg;6.88909
+870;Zhob;BALOCHISTAN;2000;Dec;1;Tmin_avg;3.88858
+871;Ziarat;BALOCHISTAN;2000;Dec;1;Tmin_avg;5.84199
+872;Disputed Area;DISPUTED AREA;2000;Dec;1;Tmin_avg;5.1248
+873;Bajaur Agency;FATA;2000;Dec;1;Tmin_avg;4.15956
+874;Khyber Agency;FATA;2000;Dec;1;Tmin_avg;5.32459
+875;Kurrum Agency;FATA;2000;Dec;1;Tmin_avg;4.86613
+876;Mohmand Agency;FATA;2000;Dec;1;Tmin_avg;5.05119
+877;North Waziristan Agency;FATA;2000;Dec;1;Tmin_avg;4.33698
+878;Orakzai Agency;FATA;2000;Dec;1;Tmin_avg;5.21807
+879;South Waziristan Agency;FATA;2000;Dec;1;Tmin_avg;4.77582
+880;Islamabad;FEDERAL;2000;Dec;1;Tmin_avg;3.36733
+881;Astore;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;4.24655
+882;Baltistan;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;4.44599
+883;Diamir;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;3.49765
+884;Ghanche;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;4.72321
+885;Ghizer;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;2.53089
+886;Gilgit;GILGIT BALTISTAN;2000;Dec;1;Tmin_avg;3.82557
+887;Abbottabad;KPK;2000;Dec;1;Tmin_avg;3.78535
+888;Bannu;KPK;2000;Dec;1;Tmin_avg;4.93119
+889;Battagram;KPK;2000;Dec;1;Tmin_avg;3.78464
+890;Buner;KPK;2000;Dec;1;Tmin_avg;4.19235
+891;Charsadda;KPK;2000;Dec;1;Tmin_avg;5.45248
+892;Chitral;KPK;2000;Dec;1;Tmin_avg;0.916545
+893;Dera Ismail Khan;KPK;2000;Dec;1;Tmin_avg;4.81251
+894;Hangu;KPK;2000;Dec;1;Tmin_avg;5.05946
+895;Haripur;KPK;2000;Dec;1;Tmin_avg;3.74566
+896;Karak;KPK;2000;Dec;1;Tmin_avg;5.0176
+897;Kohat;KPK;2000;Dec;1;Tmin_avg;5.16392
+898;Kohistan;KPK;2000;Dec;1;Tmin_avg;3.07136
+899;Lakki Marwat;KPK;2000;Dec;1;Tmin_avg;4.96329
+900;Lower Dir;KPK;2000;Dec;1;Tmin_avg;3.65721
+901;Malakand;KPK;2000;Dec;1;Tmin_avg;4.7063
+902;Mansehra;KPK;2000;Dec;1;Tmin_avg;3.93026
+903;Mardan;KPK;2000;Dec;1;Tmin_avg;4.87922
+904;Nowshera;KPK;2000;Dec;1;Tmin_avg;5.1951
+905;Peshawar;KPK;2000;Dec;1;Tmin_avg;5.58566
+906;Shangla;KPK;2000;Dec;1;Tmin_avg;3.58912
+907;Swabi;KPK;2000;Dec;1;Tmin_avg;4.39496
+908;Swat;KPK;2000;Dec;1;Tmin_avg;2.40955
+909;Tank;KPK;2000;Dec;1;Tmin_avg;4.74033
+910;Upper Dir;KPK;2000;Dec;1;Tmin_avg;1.76372
+911;Attock;PUNJAB;2000;Dec;1;Tmin_avg;4.41692
+912;Bahawalnagar;PUNJAB;2000;Dec;1;Tmin_avg;6.83434
+913;Bahawalpur;PUNJAB;2000;Dec;1;Tmin_avg;6.6669
+914;Bhakkar;PUNJAB;2000;Dec;1;Tmin_avg;5.38747
+915;Chakwal;PUNJAB;2000;Dec;1;Tmin_avg;4.81157
+916;Chiniot;PUNJAB;2000;Dec;1;Tmin_avg;5.05655
+917;Dera Ghazi Khan;PUNJAB;2000;Dec;1;Tmin_avg;5.727
+918;Faisalabad;PUNJAB;2000;Dec;1;Tmin_avg;5.25999
+919;Gujranwala;PUNJAB;2000;Dec;1;Tmin_avg;6.27908
+920;Gujrat;PUNJAB;2000;Dec;1;Tmin_avg;5.30033
+921;Hafizabad;PUNJAB;2000;Dec;1;Tmin_avg;5.52994
+922;Jhang;PUNJAB;2000;Dec;1;Tmin_avg;5.6253
+923;Jhelum;PUNJAB;2000;Dec;1;Tmin_avg;4.98392
+924;Kasur;PUNJAB;2000;Dec;1;Tmin_avg;6.84997
+925;Khanewal;PUNJAB;2000;Dec;1;Tmin_avg;6.15618
+926;Khushab;PUNJAB;2000;Dec;1;Tmin_avg;5.17987
+927;Lahore;PUNJAB;2000;Dec;1;Tmin_avg;7.78284
+928;Layyah;PUNJAB;2000;Dec;1;Tmin_avg;5.79883
+929;Lodhran;PUNJAB;2000;Dec;1;Tmin_avg;6.51271
+930;Mandi Bahauddin;PUNJAB;2000;Dec;1;Tmin_avg;5.23037
+931;Mianwali;PUNJAB;2000;Dec;1;Tmin_avg;5.03157
+932;Multan;PUNJAB;2000;Dec;1;Tmin_avg;6.18299
+933;Muzaffargarh;PUNJAB;2000;Dec;1;Tmin_avg;6.17048
+934;Nankana Sahib;PUNJAB;2000;Dec;1;Tmin_avg;6.35796
+935;Narowal;PUNJAB;2000;Dec;1;Tmin_avg;6.38705
+936;Okara;PUNJAB;2000;Dec;1;Tmin_avg;6.31739
+937;Pakpattan;PUNJAB;2000;Dec;1;Tmin_avg;6.76529
+938;Rahim Yar Khan;PUNJAB;2000;Dec;1;Tmin_avg;6.92413
+939;Rajanpur;PUNJAB;2000;Dec;1;Tmin_avg;6.64913
+940;Rawalpindi;PUNJAB;2000;Dec;1;Tmin_avg;3.83342
+941;Sahiwal;PUNJAB;2000;Dec;1;Tmin_avg;6.26604
+942;Sargodha;PUNJAB;2000;Dec;1;Tmin_avg;5.20032
+943;Sheikhupura;PUNJAB;2000;Dec;1;Tmin_avg;6.82019
+944;Sialkot;PUNJAB;2000;Dec;1;Tmin_avg;6.03035
+945;Toba Tek Singh;PUNJAB;2000;Dec;1;Tmin_avg;5.75355
+946;Vehari;PUNJAB;2000;Dec;1;Tmin_avg;6.53677
+947;Badin;SINDH;2000;Dec;1;Tmin_avg;9.60617
+1095;Karachi West;SINDH;2000;Dec;2;Tmin_avg;15.2729
+1096;Kashmore;SINDH;2000;Dec;2;Tmin_avg;9.27966
+1097;Khairpur;SINDH;2000;Dec;2;Tmin_avg;9.21044
+1098;Larkana;SINDH;2000;Dec;2;Tmin_avg;8.19078
+1099;Malir;SINDH;2000;Dec;2;Tmin_avg;14.7755
+1100;Matiari;SINDH;2000;Dec;2;Tmin_avg;10.0929
+1101;Mirpur Khas;SINDH;2000;Dec;2;Tmin_avg;9.88894
+1102;Naushahro Feroze;SINDH;2000;Dec;2;Tmin_avg;8.5966
+1103;Qambar Shahdadkot;SINDH;2000;Dec;2;Tmin_avg;7.87496
+1104;Sanghar;SINDH;2000;Dec;2;Tmin_avg;9.27256
+1105;Shaheed Benazirabad;SINDH;2000;Dec;2;Tmin_avg;9.16329
+1106;Shikarpur;SINDH;2000;Dec;2;Tmin_avg;10.2303
+1107;Sukkur;SINDH;2000;Dec;2;Tmin_avg;10.3692
+1108;Tando Allahyar;SINDH;2000;Dec;2;Tmin_avg;10.1972
+1109;Tando Muhammad Khan;SINDH;2000;Dec;2;Tmin_avg;11.5032
+1110;Tharparkar;SINDH;2000;Dec;2;Tmin_avg;9.32994
+1111;Thatta;SINDH;2000;Dec;2;Tmin_avg;13.0666
+1112;Umerkot;SINDH;2000;Dec;2;Tmin_avg;9.32265
+1113;Bagh;AJK;2000;Dec;3;Tmin_avg;5.02003
+1114;Bhimber;AJK;2000;Dec;3;Tmin_avg;5.61834
+1115;Hattian;AJK;2000;Dec;3;Tmin_avg;
+1116;Haveli;AJK;2000;Dec;3;Tmin_avg;
+1117;Kotli;AJK;2000;Dec;3;Tmin_avg;5.19546
+1118;Mirpur;AJK;2000;Dec;3;Tmin_avg;5.29456
+1119;Muzaffarabad;AJK;2000;Dec;3;Tmin_avg;4.92057
+1120;Neelam;AJK;2000;Dec;3;Tmin_avg;4.80165
+1121;Poonch;AJK;2000;Dec;3;Tmin_avg;5.01905
+1122;Sudhnoti;AJK;2000;Dec;3;Tmin_avg;4.99309
+1123;Awaran;BALOCHISTAN;2000;Dec;3;Tmin_avg;5.9224
+1124;Barkhan;BALOCHISTAN;2000;Dec;3;Tmin_avg;4.3941
+1125;Bolan;BALOCHISTAN;2000;Dec;3;Tmin_avg;3.88983
+1126;Chagai;BALOCHISTAN;2000;Dec;3;Tmin_avg;2.96814
+1127;Dera Bugti;BALOCHISTAN;2000;Dec;3;Tmin_avg;5.2051
+1128;Gwadar;BALOCHISTAN;2000;Dec;3;Tmin_avg;5.50477
+1129;Jafarabad;BALOCHISTAN;2000;Dec;3;Tmin_avg;5.1791
+1130;Jhal Magsi;BALOCHISTAN;2000;Dec;3;Tmin_avg;3.20588
+1131;Kalat;BALOCHISTAN;2000;Dec;3;Tmin_avg;-1.8792
+1132;Kech;BALOCHISTAN;2000;Dec;3;Tmin_avg;5.01267
+1133;Kharan;BALOCHISTAN;2000;Dec;3;Tmin_avg;2.76834
+1134;Khuzdar;BALOCHISTAN;2000;Dec;3;Tmin_avg;3.95516
+1135;Kohlu;BALOCHISTAN;2000;Dec;3;Tmin_avg;4.77555
+1136;Lasbela;BALOCHISTAN;2000;Dec;3;Tmin_avg;8.2051
+1137;Loralai;BALOCHISTAN;2000;Dec;3;Tmin_avg;3.92588
+1138;Mastung;BALOCHISTAN;2000;Dec;3;Tmin_avg;0.175458
+1139;Musakhel;BALOCHISTAN;2000;Dec;3;Tmin_avg;3.12428
+1140;Nasirabad;BALOCHISTAN;2000;Dec;3;Tmin_avg;4.64824
+1141;Nushki;BALOCHISTAN;2000;Dec;3;Tmin_avg;-0.936069

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <parent>
+        <groupId>it.geosolutions.nrl</groupId>
+        <artifactId>geobatch-root</artifactId>    
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!--     Module Description                                      -->
+    <!-- =========================================================== -->
+
+    <groupId>it.geosolutions.geobatch</groupId>
+    <artifactId>nrl-action-ndviingest</artifactId>
+    <packaging>jar</packaging>
+
+    <name>GeoBatch action: NDVI preparation</name>
+    <description>GeoBatch action: NDVI preparation for ImageMosaic processing</description>
+
+    <properties>
+    </properties>
+
+    <!-- =========================================================== -->
+    <!--     Dependencies                                            -->
+    <!-- =========================================================== -->
+
+    <dependencies>
+
+        <!-- =========================================================== -->
+        <!--     GeoBatch deps                                           -->
+        <!-- =========================================================== -->
+        <!-- import pack plugin definition -->
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-actions</artifactId>
+            <type>pom</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-action-imagemosaic</artifactId>
+        </dependency>
+
+        <!--        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-core-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+
+        <!-- =========================================================== -->
+
+        <!--        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fs-catalog</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!--<version>4.11</version>-->
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <inherited>true</inherited>
+              <executions>
+                <!-- Remove the flowdata files from the base jar ========-->
+                <execution>
+            <!--
+	      setting the phase as prep-pack is the only way I::etj found
+	      to have the excludes work.
+	      Once the basic jar is created with the exclusions,
+	      the jar will not be rebuilt in the jar:jar phase.
+
+                          This exclusion will work with maven 2.1.0 but not with 2.0.9 or 2.0.10.
+                        -->
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>data/</exclude>
+                                <exclude>settings/</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <!-- Creates a jar containing only the flowdata files ===-->
+                    <execution>
+                        <id>packFlowData</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>flowdata</classifier>
+                            <includes>
+                                <include>data/**</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

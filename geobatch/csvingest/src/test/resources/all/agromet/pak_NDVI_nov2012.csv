@@ -1,0 +1,11 @@
+ID_ndv;distr;prov;year;mon;dec;factor;NDVI_avg
+1;Bagh;AJK;2000;Apr;1;NDVI_avg;0
+2;Bhimber;AJK;2000;Apr;1;NDVI_avg;0
+3;Hattian;AJK;2000;Apr;1;NDVI_avg;
+13;Bolan;BALOCHISTAN;2000;Apr;1;NDVI_avg;
+14;Chagai;BALOCHISTAN;2000;Apr;1;NDVI_avg;
+15;Dera Bugti;BALOCHISTAN;2000;Apr;1;NDVI_avg;0
+16;Gwadar;BALOCHISTAN;2000;Apr;1;NDVI_avg;0
+1542;Bolan;BALOCHISTAN;2000;Feb;3;NDVI_avg;0
+1543;Chagai;BALOCHISTAN;2000;Feb;3;NDVI_avg;0
+1546;Jafarabad;BALOCHISTAN;2000;Feb;3;NDVI_avg;0.34688

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+
+	<http auto-config="true">
+		
+		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
+		<intercept-url pattern="/home*" access="ROLE_ADMIN" />
+		<intercept-url pattern="/users*" access="ROLE_ADMIN" />
+		<form-login login-page="/login" default-target-url="/users/"
+			authentication-failure-url="/loginfailed" />
+		<logout logout-success-url="/logout" />
+	</http>
+		
+
+    <beans:bean id="geoStoreAuthenticationProvider" class="it.geosolutions.nrl.security.GeoStoreAuthenticationProvider">
+    	<beans:property name="geoStoreRestURL" value="${geostore.resturl}"></beans:property><!-- TODO external. this string -->
+    	<beans:property name="allowedRoles">
+    			<beans:list>
+					<beans:value>ADMIN</beans:value>
+				</beans:list>
+    	</beans:property>
+    </beans:bean>
+ 
+    <authentication-manager>
+        <authentication-provider ref='geoStoreAuthenticationProvider'/>
+    </authentication-manager>
+ 
+
+
+</beans:beans>

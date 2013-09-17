@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <parent>
+<!--        <groupId>it.geosolutions.geobatch</groupId>
+        <artifactId>gb-actions</artifactId>-->
+
+            <groupId>it.geosolutions.nrl</groupId>
+        <artifactId>geobatch-root</artifactId>    
+
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+    <!-- =========================================================== -->
+    <!--     Module Description                                      -->
+    <!-- =========================================================== -->
+    <groupId>it.geosolutions.geobatch</groupId>
+    <artifactId>nrl-action-csvingest</artifactId>
+    <packaging>jar</packaging>
+
+    <name>GeoBatch action: CSV ingest</name>
+    <description></description>
+
+    <properties>
+    </properties>
+    <!-- =========================================================== -->
+    <!--     Dependency Management                                   -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <!--    <dependency>
+          <groupId>it.geosolutions.geobatch</groupId>
+          <artifactId>tools-geobatch</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.nrl</groupId>
+            <artifactId>nrl-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.nrl</groupId>
+            <artifactId>nrl-persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+<!--        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-actions</artifactId>
+            <version>1.4-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>-->
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-core-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-alias-registry</artifactId>
+        </dependency>
+
+        <!-- forcing hibernate versions -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+
+        <!-- import pack plugin definition -->
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-actions</artifactId>
+            <type>pom</type>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+</project>
