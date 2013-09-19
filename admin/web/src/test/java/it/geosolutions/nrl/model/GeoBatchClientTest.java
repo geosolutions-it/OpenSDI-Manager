@@ -64,7 +64,7 @@ public class GeoBatchClientTest {
 
     protected GeoBatchRESTClient createClient() {
         GeoBatchRESTClient client = new GeoBatchRESTClient();
-        client.setGeostoreRestUrl("http://localhost:8080/geobatch/rest/");
+        client.setGeostoreRestUrl("http://localhost:8081/geobatch/rest/");
         client.setUsername("admin");
         client.setPassword("admin");
 
@@ -89,7 +89,7 @@ public class GeoBatchClientTest {
             throw new RuntimeException("Unexpected exception: " + ex.getMessage(), ex);
         }
     }
-    @Ignore
+
     @Test
     public void testGetFlows() {
         GeoBatchRESTClient client = createClient();
