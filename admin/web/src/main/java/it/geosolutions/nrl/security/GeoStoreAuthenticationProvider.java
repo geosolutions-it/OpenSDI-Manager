@@ -1,7 +1,5 @@
 package it.geosolutions.nrl.security;
 
-import it.geosolutions.geostore.core.model.User;
-import it.geosolutions.geostore.core.model.enums.Role;
 import it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient;
 import it.geosolutions.geostore.services.rest.model.RESTUser;
 
@@ -12,7 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
  * Wrap geostore Rest Services to allow Authentication using Geostore Users
  * @author Lorenzo Natali
@@ -53,7 +51,7 @@ public class GeoStoreAuthenticationProvider implements AuthenticationProvider {
 			if (!roleAllowed(role))
 				return null;
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new GrantedAuthorityImpl("ROLE_" + role));
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 			Authentication a = new UsernamePasswordAuthenticationToken(us, pw,
 					authorities);
 			// a.setAuthenticated(true);

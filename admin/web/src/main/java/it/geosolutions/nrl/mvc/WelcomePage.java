@@ -16,8 +16,9 @@ public class WelcomePage {
 	public String printWelcome(ModelMap model, Principal principal ) {
  
 		String name = principal.getName();
-		ControllerUtils.setCommonModel(model);
 		model.addAttribute("context", "home");
+		model.addAttribute("userName", name);
+		ControllerUtils.setCommonModel(model);
 		return "template";
  
 	}

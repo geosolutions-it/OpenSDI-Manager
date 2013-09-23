@@ -1,7 +1,5 @@
 package it.geosolutions.nrl.mvc.model.statistics;
 
-import it.geosolutions.geostore.services.rest.utils.GeoStoreJAXBContext;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -11,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.xpath.XPath;
@@ -19,7 +16,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
 import java.io.IOException;
 /**
  * Wraps a configuration for geobatch infoFile access utilities

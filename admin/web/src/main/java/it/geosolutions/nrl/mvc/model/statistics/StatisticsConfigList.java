@@ -2,9 +2,7 @@ package it.geosolutions.nrl.mvc.model.statistics;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
