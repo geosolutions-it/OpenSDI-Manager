@@ -20,9 +20,11 @@ public class FileBrowser {
 	public String getRegex() {
 		return regex;
 	}
+	
 	public void setRegex(String regex) {
 		this.regex = regex;
 	}
+	
 	public List<JSPFile> getFiles(){
 		File dir = new File(baseDir);
 		if( !dir.isDirectory() ) return null;
@@ -44,6 +46,7 @@ public class FileBrowser {
 		}
 		return ret;
 	}
+	
 	public List<String> getFileNames(){
 		File dir = new File(baseDir);
 		if( !dir.isDirectory() ) return null;
@@ -65,6 +68,7 @@ public class FileBrowser {
 		}
 		return ret;
 	}
+	
 	public List<String> getDirs(){
 		File dir = new File(baseDir);
 		if( !dir.isDirectory() ) return null;
@@ -82,6 +86,7 @@ public class FileBrowser {
 	public String getBaseDir() {
 		return baseDir;
 	}
+	
 	public void setBaseDir(String baseDir) {
 		this.baseDir = baseDir;
 		
