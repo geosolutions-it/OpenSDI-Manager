@@ -34,9 +34,13 @@ public class Zip2pgOperationController implements FileOperation {
 	 */
 	private String[] extensions = {"zip"};
 	
+	/**
+	 * Directory where to scan for files
+	 */
 	private String basedirString = "G:/OpenSDIManager/test_shapes/";
 
 	/**
+	 * Getter
 	 * @return the basedirString
 	 */
 	public String getBasedirString() {
@@ -44,6 +48,7 @@ public class Zip2pgOperationController implements FileOperation {
 	}
 
 	/**
+	 * Setter
 	 * @param basedirString the basedirString to set
 	 */
 	public void setBasedirString(String basedirString) {
@@ -80,7 +85,8 @@ public class Zip2pgOperationController implements FileOperation {
 	        List<String> flist = new ArrayList<String>();
 			flist.add(basedirString+fileName);
 	        runInfo.setFileList(flist);
-	        // TODO: what is fastFail?
+	        
+	        // TODO: fastFail or not?
 	        response = service.runLocal("ds2ds_zip2pg", true, runInfo);
 
 		} catch (Exception e) {

@@ -39,6 +39,8 @@
            <li class="${context=='users'?'active':'' }"><a href="<c:url value="/users/"/>">Users</a></li>
            
            <li class="${context=='files'?'active':'' }"><a href="<c:url value="/files/"/>">File Browser</a></li>
+           
+           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/oplist/"/>">Operations List</a></li>
          </ul>
    
          <ul class="nav pull-right">
