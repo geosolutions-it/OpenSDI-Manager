@@ -59,6 +59,12 @@ public class Zip2pgOperationController implements FileOperation {
 	 */
 	private String basedirString = "G:/OpenSDIManager/test_shapes/";
 
+	private String geobatchRestUrl = "http://localhost:8081/geobatch/rest/";
+
+	private String geobatchUsername = "admin";
+
+	private String geobatchPassword = "admin";
+
 	/**
 	 * Getter
 	 * @return the basedirString
@@ -93,10 +99,9 @@ public class Zip2pgOperationController implements FileOperation {
 		String response = "Zip2pg running";
 		try {
 	        GeoBatchRESTClient client = new GeoBatchRESTClient();
-	        // TODO: parameterize?
-	        client.setGeostoreRestUrl("http://localhost:8081/geobatch/rest/");
-	        client.setUsername("admin");
-	        client.setPassword("admin");
+	        client.setGeostoreRestUrl(getGeobatchRestUrl());
+	        client.setUsername(getGeobatchUsername());
+	        client.setPassword(getGeobatchPassword());
 	        
 	        // TODO: check ping to GeoBatch (see test)
 	        
@@ -160,6 +165,48 @@ public class Zip2pgOperationController implements FileOperation {
 	@Override
 	public String getJsp() {
 		return "zip2pg";
+	}
+
+	/**
+	 * @return the geostoreRestUrl
+	 */
+	public String getGeobatchRestUrl() {
+		return geobatchRestUrl;
+	}
+
+	/**
+	 * @param geobatchRestUrl the geostoreRestUrl to set
+	 */
+	public void setGeobatchRestUrl(String geobatchRestUrl) {
+		this.geobatchRestUrl = geobatchRestUrl;
+	}
+
+	/**
+	 * @return the geostoreUsername
+	 */
+	public String getGeobatchUsername() {
+		return geobatchUsername;
+	}
+
+	/**
+	 * @param geobatchUsername the geostoreUsername to set
+	 */
+	public void setGeobatchUsername(String geobatchUsername) {
+		this.geobatchUsername = geobatchUsername;
+	}
+
+	/**
+	 * @return the geostorePassword
+	 */
+	public String getGeobatchPassword() {
+		return geobatchPassword;
+	}
+
+	/**
+	 * @param geobatchPassword the geostorePassword to set
+	 */
+	public void setGeobatchPassword(String geobatchPassword) {
+		this.geobatchPassword = geobatchPassword;
 	}
 
 }

@@ -20,19 +20,19 @@
  */
 package it.geosolutions.nrl.mvc;
 
-import it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient;
 import it.geosolutions.nrl.mvc.model.statistics.FileBrowser;
 import it.geosolutions.nrl.utils.ControllerUtils;
 import it.geosolutions.opensdi.model.FileUpload;
 import it.geosolutions.operations.FileOperation;
 import it.geosolutions.operations.Operation;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
@@ -45,9 +45,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FilesController implements ApplicationContextAware, Operation{
 	
-	@Autowired
-	AdministratorGeoStoreClient geoStoreClient;
-	
 	private ApplicationContext applicationContext;
 
 	private String operationName = "FileBrowser";
@@ -55,7 +52,13 @@ public class FilesController implements ApplicationContextAware, Operation{
 	private String operationRESTPath = "filebrowser";
 
 	private String operationJsp = "files";
+
+	private String baseDir;
 	
+	public FilesController() {
+		baseDir = "G:/OpenSDIManager/test_shapes/";
+	}
+
 	/**
 	 * Shows the list of files inside the selected folder
 	 * @param model
@@ -65,7 +68,7 @@ public class FilesController implements ApplicationContextAware, Operation{
 	public String fileList(ModelMap model) {
 		
 		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir("G:/OpenSDIManager/test_shapes");
+		fb.setBaseDir(baseDir);
 		fb.setRegex(null);
 		model.addAttribute("fileBrowser", fb);	
 
@@ -94,8 +97,17 @@ public class FilesController implements ApplicationContextAware, Operation{
             for (MultipartFile multipartFile : files) {
  
                 String fileName = multipartFile.getOriginalFilename();
-                fileNames.add(fileName);
-                //Handle file content - multipartFile.getInputStream()
+                if(!"".equalsIgnoreCase(fileName)){
+                    //Handle file content - multipartFile.getInputStream()
+                    try {
+						multipartFile.transferTo(new File(baseDir + fileName));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                    fileNames.add(fileName);
+                }
                 System.out.println(fileName);
  
             }
@@ -104,7 +116,7 @@ public class FilesController implements ApplicationContextAware, Operation{
         model.addAttribute("uploadedFiles", fileNames);
         
 		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir("G:/OpenSDIManager/test_shapes");
+		fb.setBaseDir(baseDir);
 		fb.setRegex(null);
 		model.addAttribute("fileBrowser", fb);	
 
@@ -120,8 +132,7 @@ public class FilesController implements ApplicationContextAware, Operation{
 	private HashMap<String, Operation> getAvailableOperations() {
         
         HashMap<String, Operation> ocontrollersHashMap = new HashMap<String, Operation>();
-        //ocontrollersHashMap.put("zip", z2pController);
-
+        
 		String[] lista = applicationContext.getBeanNamesForType(FileOperation.class);
 		for (String s : lista) {
 			FileOperation fo = (FileOperation)applicationContext.getBean(s);
@@ -132,15 +143,6 @@ public class FilesController implements ApplicationContextAware, Operation{
         
 		return ocontrollersHashMap;
 		
-	}
-
-	// GETTERS AND SETTERS
-	public AdministratorGeoStoreClient getGeoStoreClient() {
-		return geoStoreClient;
-	}
-
-	public void setGeoStoreClient(AdministratorGeoStoreClient geoStoreClient) {
-		this.geoStoreClient = geoStoreClient;
 	}
 
 	@Override

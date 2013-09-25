@@ -29,25 +29,7 @@
 										data-fileid="${file.name}" href="../operation/${entry.value.RESTPath}/${file.name}">${entry.value.name}</a>
 								</c:if>
 							</c:forEach>
-							<!-- 
-							<c:if test="${fn:endsWith(file.name, '.zip')}">
-								<a data-toggle="modal" class="btn action-1" data-target="#action-1"
-									data-fileid="${file.name}" href="../operation/zip2pg/${file.name}">Zip2pg</a>
-							</c:if>
-							 -->
-							<c:if test="${fn:endsWith(file.name, '.shp')}">
-								<a data-toggle="modal" class="btn action-2" data-target="#action-2"
-									data-fileid="${file.name}" href="javascript:void(0);">Shp2pg</a>
-							</c:if>
 						</td>
-					</tr>
-				</c:forEach>
-				<c:forEach items="${uploadedFiles}" var="file">
-					<tr>
-						<td>${file}</td>
-						<td></td>
-						<td></td>
-						<td></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -174,7 +156,7 @@
 	$(document).ready(function() {
 	    //add more file components if Add is clicked
 	    $('#addFile').click(function() {
-	        var fileIndex = $('#fileTable tr').children().length - 1;
+	        var fileIndex = $('#fileTable tr').children().length;
 	        $('#fileTable').append(
 	                '<tr><td>'+
 	                '   <input type="file" name="files['+ fileIndex +']" />'+

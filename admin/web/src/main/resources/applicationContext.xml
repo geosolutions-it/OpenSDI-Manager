@@ -62,4 +62,13 @@
 			<property name="password" value="${geostore.password}"></property>
 		</bean> 
 		
+		
+		<!-- Zip2pg config 
+		<bean id="zip2pgOp" class="it.geosolutions.operations.Zip2pgOperationController">
+			<property name="basedirString" value="G:/OpenSDIManager/test_shapes/"></property>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+		</bean>
+		-->
 </beans>
