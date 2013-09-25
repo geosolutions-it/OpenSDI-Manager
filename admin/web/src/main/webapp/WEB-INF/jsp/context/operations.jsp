@@ -10,7 +10,7 @@
 				<th>Name</th>
 				<th>REST Path</th>
 				<th>Type</th>
-				<th>Actions</th>
+				<th>File Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,7 +23,8 @@
 						<td>${op[2]}</td>
 						<td>
 							<c:if test="${op[3]}">
-								si
+								<a data-toggle="modal" class="btn ${fn:toLowerCase(op[0])}" data-target="#${fn:toLowerCase(op[0])}"
+									href="../operation/${op[1]}/">${op[0]}</a>
 							</c:if>
 							
 							<c:if test="${not op[3]}">

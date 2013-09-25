@@ -1,11 +1,35 @@
+/*
+ *  OpenSDI Manager
+ *  Copyright (C) 2013 GeoSolutions S.A.S.
+ *  http://www.geo-solutions.it
+ *
+ *  GPLv3 + Classpath exception
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.geosolutions.nrl.mvc;
 
 import it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient;
 import it.geosolutions.nrl.mvc.model.statistics.FileBrowser;
 import it.geosolutions.nrl.utils.ControllerUtils;
+import it.geosolutions.opensdi.model.FileUpload;
 import it.geosolutions.operations.FileOperation;
 import it.geosolutions.operations.Operation;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +37,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class FilesController implements ApplicationContextAware, Operation{
@@ -30,9 +56,53 @@ public class FilesController implements ApplicationContextAware, Operation{
 
 	private String operationJsp = "files";
 	
+	/**
+	 * Shows the list of files inside the selected folder
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/files", method = RequestMethod.GET)
 	public String fileList(ModelMap model) {
 		
+		FileBrowser fb = new FileBrowser();
+		fb.setBaseDir("G:/OpenSDIManager/test_shapes");
+		fb.setRegex(null);
+		model.addAttribute("fileBrowser", fb);	
+
+		model.addAttribute("operations", getAvailableOperations()); 
+		
+		model.addAttribute("context", operationJsp);
+		ControllerUtils.setCommonModel(model);
+
+		return "template";
+
+	}
+
+	/**
+	 * Shows the list of files inside the selected folder after a file upload
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/files", method = RequestMethod.POST)
+	public String saveFileAndList(@ModelAttribute("uploadFile") FileUpload uploadFile, ModelMap model) {
+		
+        List<MultipartFile> files = uploadFile.getFiles();
+        
+        List<String> fileNames = new ArrayList<String>();
+         
+        if(null != files && files.size() > 0) {
+            for (MultipartFile multipartFile : files) {
+ 
+                String fileName = multipartFile.getOriginalFilename();
+                fileNames.add(fileName);
+                //Handle file content - multipartFile.getInputStream()
+                System.out.println(fileName);
+ 
+            }
+        }
+         
+        model.addAttribute("uploadedFiles", fileNames);
+        
 		FileBrowser fb = new FileBrowser();
 		fb.setBaseDir("G:/OpenSDIManager/test_shapes");
 		fb.setRegex(null);

@@ -8,7 +8,10 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="it.geosolutions.nrl.mvc" />
 	<context:component-scan base-package="it.geosolutions.operations" />
-	
+
+	<bean id="multipartResolver"
+	 class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
 	 <bean id="handlerMapping"
       class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
     </bean>
