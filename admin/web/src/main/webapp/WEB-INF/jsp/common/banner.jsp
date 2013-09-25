@@ -1,11 +1,13 @@
 
 <div align="center"	style="background-image: url(<c:url value="/img/banner/bgimg.jpg"/>); background-repeat: repeat; width: 100%; height: 109px">
 	<img src="<c:url value="/img/banner/left-banner_en.jpg"/>" style="float: left"
-		usemap="#IM_left-banner" /> <img
+		usemap="#IM_left-banner" />
+	<img
 		src="<c:url value="/img/banner/right-banner_en.jpg"/>"
 		style="float: right; position: absolute; top: 0px; right: 0px;"
 		usemap="#IM_right-banner" />
 </div>
+<!-- 
 <map name="IM_left-banner">
 	<area shape="rect" coords="19,19,393,44"
 		href="http://dwms.fao.org/~test/home_en.asp" target=?_blank?
@@ -35,3 +37,4 @@
 		href="http://www.agripunjab.gov.pk/" target="_blank"
 		alt="PUNJAB Province" title="PUNJAB Province" />
 </map>
+ -->
