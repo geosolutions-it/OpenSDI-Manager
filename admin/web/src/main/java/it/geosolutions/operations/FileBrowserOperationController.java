@@ -18,13 +18,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.nrl.mvc;
+package it.geosolutions.operations;
 
 import it.geosolutions.nrl.mvc.model.statistics.FileBrowser;
 import it.geosolutions.nrl.utils.ControllerUtils;
 import it.geosolutions.opensdi.model.FileUpload;
-import it.geosolutions.operations.FileOperation;
-import it.geosolutions.operations.Operation;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class FilesController implements ApplicationContextAware, Operation{
+public class FileBrowserOperationController implements ApplicationContextAware, Operation{
 	
 	private ApplicationContext applicationContext;
 
@@ -51,11 +49,13 @@ public class FilesController implements ApplicationContextAware, Operation{
 
 	private String operationRESTPath = "filebrowser";
 
-	private String operationJsp = "files";
+	private String operationContextJSP = "files";
 
 	private String baseDir;
+
+	private String operationJSP = "template";
 	
-	public FilesController() {
+	public FileBrowserOperationController() {
 		baseDir = "G:/OpenSDIManager/test_shapes/";
 	}
 
@@ -63,9 +63,11 @@ public class FilesController implements ApplicationContextAware, Operation{
 	 * Shows the list of files inside the selected folder
 	 * @param model
 	 * @return
-	 */
+
 	@RequestMapping(value = "/files", method = RequestMethod.GET)
 	public String fileList(ModelMap model) {
+		
+		System.out.println(applicationContext);
 		
 		FileBrowser fb = new FileBrowser();
 		fb.setBaseDir(baseDir);
@@ -74,13 +76,14 @@ public class FilesController implements ApplicationContextAware, Operation{
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-		model.addAttribute("context", operationJsp);
+		model.addAttribute("context", operationContextJSP);
 		ControllerUtils.setCommonModel(model);
 
 		return "template";
 
 	}
-
+	 */
+	
 	/**
 	 * Shows the list of files inside the selected folder after a file upload
 	 * @param model
@@ -122,7 +125,7 @@ public class FilesController implements ApplicationContextAware, Operation{
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-		model.addAttribute("context", operationJsp);
+		model.addAttribute("context", operationContextJSP);
 		ControllerUtils.setCommonModel(model);
 
 		return "template";
@@ -164,6 +167,24 @@ public class FilesController implements ApplicationContextAware, Operation{
 
 	@Override
 	public String getJsp() {
-		return operationJsp ;
+		return operationContextJSP ;
+	}
+
+	@Override
+	public String getJsp(ModelMap model) {
+		
+		FileBrowser fb = new FileBrowser();
+		fb.setBaseDir(baseDir);
+		fb.setRegex(null);
+		model.addAttribute("fileBrowser", fb);	
+
+		model.addAttribute("operations", getAvailableOperations()); 
+		
+		model.addAttribute("context", operationContextJSP);
+		
+		//TODO: should I do this here or in the OperationEngine scope?
+		//ControllerUtils.setCommonModel(model);
+
+		return operationJSP ;
 	}
 }

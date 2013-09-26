@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class Zip2pgOperationController implements FileOperation {
+public class Zip2pgOperation implements FileOperation {
 	
 	/**
 	 * The name of this Operation
@@ -80,7 +80,7 @@ public class Zip2pgOperationController implements FileOperation {
 	public void setBasedirString(String basedirString) {
 		this.basedirString = basedirString;
 	}
-
+/*
 	@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.GET)
 	public String zip2pg(@PathVariable(value = "fileName") String fileName, ModelMap model) {
 		
@@ -89,6 +89,7 @@ public class Zip2pgOperationController implements FileOperation {
 		return "snipplets/modal/zip2pg";
 
 	}
+*/
 	/**
 	 *  This is the actual Flow Launcher
 	 *  It connects to GeoBatch sending the parameters
@@ -207,6 +208,14 @@ public class Zip2pgOperationController implements FileOperation {
 	 */
 	public void setGeobatchPassword(String geobatchPassword) {
 		this.geobatchPassword = geobatchPassword;
+	}
+
+	@Override
+	public String getJsp(ModelMap model) {
+		
+		model.addAttribute("fileName", fileName);
+		return "snipplets/modal/zip2pg";
+
 	}
 
 }

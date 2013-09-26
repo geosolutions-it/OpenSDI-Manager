@@ -20,6 +20,8 @@
  */
 package it.geosolutions.operations;
 
+import org.springframework.ui.ModelMap;
+
 public interface Operation {
 	
 	/**
@@ -36,5 +38,10 @@ public interface Operation {
 	 * @return the Jsp name to build the GUI
 	 */
 	public String getJsp();
+
+	/**
+	 * @return the Jsp name to build the GUI end set the provided model with the right attributes
+	 */
+	public String getJsp(ModelMap model);
 
 }

@@ -7,7 +7,17 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="it.geosolutions.nrl.mvc" />
-	<context:component-scan base-package="it.geosolutions.operations" />
+	<!--  <context:component-scan base-package="it.geosolutions.operations" /> -->
+	
+	<bean id="zip2pgOp" class="it.geosolutions.operations.Zip2pgOperationController">
+			<property name="basedirString" value="G:/OpenSDIManager/test_shapes/"></property>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+	</bean>
+
+	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController"/>
+	<bean id="activeOpListOp" class="it.geosolutions.operations.ActiveOperationsListOperation"/>
 
 	<bean id="multipartResolver"
 	 class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
