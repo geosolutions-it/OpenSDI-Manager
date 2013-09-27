@@ -9,13 +9,15 @@
 	<context:component-scan base-package="it.geosolutions.nrl.mvc" />
 	<!--  <context:component-scan base-package="it.geosolutions.operations" /> -->
 	
-	<bean id="zip2pgOp" class="it.geosolutions.operations.Zip2pgOperationController">
+	<bean id="zip2pgOp" class="it.geosolutions.operations.Zip2pgOperation">
+			<property name="path" value="zip2pgOp"/>
 			<property name="basedirString" value="G:/OpenSDIManager/test_shapes/"></property>
 			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
 			<property name="geobatchUsername" value="admin"></property>
 			<property name="geobatchPassword" value="admin"></property>
 	</bean>
 
+	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
 	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController"/>
 	<bean id="activeOpListOp" class="it.geosolutions.operations.ActiveOperationsListOperation"/>
 

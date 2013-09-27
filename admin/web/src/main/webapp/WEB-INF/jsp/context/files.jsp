@@ -26,7 +26,7 @@
 								<c:set var="fileext" value=".${entry.key}" /> 
 								<c:if test="${fn:endsWith(file.name, fileext)}">
 									<a data-toggle="modal" class="btn ${fn:toLowerCase(entry.value.name)}" data-target="#${fn:toLowerCase(entry.value.name)}"
-										data-fileid="${file.name}" href="../operation/${entry.value.RESTPath}/${file.name}">${entry.value.name}</a>
+										data-fileid="${file.name}" href="../${entry.value.RESTPath}/${file.name}">${entry.value.name}</a>
 								</c:if>
 							</c:forEach>
 						</td>
@@ -137,7 +137,7 @@
 			formUtils.initModalForm('#${fn:toLowerCase(entry.value.name)}');
 			$('.${fn:toLowerCase(entry.value.name)}').on('click', function() {
 				var fileId = $(this).data('fileid');
-				formUtils.changeAction('#${fn:toLowerCase(entry.value.name)}', '../operation/${entry.value.RESTPath}/' + fileId);
+				formUtils.changeAction('#${fn:toLowerCase(entry.value.name)}', '../${entry.value.RESTPath}/' + fileId);
 			})
 		</c:forEach>
 		

@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -51,12 +53,12 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	private String operationContextJSP = "files";
 
-	private String baseDir;
+	private String defaultBaseDir;
 
 	private String operationJSP = "template";
 	
 	public FileBrowserOperationController() {
-		baseDir = "G:/OpenSDIManager/test_shapes/";
+		defaultBaseDir = "G:/OpenSDIManager/test_shapes/";
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/files", method = RequestMethod.POST)
+	//@RequestMapping(value = "/files", method = RequestMethod.POST)
 	public String saveFileAndList(@ModelAttribute("uploadFile") FileUpload uploadFile, ModelMap model) {
 		
         List<MultipartFile> files = uploadFile.getFiles();
@@ -103,7 +105,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
                 if(!"".equalsIgnoreCase(fileName)){
                     //Handle file content - multipartFile.getInputStream()
                     try {
-						multipartFile.transferTo(new File(baseDir + fileName));
+						multipartFile.transferTo(new File(defaultBaseDir + fileName));
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -119,7 +121,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
         model.addAttribute("uploadedFiles", fileNames);
         
 		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir(baseDir);
+		fb.setBaseDir(defaultBaseDir);
 		fb.setRegex(null);
 		model.addAttribute("fileBrowser", fb);	
 
@@ -136,9 +138,9 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
         
         HashMap<String, Operation> ocontrollersHashMap = new HashMap<String, Operation>();
         
-		String[] lista = applicationContext.getBeanNamesForType(FileOperation.class);
+		String[] lista = applicationContext.getBeanNamesForType(LocalOperation.class);
 		for (String s : lista) {
-			FileOperation fo = (FileOperation)applicationContext.getBean(s);
+			LocalOperation fo = (LocalOperation)applicationContext.getBean(s);
 			if(!fo.isMultiple()) {
 				 ocontrollersHashMap.put(fo.getExtensions().get(0), fo);
 			}
@@ -171,11 +173,50 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	}
 
 	@Override
-	public String getJsp(ModelMap model) {
+	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
 		
+		System.out.println("getJSP di FileBrowser");
+
+		String baseDir = defaultBaseDir;
 		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir(baseDir);
+		
+		Object gotParam = model.get("gotParam");
+		
+		//TODO: navigate subdirectories for param (request.getParameterMap()
+		
+		if(gotParam != null) {
+			System.out.println(gotParam);
+			String newDir = (String)gotParam;
+			if(newDir.equals("CSV")) {
+				baseDir = "G:/OpenSDIManager/test_geotiff/";
+			}
+		}
+
+		fb.setBaseDir(baseDir);			
 		fb.setRegex(null);
+		
+        
+        if(null != files && files.size() > 0) {
+        	List<String> fileNames = new ArrayList<String>();
+            for (MultipartFile multipartFile : files) {
+ 
+                String fileName = multipartFile.getOriginalFilename();
+                if(!"".equalsIgnoreCase(fileName)){
+                    try {
+						multipartFile.transferTo(new File(baseDir + fileName));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                    fileNames.add(fileName);
+                }
+                System.out.println(fileName);
+ 
+            }
+        }
+
+		
 		model.addAttribute("fileBrowser", fb);	
 
 		model.addAttribute("operations", getAvailableOperations()); 

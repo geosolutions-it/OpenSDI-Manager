@@ -28,15 +28,18 @@ import it.geosolutions.geostore.core.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class Zip2pgOperation implements FileOperation {
+public class Zip2pgOperation implements LocalOperation {
 	
 	/**
 	 * The name of this Operation
@@ -94,8 +97,10 @@ public class Zip2pgOperation implements FileOperation {
 	 *  This is the actual Flow Launcher
 	 *  It connects to GeoBatch sending the parameters
 	 */
-	@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.POST)
+	//@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.POST)
 	public String zip2pg(@PathVariable(value = "fileName") String fileName,@ModelAttribute("user") User user, ModelMap model) {
+
+		System.out.println("Handling by zip2pg : zip2pg original method");
 
 		String response = "Zip2pg running";
 		try {
@@ -145,7 +150,7 @@ public class Zip2pgOperation implements FileOperation {
 
 	@Override
 	public String getRESTPath() {
-		return path;
+		return getPath();
 	}
 
 	@Override
@@ -166,6 +171,13 @@ public class Zip2pgOperation implements FileOperation {
 	@Override
 	public String getJsp() {
 		return "zip2pg";
+	}
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**
@@ -211,11 +223,39 @@ public class Zip2pgOperation implements FileOperation {
 	}
 
 	@Override
-	public String getJsp(ModelMap model) {
+	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
 		
-		model.addAttribute("fileName", fileName);
+		System.out.println("getJSP di zip2pg");
+		
+		if(model.containsKey("gotParam"))
+			model.addAttribute("fileName", model.get("gotParam"));
+		else {
+			model.addAttribute("fileName", "dummy.zip");
+		}
+		//TODO: set model!
+		//model.addAttribute("fileName", fileName);
 		return "snipplets/modal/zip2pg";
 
+	}
+
+	@Override
+	public Object getBlob(Object inputParam) {
+		
+		// TODO: look for a HttpServletRequest
+		String fileName = (String)inputParam;
+        RESTRunInfo runInfo = new RESTRunInfo();
+        List<String> flist = new ArrayList<String>();
+		// TODO: more flexible
+        flist.add(basedirString+fileName);
+        runInfo.setFileList(flist);
+        
+		return runInfo;
+	}
+
+	@Override
+	public String getFlowID() {
+		// TODO: parametric!!!
+		return "ds2ds_zip2pg";
 	}
 
 }

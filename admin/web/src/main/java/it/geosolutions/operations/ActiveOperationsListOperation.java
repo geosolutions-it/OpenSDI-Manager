@@ -26,6 +26,8 @@ import it.geosolutions.operations.Operation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 /**
  * Operation that shows a list of every available Operation
  * @author Lorenzo Pini
@@ -79,7 +82,7 @@ public class ActiveOperationsListOperation implements ApplicationContextAware, O
 			obj[0] = op.getName();
 			obj[1] = op.getRESTPath();
 			obj[2] = op.getClass().getName();
-			obj[3] = (op instanceof FileOperation);
+			obj[3] = (op instanceof LocalOperation);
 
 			ocontrollersList.add(obj );
 		}
@@ -109,4 +112,14 @@ public class ActiveOperationsListOperation implements ApplicationContextAware, O
 	public String getJsp() {
 		return operationJsp ;
 	}
+
+	@Override
+	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
+		
+		System.out.println("getJSP di ActiveOperations");
+		//TODO: set model!
+		
+		return operationJsp;
+	}
+
 }
