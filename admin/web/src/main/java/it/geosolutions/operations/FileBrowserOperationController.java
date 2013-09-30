@@ -38,8 +38,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -58,7 +56,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	private String operationJSP = "template";
 	
 	public FileBrowserOperationController() {
-		defaultBaseDir = "G:/OpenSDIManager/test_shapes/";
+		setDefaultBaseDir("G:/OpenSDIManager/test_shapes/");
 	}
 
 	/**
@@ -105,7 +103,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
                 if(!"".equalsIgnoreCase(fileName)){
                     //Handle file content - multipartFile.getInputStream()
                     try {
-						multipartFile.transferTo(new File(defaultBaseDir + fileName));
+						multipartFile.transferTo(new File(getDefaultBaseDir() + fileName));
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -121,7 +119,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
         model.addAttribute("uploadedFiles", fileNames);
         
 		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir(defaultBaseDir);
+		fb.setBaseDir(getDefaultBaseDir());
 		fb.setRegex(null);
 		model.addAttribute("fileBrowser", fb);	
 
@@ -162,6 +160,22 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		return operationName ;
 	}
 
+	/**
+	 * Getter for operationName
+	 * @return
+	 */
+	public String getOperationName() {
+		return operationName ;
+	}
+
+	/**
+	 * Setter for operationName
+	 * @param newName
+	 */
+	public void setOperationName(String newName) {
+		this.operationName = newName ;
+	}
+
 	@Override
 	public String getRESTPath() {
 		return operationRESTPath ;
@@ -177,7 +191,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		
 		System.out.println("getJSP di FileBrowser");
 
-		String baseDir = defaultBaseDir;
+		String baseDir = getDefaultBaseDir();
 		FileBrowser fb = new FileBrowser();
 		
 		Object gotParam = model.get("gotParam");
@@ -186,11 +200,9 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		
 		if(gotParam != null) {
 			System.out.println(gotParam);
-			String newDir = (String)gotParam;
-			if(newDir.equals("CSV")) {
-				baseDir = "G:/OpenSDIManager/test_geotiff/";
-			}
 		}
+		
+		model.addAttribute("operationName", this.operationName);	
 
 		fb.setBaseDir(baseDir);			
 		fb.setRegex(null);
@@ -228,4 +240,24 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 		return operationJSP ;
 	}
+
+	/**
+	 * @return the defaultBaseDir
+	 */
+	public String getDefaultBaseDir() {
+		return defaultBaseDir;
+	}
+
+	/**
+	 * @param defaultBaseDir the defaultBaseDir to set
+	 */
+	public void setDefaultBaseDir(String defaultBaseDir) {
+		this.defaultBaseDir = defaultBaseDir;
+	}
+/*
+	@Override
+	public void setName(String name) {
+		this.operationName = name;
+	}
+	*/
 }

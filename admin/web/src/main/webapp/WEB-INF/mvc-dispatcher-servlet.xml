@@ -18,7 +18,15 @@
 	</bean>
 
 	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
-	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController"/>
+	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
+			<property name="operationName" value="NDVIBrowser"/>
+			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_shapes/"></property>
+	</bean>
+	<bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
+			<property name="operationName" value="CSVBrowser"/>
+			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_geotiff/"></property>
+	</bean>
+	
 	<bean id="activeOpListOp" class="it.geosolutions.operations.ActiveOperationsListOperation"/>
 
 	<bean id="multipartResolver"
