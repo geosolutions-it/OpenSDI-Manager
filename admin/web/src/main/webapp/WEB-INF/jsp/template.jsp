@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+<head>
 <title>Crop Informational Portal ${PageTitle}</title>
 <link href="<c:url value="/css/bootstrap.min.css"/>" media="all" type="text/css"
 	rel="stylesheet">

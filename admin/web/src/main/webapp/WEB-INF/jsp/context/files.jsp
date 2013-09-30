@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page trimDirectiveWhitespaces="true" %>
 <div class="container">
 	<h2>File Browser</h2>
 
@@ -14,7 +15,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			
 			<c:if test="${not empty fileBrowser.files }">
 				<c:forEach items="${fileBrowser.files}" var="file">
 					<tr>
@@ -132,15 +132,13 @@
 		formUtils.initModalForm('#create');
 		formUtils.initModalForm('#action-1');
 		formUtils.initModalForm('#delete');
-
-		<c:forEach items="${operations}" var="entry">
-			formUtils.initModalForm('#${fn:toLowerCase(entry.value.name)}');
-			$('.${fn:toLowerCase(entry.value.name)}').on('click', function() {
-				var fileId = $(this).data('fileid');
-				formUtils.changeAction('#${fn:toLowerCase(entry.value.name)}', '../${entry.value.RESTPath}/' + fileId);
-			})
-		</c:forEach>
-		
+	<c:forEach items="${operations}" var="entry">
+		formUtils.initModalForm('#${fn:toLowerCase(entry.value.name)}');
+		$('.${fn:toLowerCase(entry.value.name)}').on('click', function() {
+			var fileId = $(this).data('fileid');
+			formUtils.changeAction('#${fn:toLowerCase(entry.value.name)}', '../${entry.value.RESTPath}/' + fileId);
+		})
+	</c:forEach>
 		$('.action-1').on('click', function() {
 			var fileId = $(this).data('fileid');
 			//alert('Clicked action-1 on '+fileId);
