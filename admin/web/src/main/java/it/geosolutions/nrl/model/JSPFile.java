@@ -37,9 +37,26 @@ public class JSPFile extends File{
 		super(path);
 	}
 
+	/**
+	 * Expose length() method as Size
+	 * @return long length of file
+	 */
 	public long getSize() {
 		return this.length();
 	}
+	
+	/**
+	 * Expose isDirectory() method
+	 * @return boolean isDirectory()
+	 */
+	public boolean getIsDirectory() {
+		return this.isDirectory();
+	}
+	
+	/**
+	 * Expose lastModified() method 
+	 * @return String formatted last modified value
+	 */
 	public String getLastModified() {
 		return sdf.format(this.lastModified());
 	}

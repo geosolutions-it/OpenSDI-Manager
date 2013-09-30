@@ -20,10 +20,12 @@
 	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
 	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
 			<property name="operationName" value="NDVIBrowser"/>
+			<property name="canNavigate" value="false"></property>
 			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_shapes/"></property>
 	</bean>
 	<bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
 			<property name="operationName" value="CSVBrowser"/>
+			<property name="canNavigate" value="true"></property>
 			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_geotiff/"></property>
 	</bean>
 	

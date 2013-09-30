@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,34 +56,12 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	private String operationJSP = "template";
 	
+	private Boolean canNavigate;
+	
 	public FileBrowserOperationController() {
 		setDefaultBaseDir("G:/OpenSDIManager/test_shapes/");
 	}
 
-	/**
-	 * Shows the list of files inside the selected folder
-	 * @param model
-	 * @return
-
-	@RequestMapping(value = "/files", method = RequestMethod.GET)
-	public String fileList(ModelMap model) {
-		
-		System.out.println(applicationContext);
-		
-		FileBrowser fb = new FileBrowser();
-		fb.setBaseDir(baseDir);
-		fb.setRegex(null);
-		model.addAttribute("fileBrowser", fb);	
-
-		model.addAttribute("operations", getAvailableOperations()); 
-		
-		model.addAttribute("context", operationContextJSP);
-		ControllerUtils.setCommonModel(model);
-
-		return "template";
-
-	}
-	 */
 	
 	/**
 	 * Shows the list of files inside the selected folder after a file upload
@@ -121,6 +100,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		FileBrowser fb = new FileBrowser();
 		fb.setBaseDir(getDefaultBaseDir());
 		fb.setRegex(null);
+		fb.setScanDiretories(canNavigate);
 		model.addAttribute("fileBrowser", fb);	
 
 		model.addAttribute("operations", getAvailableOperations()); 
@@ -196,7 +176,29 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		
 		Object gotParam = model.get("gotParam");
 		
-		//TODO: navigate subdirectories for param (request.getParameterMap()
+		Map<String, String[]> parameters = request.getParameterMap();
+
+	    for(String key : parameters.keySet()) {
+	        System.out.println(key);
+	        String[] vals = parameters.get(key);
+	        for(String val : vals)
+	            System.out.println(" -> " + val);
+	        if(key.equalsIgnoreCase("d")) {
+	        	// TODO: millemila check!!!
+	        	String dirString = parameters.get(key)[0].trim();
+	        	if(dirString.startsWith("/")) {
+	        		dirString = dirString.substring(1);
+	        	}
+	        	baseDir = baseDir + dirString;
+	        	model.addAttribute("directory", dirString);
+	        	if(dirString.lastIndexOf("/")>=0) {
+		        	model.addAttribute("directoryBack", dirString.substring(0, dirString.lastIndexOf("/")));
+	        	}
+	        	else {
+	        		model.addAttribute("directoryBack", "");
+				}
+	        }
+	    }
 		
 		if(gotParam != null) {
 			System.out.println(gotParam);
@@ -206,7 +208,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 		fb.setBaseDir(baseDir);			
 		fb.setRegex(null);
-		
+		fb.setScanDiretories(canNavigate);
         
         if(null != files && files.size() > 0) {
         	List<String> fileNames = new ArrayList<String>();
@@ -254,10 +256,18 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	public void setDefaultBaseDir(String defaultBaseDir) {
 		this.defaultBaseDir = defaultBaseDir;
 	}
-/*
-	@Override
-	public void setName(String name) {
-		this.operationName = name;
+
+	/**
+	 * @return the canNavigate
+	 */
+	public Boolean getCanNavigate() {
+		return canNavigate;
 	}
-	*/
+
+	/**
+	 * @param canNavigate the canNavigate to set
+	 */
+	public void setCanNavigate(Boolean canNavigate) {
+		this.canNavigate = canNavigate;
+	}
 }

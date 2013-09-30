@@ -15,13 +15,27 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${not empty directory }">
+				<tr>
+					<td>..</td>
+					<td>Folder</td>
+					<td></td>
+					<td>
+						<a class="btn" href="?d=${directoryBack}">Up one folder</a>
+					</td>
+				</tr>				
+			</c:if>
 			<c:if test="${not empty fileBrowser.files }">
 				<c:forEach items="${fileBrowser.files}" var="file">
 					<tr>
-						<td>${file.name}</td>
-						<td>${file.size} Bytes</td>
+						<td>${file.name}${file.isDirectory?"/":""}</td>
+						<c:if test="${not file.isDirectory }"><td>${file.size} Bytes</td></c:if>
+						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
 						<td>${file.lastModified}</td>
 						<td>
+							<c:if test="${file.isDirectory}">
+								<a class="btn" href="?d=${directory}/${file.name}">Open ${file.name} folder</a>
+							</c:if>
 							<c:forEach items="${operations}" var="entry">
 								<c:set var="fileext" value=".${entry.key}" /> 
 								<c:if test="${fn:endsWith(file.name, fileext)}">
