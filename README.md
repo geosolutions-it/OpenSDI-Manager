@@ -1,7 +1,8 @@
 OpenSDI-Manager
 ===============
 
-Tool to manage other OpenSDI Suite products
+Tool to manage other OpenSDI Suite products  
+The current codebase has interfaces specialized in managing GeoBatch
 
 Developer build
 ===============
@@ -21,5 +22,5 @@ Code at will!
 Spring version used
 ===================
 
-Spring WEB MVC Framework 3.2.4 
+Spring WEB MVC Framework 3.2.4  
 Spring Security  3.1.4
