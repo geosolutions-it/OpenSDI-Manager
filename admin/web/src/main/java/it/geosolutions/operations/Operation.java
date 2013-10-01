@@ -34,6 +34,12 @@ public interface Operation {
 	 */
 	public String getName();
 	
+	/*
+	 * Setter
+	public void setName(String name);
+	 */
+	
+	
 	/**
 	 * @return the REST path where to send GET and POST requests
 	 */

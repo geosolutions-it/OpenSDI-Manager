@@ -17,6 +17,15 @@
 			<property name="geobatchPassword" value="admin"></property>
 	</bean>
 
+	<bean id="NDVIStatistics" class="it.geosolutions.operations.NDVIStatisticsOperation">
+			<property name="path" value="NDVIStats"/>
+			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"></property>
+			<property name="gbinputdirString" value="G:/OpenSDIManager/gbinputdir/"></property>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+	</bean>
+
 	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
 	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
 			<property name="operationName" value="NDVIBrowser"/>

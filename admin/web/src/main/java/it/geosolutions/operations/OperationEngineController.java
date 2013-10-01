@@ -26,8 +26,6 @@ import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.nrl.utils.ControllerUtils;
 import it.geosolutions.opensdi.model.FileUpload;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +50,12 @@ public class OperationEngineController implements ApplicationContextAware{
 	private ApplicationContext applicationContext;
 	
 	/**
-	 * Shows the list of files inside the selected folder
+	 * 
+	 * @param operationName
+	 * @param gotParam
+	 * @param request
 	 * @param model
-	 * @return
+	 * @return String template jsp to display
 	 */
 	@RequestMapping(value = "/operation/{operationName}/{gotParam:.+}", method = RequestMethod.GET)
 	public String issueGetToOperation(	@PathVariable(value = "operationName") String operationName,
@@ -85,7 +86,9 @@ public class OperationEngineController implements ApplicationContextAware{
 			// TODO: getJSP should modify Model adding it's own attributes
 			// Maybe the setCommonModel can be called from within the Operation ?
 			
-			model.addAttribute("gotParam", gotParam);
+			if(gotParam != null) {
+				model.addAttribute("gotParam", gotParam);
+			}
 			String operationJsp = op.getJsp(model, request, null);
 
 			// Geosolutions authentication
@@ -102,10 +105,39 @@ public class OperationEngineController implements ApplicationContextAware{
 	}
 
 	/**
-	 * Shows the list of files inside the selected folder after a file upload
+	 * Proxy function for issueGetToOperation with path variable
+	 * @param operationName
+	 * @param request
 	 * @param model
-	 * @return
- 	 */
+	 * @return template jsp to display
+	 */
+	@RequestMapping(value = "/operation/{operationName}", method = RequestMethod.GET)
+	public String issueGetToOperation(	@PathVariable(value = "operationName") String operationName,
+										HttpServletRequest request,
+										ModelMap model) {
+		return issueGetToOperation(operationName, null, request, model);
+	}
+	
+	
+	@RequestMapping(value = "/operation/{operationName}", method = RequestMethod.POST)
+	public String issuePostToOperation(	@PathVariable(value = "operationName") String operationName,
+										@RequestHeader HttpHeaders  gotHeaders,
+										@ModelAttribute("uploadFile") FileUpload uploadFile,
+										HttpServletRequest request,
+										ModelMap model) {
+		return issuePostToOperation(operationName, null, gotHeaders, uploadFile, request, model);
+	}
+
+	/**
+	 *  Issue a POST request to the desired Operation
+	 * @param operationName
+	 * @param gotParam
+	 * @param gotHeaders
+	 * @param uploadFile
+	 * @param request
+	 * @param model
+	 * @return template jsp to display returned message
+	 */
 	@RequestMapping(value = "/operation/{operationName}/{gotParam:.+}", method = RequestMethod.POST)
 	public String issuePostToOperation(	@PathVariable(value = "operationName") String operationName,
 										@PathVariable(value="gotParam") String gotParam,
@@ -146,10 +178,19 @@ public class OperationEngineController implements ApplicationContextAware{
 				       response = service.run(((RemoteOperation)operation).getFlowID(), true, blob);
 					}
 					else if (operation instanceof LocalOperation) {
-					   RESTRunInfo runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(gotParam);
-				       // TODO: fastFail or not?
-					   // TODO: move fastfail to interfaces
-				       response = service.runLocal(((LocalOperation)operation).getFlowID(), true, runInfo);
+						
+						// TODO: implementare i request param al posto del gotParam
+						RESTRunInfo runInfo;
+						if(gotParam != null) {
+							runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(gotParam);
+						}else {
+							Map<String, String[]> parameters = request.getParameterMap();
+							runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(parameters);
+						}
+
+					    // TODO: fastFail or not?
+						// TODO: move fastfail to interfaces
+					    response = service.runLocal(((LocalOperation)operation).getFlowID(), true, runInfo);
 					}
 					
 					
@@ -170,7 +211,7 @@ public class OperationEngineController implements ApplicationContextAware{
 			
 			List<MultipartFile> files = uploadFile.getFiles();
 	        
-	        List<String> fileNames = new ArrayList<String>();
+	        //List<String> fileNames = new ArrayList<String>();
 	         
 			Map<String, String[]> parameters = request.getParameterMap();
 	
@@ -233,7 +274,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		
 		
 	}
-
+/*
 	private HashMap<String, Operation> getAvailableOperations() {
         
         HashMap<String, Operation> ocontrollersHashMap = new HashMap<String, Operation>();
@@ -249,7 +290,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		return ocontrollersHashMap;
 		
 	}
-
+*/
 	@Override
 	public void setApplicationContext(ApplicationContext arg0)
 			throws BeansException {

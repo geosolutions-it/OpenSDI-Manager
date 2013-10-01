@@ -44,7 +44,8 @@ public class Statistics {
 		}
 		for(InputSelectorConfig config : statisticsConfigs.getConfigs()){
 			if(mask.equals(config.getId())){
-				model.addAttribute("masks",config);			
+				model.addAttribute("masks",config);	
+				return;
 			}
 		}
 		LOGGER.warn("Statistics config not found: " + mask);

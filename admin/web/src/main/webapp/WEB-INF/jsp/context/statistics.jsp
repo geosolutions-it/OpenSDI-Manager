@@ -26,7 +26,7 @@
 	})
 </script>
 <div class="container width700">
-	<form class="form-horizontal span6 ">
+	<form class="form-horizontal span6 " method="post">
 		<div class="control-group">
 			<label class="control-label">Regions</label>
 			<div class="controls">
@@ -48,7 +48,6 @@
 				</c:if>
 			</div>
 		</div>
-
 		<div class="control-group">
 			<label class="control-label">Mask</label>
 			<div class="controls">
@@ -75,18 +74,17 @@
 			<div class="controls">
 
 				<span class="input-append " data-date-format="yyyy mm">
-					<input id="granule_mounth" class="span2" size="16" type="text">
+					<input id="granule_mounth" class="span2" size="16" type="text" name="month">
 					<span class="add-on"><i class="icon-calendar"></i></span>
-				</span> <select class="input-small" name="dekad" id="dekad">
+				</span>
+				<select class="input-small" name="dekad" id="dekad">
 					<option>1</option>
 					<option>2</option>
 					<option>3</option>
-
 				</select>
 			</div>
 		</div>
-		<button class="btn pull-right" type="submit">Generate
-			Statistics</button>
+		<button class="btn pull-right" type="submit">Generate Statistics</button>
 	</form>
 </div>
 

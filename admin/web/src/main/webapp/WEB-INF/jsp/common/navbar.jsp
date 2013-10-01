@@ -30,7 +30,7 @@
            <li class="dropdown">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics<b class="caret"></b></a>
              <ul class="dropdown-menu">
-               <li><a href="<c:url value="/statistics/regions/masks/ndvi"/>">NDVI</a></li>
+               <li><a href="<c:url value="/operation/NDVIStatistics"/>">NDVI</a></li>
 <!--                <li><a href="#">Publish</a></li> -->
   
              </ul>
