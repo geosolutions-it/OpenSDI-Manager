@@ -20,11 +20,7 @@
  */
 package it.geosolutions.operations;
 
-import it.geosolutions.geobatch.services.rest.GeoBatchRESTClient;
-import it.geosolutions.geobatch.services.rest.RESTFlowService;
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
-import it.geosolutions.geostore.core.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -97,6 +89,7 @@ public class Zip2pgOperation implements LocalOperation {
 	 *  This is the actual Flow Launcher
 	 *  It connects to GeoBatch sending the parameters
 	 */
+	/*
 	//@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.POST)
 	public String zip2pg(@PathVariable(value = "fileName") String fileName,@ModelAttribute("user") User user, ModelMap model) {
 
@@ -133,7 +126,7 @@ public class Zip2pgOperation implements LocalOperation {
 		return "common/messages";
 
 	}
-
+*/
 	/**
 	 * @return the name
 	 */

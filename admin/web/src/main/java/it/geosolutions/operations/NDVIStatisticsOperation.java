@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class NDVIStatisticsOperation implements Operation { //implements LocalOperation {
+public class NDVIStatisticsOperation implements LocalOperation {
 	
 	/**
 	 * The name of this Operation
@@ -86,16 +86,34 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 		
 		System.out.println("getJSP di NDVIStatistics");
 		
-		// TODO: handling fake requests, remove when geobatch has the flow
-		if(request.getMethod().equalsIgnoreCase("POST")) {
+		// TODO: How make this config? parametric xml or request parameters?
+		setRegions("regions",model);
+		setMask("masks",model);
+		//setGranule(granule,model);
+		
+		model.addAttribute("context", "statistics");
+		return "template";
+		
+	}
+
+	@Override
+	public Object getBlob(Object inputParam) {
+
+		@SuppressWarnings("unchecked")
+		Map<String, String[]> parameters = (Map<String, String[]>) inputParam;
+		RESTRunInfo runInfo = null;
+
+		{
 			
-			model.addAttribute("messageType", "POSTED");
-			Map<String, String[]> parameters = request.getParameterMap();
+			//model.addAttribute("messageType", "POSTED");
+			
+			//@SuppressWarnings("unchecked")
+			//Map<String, String[]> parameters = request.getParameterMap();
 	        
 			// create statsBean to create XML
 			StatsBean sb = new StatsBean();
 	        
-	        String message = "Received: ";
+	        //String message = "Received: ";
 	        
 	        String granule_month = "";
 	        String granule_dekad = "";
@@ -104,8 +122,8 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 				
 				String[] vals = parameters.get(key);
 		        
-				for(String val : vals)
-		            message = message.concat(key + " -> "+val+ " \n ");
+				//for(String val : vals)
+		        //    message = message.concat(key + " -> "+val+ " \n ");
 		        
 		        if(key.equalsIgnoreCase("region")) {
 		        	if(vals[0].equalsIgnoreCase("default:Province")) {
@@ -146,32 +164,19 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 	        	
 				File outputFile = File.createTempFile("input_", ".xml", new File(getGbinputdirString()));
 				JAXB.marshal(sb, outputFile);
+				runInfo = new RESTRunInfo();
+				List<String> fList = new ArrayList<String>();
+				fList.add(outputFile.getAbsolutePath());
+				runInfo.setFileList(fList);
 				
 	        } catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			model.addAttribute("notLocalizedMessage", message);
-			return "common/messages";
+			//model.addAttribute("notLocalizedMessage", message);
+			//return "common/messages";
 		}
-		
-		// TODO: How make this config? parametric xml or request parameters?
-		setRegions("regions",model);
-		setMask("masks",model);
-		//setGranule(granule,model);
-		
-		model.addAttribute("context", "statistics");
-		return "template";
-		
-	}
 
-	//@Override
-	public Object getBlob(Object inputParam) {
-		
-		// TODO: currently unused
-		//Map<String, String[]> parameters = (Map<String, String[]>) inputParam;
-
-		RESTRunInfo runInfo = new RESTRunInfo();
 		// TODO: create the input xml from a template
 		//parameters.get("param1")
 		//parameters.get("param2")
@@ -272,7 +277,7 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 		return getPath();
 	}
 
-	//@Override
+	@Override
 	public List<String> getExtensions() {
 		List<String> l = new ArrayList<String>();
 		for (String s : extensions) {
@@ -281,7 +286,7 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 		return l;
 	}
 
-	//@Override
+	@Override
 	public boolean isMultiple() {
 		return false;
 	}
@@ -341,7 +346,7 @@ public class NDVIStatisticsOperation implements Operation { //implements LocalOp
 		this.geobatchPassword = geobatchPassword;
 	}
 
-	//@Override
+	@Override
 	public String getFlowID() {
 		// TODO: parametric!!!
 		return "NDVIStats";

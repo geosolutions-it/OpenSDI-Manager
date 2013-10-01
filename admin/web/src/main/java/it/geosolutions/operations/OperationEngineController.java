@@ -67,6 +67,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		
 		System.out.println(operationName);
 
+		@SuppressWarnings("unchecked")
 		Map<String, String[]> parameters = request.getParameterMap();
 
 	    for(String key : parameters.keySet()) {
@@ -184,6 +185,8 @@ public class OperationEngineController implements ApplicationContextAware{
 						if(gotParam != null) {
 							runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(gotParam);
 						}else {
+						
+							@SuppressWarnings("unchecked")
 							Map<String, String[]> parameters = request.getParameterMap();
 							runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(parameters);
 						}
@@ -197,7 +200,7 @@ public class OperationEngineController implements ApplicationContextAware{
 				} catch (Exception e) {
 					e.printStackTrace();
 					model.addAttribute("messageType", "error");
-					model.addAttribute("notLocalizedMessage", "Couldn't run Zip2pg");
+					model.addAttribute("notLocalizedMessage", "Couldn't run "+operation.getName());
 					return "common/messages";
 
 				}
@@ -213,6 +216,7 @@ public class OperationEngineController implements ApplicationContextAware{
 	        
 	        //List<String> fileNames = new ArrayList<String>();
 	         
+			@SuppressWarnings("unchecked")
 			Map<String, String[]> parameters = request.getParameterMap();
 	
 		    for(String key : parameters.keySet()) {
