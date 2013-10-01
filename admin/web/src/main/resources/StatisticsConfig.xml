@@ -2,7 +2,7 @@
 	<config>
 		<id>regions</id>
 		<fileBrowser>
-			<baseDir>.</baseDir>
+			<baseDir>G:/OpenSDIManager/test_shapes/</baseDir>
 			<regex><![CDATA[.*\.shp]]></regex>
 		</fileBrowser>
 		<element>
@@ -19,7 +19,7 @@
 	<config>
 		<id>masks</id>
 		<fileBrowser>
-			<baseDir>.</baseDir>
+			<baseDir>G:/OpenSDIManager/test_shapes/</baseDir>
 			<regex><![CDATA[.*\.shp]]></regex>
 			
 		</fileBrowser>

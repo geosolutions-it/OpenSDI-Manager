@@ -180,7 +180,7 @@ public class OperationEngineController implements ApplicationContextAware{
 					}
 					else if (operation instanceof LocalOperation) {
 						
-						// TODO: implementare i request param al posto del gotParam
+						// TODO: implement request parameters instead of gotParam
 						RESTRunInfo runInfo;
 						if(gotParam != null) {
 							runInfo = (RESTRunInfo) ((LocalOperation)operation).getBlob(gotParam);
@@ -213,9 +213,7 @@ public class OperationEngineController implements ApplicationContextAware{
 			}
 			
 			List<MultipartFile> files = uploadFile.getFiles();
-	        
-	        //List<String> fileNames = new ArrayList<String>();
-	         
+	                
 			@SuppressWarnings("unchecked")
 			Map<String, String[]> parameters = request.getParameterMap();
 	

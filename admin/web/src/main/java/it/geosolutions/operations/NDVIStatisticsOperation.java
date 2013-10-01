@@ -166,6 +166,7 @@ public class NDVIStatisticsOperation implements LocalOperation {
 				JAXB.marshal(sb, outputFile);
 				runInfo = new RESTRunInfo();
 				List<String> fList = new ArrayList<String>();
+				// TODO: absolute or relative?
 				fList.add(outputFile.getAbsolutePath());
 				runInfo.setFileList(fList);
 				

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Crop Informational Portal ${PageTitle}</title>
+<title>OpenSDI Manager ${PageTitle}</title>
 <link href="<c:url value="/css/bootstrap.min.css"/>" media="all" type="text/css"
 	rel="stylesheet">
 <link href="<c:url value="/css/nrl.css"/>" media="all" type="text/css"
