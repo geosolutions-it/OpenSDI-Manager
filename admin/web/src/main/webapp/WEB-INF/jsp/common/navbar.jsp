@@ -43,6 +43,8 @@
            <li class="${context=='files'?(operationName=='CSVBrowser'?'active':''):'' }"><a href="<c:url value="/operation/fileBrowserOpCSV/CSV"/>">File Browser CSV</a></li>
            
            <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/oplist/"/>">Operations List</a></li>
+
+           <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/flowstatus/"/>">Check Flow Status</a></li>
          </ul>
    
          <ul class="nav pull-right">

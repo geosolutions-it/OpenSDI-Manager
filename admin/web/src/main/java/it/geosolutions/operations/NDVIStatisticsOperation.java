@@ -24,11 +24,8 @@ import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.nrl.dto.StatsBean;
 import it.geosolutions.nrl.mvc.model.statistics.InputSelectorConfig;
 import it.geosolutions.nrl.mvc.model.statistics.StatisticsConfigList;
-import it.geosolutions.nrl.utils.ControllerUtils;
-
 import java.io.File;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -91,6 +87,9 @@ public class NDVIStatisticsOperation implements LocalOperation {
 		setMask("masks",model);
 		//setGranule(granule,model);
 		
+		//TODO: getJSP should not return the "template" but the context
+		//      the Engine should use the returned value to fill "context"
+		//      and display "template" or whatever it wants
 		model.addAttribute("context", "statistics");
 		return "template";
 		
@@ -187,16 +186,6 @@ public class NDVIStatisticsOperation implements LocalOperation {
         return runInfo; 
 	}
 
-	public String printWelcome(@PathVariable(value = "regions") String regions,@PathVariable(value = "mask") String mask,@PathVariable(value = "granule") String granule, ModelMap model, Principal principal ) {
-		
-		setRegions(regions,model);
-		setMask(mask,model);
-		setGranule(granule,model);
-		ControllerUtils.setCommonModel(model);
-		model.addAttribute("context", "statistics");
-		return "template";
- 
-	}
 
 	private void setMask(String mask, ModelMap model) {
 		if (statisticsConfigs.getConfigs()== null ){
@@ -227,6 +216,7 @@ public class NDVIStatisticsOperation implements LocalOperation {
 
 		
 	}
+	
 	private void setGranule(String granule, ModelMap model) {
 		if (statisticsConfigs.getConfigs()== null ){
 			LOGGER.error("couldn't find statistics configs");

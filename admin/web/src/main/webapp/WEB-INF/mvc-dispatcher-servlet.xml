@@ -17,6 +17,13 @@
 			<property name="geobatchPassword" value="admin"></property>
 	</bean>
 
+	<bean id="flowstatus" class="it.geosolutions.operations.FlowStatusOperation">
+			<property name="path" value="flowstatus"/>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+	</bean>
+
 	<bean id="NDVIStatistics" class="it.geosolutions.operations.NDVIStatisticsOperation">
 			<property name="path" value="NDVIStats"/>
 			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"></property>
