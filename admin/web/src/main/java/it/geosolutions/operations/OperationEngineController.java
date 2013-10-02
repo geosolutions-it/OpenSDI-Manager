@@ -99,7 +99,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		
 		}else {
 			model.addAttribute("messageType", "error");
-			model.addAttribute("notLocalizedMessage", "Operation not found");
+			model.addAttribute("operationMessage", "Operation not found");
 			return "common/messages";
 		}
 
@@ -200,13 +200,13 @@ public class OperationEngineController implements ApplicationContextAware{
 				} catch (Exception e) {
 					e.printStackTrace();
 					model.addAttribute("messageType", "error");
-					model.addAttribute("notLocalizedMessage", "Couldn't run "+operation.getName());
+					model.addAttribute("operationMessage", "Couldn't run "+operation.getName());
 					return "common/messages";
 
 				}
 				
 				model.addAttribute("messageType", "success");
-				model.addAttribute("notLocalizedMessage", response);
+				model.addAttribute("operationMessage", response);
 
 				return "common/messages";
 
@@ -268,7 +268,7 @@ public class OperationEngineController implements ApplicationContextAware{
 	
 		}else {
 			model.addAttribute("messageType", "error");
-			model.addAttribute("notLocalizedMessage", "Operation not found");
+			model.addAttribute("operationMessage", "Operation not found");
 			return "common/messages";
 		}
 
