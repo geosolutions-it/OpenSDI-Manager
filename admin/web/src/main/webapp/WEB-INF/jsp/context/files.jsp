@@ -17,7 +17,7 @@
 		<tbody>
 			<c:if test="${not empty directory }">
 				<tr>
-					<td>..</td>
+					<td><a href="?d=${directoryBack}">.. /</a></td>
 					<td>Folder</td>
 					<td></td>
 					<td>
@@ -28,7 +28,12 @@
 			<c:if test="${not empty fileBrowser.files }">
 				<c:forEach items="${fileBrowser.files}" var="file">
 					<tr>
-						<td>${file.name}${file.isDirectory?"/":""}</td>
+						<c:if test="${not file.isDirectory}">
+						<td>${file.name}</td>
+						</c:if>
+						<c:if test="${file.isDirectory}">
+						<td><a href="?d=${directory}/${file.name}">${file.name}/</a></td>
+						</c:if>
 						<c:if test="${not file.isDirectory }"><td>${file.size} Bytes</td></c:if>
 						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
 						<td>${file.lastModified}</td>
@@ -60,17 +65,16 @@
 	<form:form method="post" modelAttribute="uploadFile" enctype="multipart/form-data">
 	 
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
-	 
-	    <input id="addFile" type="button" value="Add File" />
 	    <table id="fileTable">
-	        <tr>
-	            <td><input name="files[0]" type="file" /></td>
-	        </tr>
-	        <tr>
-	            <td><input name="files[1]" type="file" /></td>
+	    	<tr>
+	            <td>
+					<input  name="files[0]" type="file" />
+				</td>
 	        </tr>
 	    </table>
-	    <br/><input type="submit" value="Upload" />
+	    <br/>
+	    <input id="addFile" type="button" value="Add File" class="btn" />
+		<input type="submit" value="Upload" class="btn btn-primary "/>
 	</form:form>
 </div>
 <div id="create" class="modal hide fade" tabindex="-1" role="dialog"
@@ -165,14 +169,25 @@
 		})
 
 	});
+
+	function remrow(id){
+		$('#row_'+ id).remove();
+		if(id>1){
+			$('#rembtn_'+ (id-1)).show();
+		}
+	}
+	
 	$(document).ready(function() {
+	    $(":file").filestyle();
 	    //add more file components if Add is clicked
 	    $('#addFile').click(function() {
 	        var fileIndex = $('#fileTable tr').children().length;
+	        $(".remrow").hide();
 	        $('#fileTable').append(
-	                '<tr><td>'+
-	                '   <input type="file" name="files['+ fileIndex +']" />'+
+	                '<tr id="row_'+ fileIndex +'"><td>'+
+	                '   <input type="file" name="files['+ fileIndex +']" /> <input id="rembtn_'+ fileIndex +'" type="button" value="Remove" class="remrow btn btn-danger" name="clear'+ fileIndex +'" onClick="remrow('+ fileIndex +')"/>'+
 	                '</td></tr>');
+		    $(":file").filestyle();
 	    });
 	     
 	});
