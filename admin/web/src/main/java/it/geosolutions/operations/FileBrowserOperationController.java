@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,16 +51,17 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	private String operationRESTPath = "filebrowser";
 
-	private String operationContextJSP = "files";
+	private String operationJSP = "files";
 
 	private String defaultBaseDir;
-
-	private String operationJSP = "template";
 	
 	private Boolean canNavigate;
 	
+	private UUID uniqueKey;
+		
 	public FileBrowserOperationController() {
 		setDefaultBaseDir("G:/OpenSDIManager/test_shapes/");
+		uniqueKey = UUID.randomUUID();   
 	}
 
 	
@@ -105,7 +107,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-		model.addAttribute("context", operationContextJSP);
+		model.addAttribute("context", operationJSP);
 		ControllerUtils.setCommonModel(model);
 
 		return "template";
@@ -163,7 +165,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	@Override
 	public String getJsp() {
-		return operationContextJSP ;
+		return operationJSP ;
 	}
 
 	@Override
@@ -176,6 +178,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		
 		Object gotParam = model.get("gotParam");
 		
+		@SuppressWarnings("unchecked")
 		Map<String, String[]> parameters = request.getParameterMap();
 
 	    for(String key : parameters.keySet()) {
@@ -235,7 +238,10 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-		model.addAttribute("context", operationContextJSP);
+//		model.addAttribute("context", operationContextJSP);
+
+		model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
+		model.addAttribute("formId", uniqueKey.toString().substring(27, 36));
 		
 		//TODO: should I do this here or in the OperationEngine scope?
 		//ControllerUtils.setCommonModel(model);

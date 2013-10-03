@@ -50,6 +50,43 @@ public class OperationEngineController implements ApplicationContextAware{
 	private ApplicationContext applicationContext;
 	
 	/**
+	 * Encapsulate operation Jsp into the template
+	 * @param operationName
+	 * @param gotParam
+	 * @param request
+	 * @param model
+	 * @return String template jsp to display
+	 */
+	@RequestMapping(value = "/operationManager/{operationName}/{gotParam:.+}", method = RequestMethod.GET)
+	public String issueGetToTemplate(	@PathVariable(value = "operationName") String operationName,
+										@PathVariable(value = "gotParam") String gotParam,
+										HttpServletRequest request,
+										ModelMap model) {
+		
+		String opJsp = issueGetToOperation(operationName, gotParam, request, model);
+		model.addAttribute("context", opJsp);
+		
+		return "template";
+	}
+
+	
+	/**
+	 * Proxy operationManager requests without params
+	 * @param operationName
+	 * @param gotParam
+	 * @param request
+	 * @param model
+	 * @return String template jsp to display
+	 */
+	@RequestMapping(value = "/operationManager/{operationName}", method = RequestMethod.GET)
+	public String issueGetToTemplate(	@PathVariable(value = "operationName") String operationName,
+										HttpServletRequest request,
+										ModelMap model) {
+		return issueGetToTemplate(operationName, null, request, model);
+	}
+
+	
+	/**
 	 * 
 	 * @param operationName
 	 * @param gotParam
@@ -63,39 +100,26 @@ public class OperationEngineController implements ApplicationContextAware{
 										HttpServletRequest request,
 										ModelMap model) {
 		
-		System.out.println("Handling by issueGetToOperation : OperationEngine GET");
-		
+		System.out.println("Handling by issueGetToOperation : OperationEngine GET");		
 		System.out.println(operationName);
-
-		@SuppressWarnings("unchecked")
-		Map<String, String[]> parameters = request.getParameterMap();
-
-	    for(String key : parameters.keySet()) {
-	        System.out.println(key);
-	        String[] vals = parameters.get(key);
-	        for(String val : vals)
-	            System.out.println(" -> " + val);
-	    }
 	    
 		// TODO: check gotParam for security
 		
 		if(applicationContext.containsBean(operationName) && applicationContext.isTypeMatch(operationName, Operation.class)) {
-			
 		
 			Operation op = (Operation)applicationContext.getBean(operationName);
-
-			// TODO: getJSP should modify Model adding it's own attributes
-			// Maybe the setCommonModel can be called from within the Operation ?
 			
 			if(gotParam != null) {
 				model.addAttribute("gotParam", gotParam);
 			}
 			String operationJsp = op.getJsp(model, request, null);
 
+			//model.addAttribute("context", operationJsp);
 			// Geosolutions authentication
 			ControllerUtils.setCommonModel(model);
-	
-			return operationJsp;
+
+			// TODO: make this folder parametric
+			return "context/"+operationJsp;
 		
 		}else {
 			model.addAttribute("messageType", "error");
@@ -168,9 +192,7 @@ public class OperationEngineController implements ApplicationContextAware{
 			        // TODO: check ping to GeoBatch (see test)
 			        
 			        RESTFlowService service = client.getFlowService();
-
-				
-				
+			
 					if(operation instanceof RemoteOperation) {
 						// TODO: better implementation
 					   byte[] blob = (byte[]) ((RemoteOperation)operation).getBlob(uploadFile.getFiles().get(0));
@@ -194,8 +216,13 @@ public class OperationEngineController implements ApplicationContextAware{
 					    // TODO: fastFail or not?
 						// TODO: move fastfail to interfaces
 					    response = service.runLocal(((LocalOperation)operation).getFlowID(), true, runInfo);
-					}
 					
+					}
+					/*
+					else {
+						response = 
+					}
+					*/
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -261,10 +288,11 @@ public class OperationEngineController implements ApplicationContextAware{
 			model.addAttribute("gotParam", gotParam);
 			String operationJsp = operation.getJsp(model, request, files);
 	
+			model.addAttribute("context", "context/"+operationJsp);
 			// Geosolutions authentication
 			ControllerUtils.setCommonModel(model);
 	
-			return operationJsp;
+			return "template";
 	
 		}else {
 			model.addAttribute("messageType", "error");

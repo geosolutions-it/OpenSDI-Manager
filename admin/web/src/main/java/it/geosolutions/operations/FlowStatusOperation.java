@@ -176,7 +176,7 @@ public class FlowStatusOperation implements GeoBatchOperation {
 			model.addAttribute("consumer_id", "");
 		}
 
-		return "snipplets/modal/flowstatus";
+		return "flowstatus";
 
 	}
 

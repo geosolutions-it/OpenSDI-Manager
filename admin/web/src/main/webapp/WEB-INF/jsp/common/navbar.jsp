@@ -38,13 +38,13 @@
             
            <li class="${context=='users'?'active':'' }"><a href="<c:url value="/users/"/>">Users</a></li>
            
-           <li class="${context=='files'?(operationName=='NDVIBrowser'?'active':''):'' }"><a href="<c:url value="/operation/fileBrowserOp/NDVI"/>">File Browser NDVI</a></li>
+           <li class="${context=='files'?(operationName=='NDVIBrowser'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserOp/NDVI"/>">File Browser NDVI</a></li>
 
-           <li class="${context=='files'?(operationName=='CSVBrowser'?'active':''):'' }"><a href="<c:url value="/operation/fileBrowserOpCSV/CSV"/>">File Browser CSV</a></li>
+           <li class="${context=='files'?(operationName=='CSVBrowser'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserOpCSV/CSV"/>">File Browser CSV</a></li>
            
            <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/oplist/"/>">Operations List</a></li>
 
-           <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/flowstatus/"/>">Check Flow Status</a></li>
+           <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/operationManager/flowstatus/"/>">Check Flow Status</a></li>
          </ul>
    
          <ul class="nav pull-right">

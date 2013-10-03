@@ -62,10 +62,10 @@ public class ActiveOperationsListOperation implements ApplicationContextAware, O
 		
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-		model.addAttribute("context", operationJsp);
+		//model.addAttribute("context", operationJsp);
 		ControllerUtils.setCommonModel(model);
 
-		return "template";
+		return operationJsp;
 
 	}
 

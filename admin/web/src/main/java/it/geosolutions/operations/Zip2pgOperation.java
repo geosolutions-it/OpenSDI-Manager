@@ -227,7 +227,7 @@ public class Zip2pgOperation implements LocalOperation {
 		}
 		//TODO: set model!
 		//model.addAttribute("fileName", fileName);
-		return "snipplets/modal/zip2pg";
+		return "zip2pg";
 
 	}
 

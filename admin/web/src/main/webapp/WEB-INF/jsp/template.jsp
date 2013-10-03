@@ -12,6 +12,7 @@
 <script src="<c:url value="/js/jquery-validate.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/js/form.js"/>"></script>
+<script src="<c:url value="/js/jquery.form.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/bootstrap-filestyle.min.js"/>"></script>
 
 </head>
@@ -21,7 +22,7 @@
 		<div class="container-flow">
 		
 		<%@ include file="common/navbar.jsp"%>
-		<jsp:include page="context/${context}.jsp" />
+		<jsp:include page="${context}.jsp" />
 	
 		</div>
 		<%@ include file="common/footer.jsp"%>
