@@ -117,7 +117,7 @@ public class ActiveOperationsListOperation implements ApplicationContextAware, O
 	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
 		
 		System.out.println("getJSP di ActiveOperations");
-		//TODO: set model!
+		model.addAttribute("operations", getAvailableOperations()); 
 		
 		return operationJsp;
 	}

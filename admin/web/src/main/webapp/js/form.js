@@ -67,3 +67,19 @@ $(function() {
 	});
 
 });
+
+function postData(targetId){
+	var options = {
+			
+			target: '#'+targetId
+			/*
+			success: function(html) {
+				//  the next server response could not have the same id
+				$("#${containerId}").replaceWith($('#${containerId}', $(html)));
+				//$("#${containerId}").html(html);
+			}*/
+		};
+
+		$(this).ajaxSubmit(options);
+		return false;   
+}

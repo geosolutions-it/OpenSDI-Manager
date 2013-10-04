@@ -86,12 +86,8 @@ public class NDVIStatisticsOperation implements LocalOperation {
 		setRegions("regions",model);
 		setMask("masks",model);
 		//setGranule(granule,model);
-		
-		//TODO: getJSP should not return the "template" but the context
-		//      the Engine should use the returned value to fill "context"
-		//      and display "template" or whatever it wants
-		model.addAttribute("context", "statistics");
-		return "template";
+
+		return "statistics";
 		
 	}
 

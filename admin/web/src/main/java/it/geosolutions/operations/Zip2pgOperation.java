@@ -75,58 +75,7 @@ public class Zip2pgOperation implements LocalOperation {
 	public void setBasedirString(String basedirString) {
 		this.basedirString = basedirString;
 	}
-/*
-	@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.GET)
-	public String zip2pg(@PathVariable(value = "fileName") String fileName, ModelMap model) {
-		
-		model.addAttribute("fileName", fileName);
-		
-		return "snipplets/modal/zip2pg";
 
-	}
-*/
-	/**
-	 *  This is the actual Flow Launcher
-	 *  It connects to GeoBatch sending the parameters
-	 */
-	/*
-	//@RequestMapping(value = "/operation/zip2pg/{fileName:.+}", method = RequestMethod.POST)
-	public String zip2pg(@PathVariable(value = "fileName") String fileName,@ModelAttribute("user") User user, ModelMap model) {
-
-		System.out.println("Handling by zip2pg : zip2pg original method");
-
-		String response = "Zip2pg running";
-		try {
-	        GeoBatchRESTClient client = new GeoBatchRESTClient();
-	        client.setGeostoreRestUrl(getGeobatchRestUrl());
-	        client.setUsername(getGeobatchUsername());
-	        client.setPassword(getGeobatchPassword());
-	        
-	        // TODO: check ping to GeoBatch (see test)
-	        
-	        RESTFlowService service = client.getFlowService();
-	        RESTRunInfo runInfo = new RESTRunInfo();
-	        List<String> flist = new ArrayList<String>();
-			flist.add(basedirString+fileName);
-	        runInfo.setFileList(flist);
-	        
-	        // TODO: fastFail or not?
-	        response = service.runLocal("ds2ds_zip2pg", true, runInfo);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("messageType", "error");
-			model.addAttribute("notLocalizedMessage", "Couldn't run Zip2pg");
-			return "common/messages";
-
-		}
-		model.addAttribute("messageType", "success");
-		model.addAttribute("notLocalizedMessage", response);
-
-		return "common/messages";
-
-	}
-*/
 	/**
 	 * @return the name
 	 */
@@ -223,10 +172,9 @@ public class Zip2pgOperation implements LocalOperation {
 		if(model.containsKey("gotParam"))
 			model.addAttribute("fileName", model.get("gotParam"));
 		else {
-			model.addAttribute("fileName", "dummy.zip");
+			model.addAttribute("fileName", "Insert File Name");
 		}
-		//TODO: set model!
-		//model.addAttribute("fileName", fileName);
+		
 		return "zip2pg";
 
 	}

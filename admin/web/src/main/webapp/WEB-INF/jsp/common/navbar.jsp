@@ -30,7 +30,7 @@
            <li class="dropdown">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics<b class="caret"></b></a>
              <ul class="dropdown-menu">
-               <li><a href="<c:url value="/operation/NDVIStatistics"/>">NDVI</a></li>
+               <li><a href="<c:url value="/operationManager/NDVIStatistics"/>">NDVI</a></li>
 <!--                <li><a href="#">Publish</a></li> -->
   
              </ul>
@@ -42,7 +42,7 @@
 
            <li class="${context=='files'?(operationName=='CSVBrowser'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserOpCSV/CSV"/>">File Browser CSV</a></li>
            
-           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/oplist/"/>">Operations List</a></li>
+           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/activeOpListOp/"/>">Operations List</a></li>
 
            <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/operationManager/flowstatus/"/>">Check Flow Status</a></li>
          </ul>

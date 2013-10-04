@@ -1,8 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div class="container">
-
-
-	<form:form method="post" class="form-horizontal">
+<div class="container" id="flowContainerId">
+	<form:form method="post" class="form-horizontal" id="flowFormId" action="../../operation/flowstatus/">
 		<div class="modal-body">
 			<div class="control-group">
 				 <label class="control-label" for="flowinput">Consumer ID</label>
@@ -15,8 +13,18 @@
 			<button id="submitFlowId" class="btn btn-primary">Get Status</button>
 		</div>
 	</form:form>
-
 </div>
 
+<script	type="text/javascript">
+$("#flowFormId").submit(function() {
+	var options = {
+		success: function(html) {
+			$("#flowContainerId").html(html);
+		}
+	};
+	$(this).ajaxSubmit(options);
+	return false;
+});
+</script>
 
  

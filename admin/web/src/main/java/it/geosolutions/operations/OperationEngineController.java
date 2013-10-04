@@ -181,7 +181,6 @@ public class OperationEngineController implements ApplicationContextAware{
 
 			if(operation instanceof GeoBatchOperation) {
 
-				
 				String response = "Operation running";  // Default text
 				try {
 			        GeoBatchRESTClient client = new GeoBatchRESTClient();
@@ -190,9 +189,9 @@ public class OperationEngineController implements ApplicationContextAware{
 			        client.setPassword(((GeoBatchOperation)operation).getGeobatchPassword());
 			        
 			        // TODO: check ping to GeoBatch (see test)
-			        
+
 			        RESTFlowService service = client.getFlowService();
-			
+			        
 					if(operation instanceof RemoteOperation) {
 						// TODO: better implementation
 					   byte[] blob = (byte[]) ((RemoteOperation)operation).getBlob(uploadFile.getFiles().get(0));
@@ -218,11 +217,19 @@ public class OperationEngineController implements ApplicationContextAware{
 					    response = service.runLocal(((LocalOperation)operation).getFlowID(), true, runInfo);
 					
 					}
-					/*
 					else {
-						response = 
+						
+						// TODO: refactor this
+						Object[] obj = new Object[3];
+						obj[0] = service;
+						obj[1] = request;
+						obj[2] = model;
+
+						response = (String) ((GeoBatchOperation) operation).getBlob(obj);
+						return response;
+
 					}
-					*/
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -304,23 +311,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		
 		
 	}
-/*
-	private HashMap<String, Operation> getAvailableOperations() {
-        
-        HashMap<String, Operation> ocontrollersHashMap = new HashMap<String, Operation>();
-        
-		String[] lista = applicationContext.getBeanNamesForType(LocalOperation.class);
-		for (String s : lista) {
-			LocalOperation fo = (LocalOperation)applicationContext.getBean(s);
-			if(!fo.isMultiple()) {
-				 ocontrollersHashMap.put(fo.getExtensions().get(0), fo);
-			}
-		}
-        
-		return ocontrollersHashMap;
-		
-	}
-*/
+
 	@Override
 	public void setApplicationContext(ApplicationContext arg0)
 			throws BeansException {

@@ -20,10 +20,11 @@
  */
 package it.geosolutions.operations;
 
-import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
+import it.geosolutions.geobatch.services.rest.RESTFlowService;
+import it.geosolutions.geobatch.services.rest.exception.NotFoundRestEx;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -183,15 +184,62 @@ public class FlowStatusOperation implements GeoBatchOperation {
 	@Override
 	public Object getBlob(Object inputParam) {
 		
-		// TODO: look for a HttpServletRequest
-		String fileName = (String)inputParam;
-        RESTRunInfo runInfo = new RESTRunInfo();
-        List<String> flist = new ArrayList<String>();
-		// TODO: more flexible
-        flist.add(basedirString+fileName);
-        runInfo.setFileList(flist);
-        
-		return runInfo;
+		// TODO: refactor this
+		RESTFlowService service = (RESTFlowService) ((Object[])inputParam)[0];
+		HttpServletRequest request = (HttpServletRequest) ((Object[])inputParam)[1];
+		ModelMap model = (ModelMap) ((Object[])inputParam)[2];
+		
+		String id = request.getParameter("id");
+		if(id != null) {
+			
+			try {
+				it.geosolutions.geobatch.services.rest.model.RESTConsumerStatus.Status status = service.getConsumerStatus(id).getStatus();
+				switch (status) {
+				case SUCCESS:
+					model.addAttribute("messageType", "success");
+					model.addAttribute("messageJsp", "flow_success");
+					model.addAttribute("operationMessage", "Success!");
+					model.addAttribute("flowMessage", "Operation Ended Successfully");
+					break;
+				case FAIL:
+					model.addAttribute("messageType", "error");
+					model.addAttribute("messageJsp", "flow_general");
+					model.addAttribute("operationMessage", "Failed!");
+					model.addAttribute("flowMessage", "Operation Failed");
+					break;
+				case RUNNING:
+					model.addAttribute("messageType", "block");
+					model.addAttribute("messageJsp", "flow_success");
+					model.addAttribute("operationMessage", "Success!");
+					model.addAttribute("flowMessage", "Operation Running");
+					break;
+				default:
+					break;
+				}
+				
+			} catch (NotFoundRestEx e) {
+				model.addAttribute("messageType", "error");
+				model.addAttribute("messageJsp", "flow_general");
+				model.addAttribute("operationMessage", "Error");
+				model.addAttribute("flowMessage", "Consumer not found, NotFoundRestEx");
+
+			}catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("messageType", "error");
+				model.addAttribute("messageJsp", "flow_general");
+				model.addAttribute("operationMessage", "Error");
+				model.addAttribute("flowMessage", "Consumer not found");
+			}
+			
+		}else {
+			model.addAttribute("messageType", "info");
+			model.addAttribute("messageJsp", "flow_general");
+			model.addAttribute("operationMessage", "Error!");
+			model.addAttribute("flowMessage", "No Consumer ID passed");
+			return "common/static_messages";
+		}
+		        
+		return "common/static_messages";
 	}
 
 	@Override

@@ -206,6 +206,14 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		if(gotParam != null) {
 			System.out.println(gotParam);
 		}
+		String gotAction = request.getParameter("action");
+		String fileToDel = request.getParameter("delFile");
+		if(gotAction != null && gotAction.equalsIgnoreCase("delete")
+				&& fileToDel != null ) {
+			String deleteFileString = baseDir + fileToDel;
+			boolean res = deleteFile(deleteFileString);
+			System.out.println("Deletted: "+res);
+		}
 		
 		model.addAttribute("operationName", this.operationName);	
 
@@ -229,23 +237,16 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
                     fileNames.add(fileName);
                 }
                 System.out.println(fileName);
- 
             }
         }
-
 		
 		model.addAttribute("fileBrowser", fb);	
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
-//		model.addAttribute("context", operationContextJSP);
-
 		model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
 		model.addAttribute("formId", uniqueKey.toString().substring(27, 36));
 		
-		//TODO: should I do this here or in the OperationEngine scope?
-		//ControllerUtils.setCommonModel(model);
-
 		return operationJSP ;
 	}
 
@@ -275,5 +276,15 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	 */
 	public void setCanNavigate(Boolean canNavigate) {
 		this.canNavigate = canNavigate;
+	}
+	
+	private boolean deleteFile(String fileName) {
+		if(fileName != null) {
+			File toDel = new File(fileName);
+			if(toDel.exists() && toDel.isFile()) {
+		        return toDel.delete();
+			}
+		}
+		return false;
 	}
 }

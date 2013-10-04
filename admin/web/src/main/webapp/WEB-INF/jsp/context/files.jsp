@@ -4,14 +4,14 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <div class="container" id="${containerId}">
 	<h2>File Browser</h2>
-
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Actions</th>
 				<th>Size</th>
 				<th>LastModified</th>
-				<th>Actions</th>
+				<th>Delete File</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,9 +34,6 @@
 						<c:if test="${file.isDirectory}">
 						<td><a href="?d=${directory}/${file.name}">${file.name}/</a></td>
 						</c:if>
-						<c:if test="${not file.isDirectory }"><td>${file.size} Bytes</td></c:if>
-						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
-						<td>${file.lastModified}</td>
 						<td>
 							<c:if test="${file.isDirectory}">
 								<a class="btn" href="?d=${directory}/${file.name}">Open ${file.name} folder</a>
@@ -48,6 +45,14 @@
 										data-fileid="${file.name}" href="../../operation/${entry.value.RESTPath}/${file.name}">${entry.value.name}</a>
 								</c:if>
 							</c:forEach>
+						</td>
+						<c:if test="${not file.isDirectory }"><td>${file.size} Bytes</td></c:if>
+						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
+						<td>${file.lastModified}</td>
+						<td>
+							<c:if test="${not file.isDirectory}">
+								<button class="btn btn-mini btn-danger" onClick="delFile('${file.name}')">Delete</button> 
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>
@@ -62,7 +67,7 @@
 			</c:if>
 		</tbody>
 	</table>
-	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data">
+	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/fileBrowserOp/">
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
 	    	<tr>
@@ -75,7 +80,6 @@
 	    <input id="addFile" type="button" value="Add File" class="btn" />
 		<input type="submit" value="Upload" class="btn btn-primary "/>
 	</form:form>
-
 
 <c:forEach items="${operations}" var="entry">
 <!-- TODO: create only if they are used in the file list! -->
@@ -90,7 +94,7 @@
 	</div>
 </div></c:forEach>
 
-<script>
+<script type="text/javascript">
 	$(function() {
 
 	<c:forEach items="${operations}" var="entry">
@@ -123,7 +127,6 @@
 		    $(":file").filestyle();
 	    });
 	    
-	    
     	$("#${formId}").submit(function() {
     		var options = {
     			/* target:"#divResult", */
@@ -137,8 +140,23 @@
     		$(this).ajaxSubmit(options);
     		return false;
     	});
-	     
 	});
+	
+	function delFile(fileName){
+		$.ajax({
+			type : 'POST',
+			url : "../../operation/fileBrowserOp/",
+			data : {
+				"action": "delete", 
+				"toDel" : fileName
+			},
+			success : function(response) {
+				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
+			},
+			error : function(response) {
+				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
+			}
+		});
+	}
 </script>
-
 </div>

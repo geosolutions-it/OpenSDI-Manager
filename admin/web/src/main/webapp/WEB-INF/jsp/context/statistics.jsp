@@ -26,7 +26,7 @@
 	})
 </script>
 <div class="container width700">
-	<form class="form-horizontal span6 " method="post">
+	<form class="form-horizontal span6 " method="post" action="../operation/NDVIStatistics">
 		<div class="control-group">
 			<label class="control-label">Regions</label>
 			<div class="controls">
