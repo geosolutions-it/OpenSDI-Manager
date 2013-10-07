@@ -207,7 +207,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 			System.out.println(gotParam);
 		}
 		String gotAction = request.getParameter("action");
-		String fileToDel = request.getParameter("delFile");
+		String fileToDel = request.getParameter("toDel");
 		if(gotAction != null && gotAction.equalsIgnoreCase("delete")
 				&& fileToDel != null ) {
 			String deleteFileString = baseDir + fileToDel;

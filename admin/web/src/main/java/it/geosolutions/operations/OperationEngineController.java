@@ -287,7 +287,6 @@ public class OperationEngineController implements ApplicationContextAware{
 	 
 	            }
 	        }
-
 			
 			// TODO: getJSP should modify Model adding it's own attributes
 			// Maybe the setCommonModel can be called from within the Operation ?
@@ -306,9 +305,6 @@ public class OperationEngineController implements ApplicationContextAware{
 			model.addAttribute("operationMessage", "Operation not found");
 			return "common/messages";
 		}
-
-		
-		
 		
 	}
 
