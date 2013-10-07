@@ -38,7 +38,7 @@ public class Users {
 			model.addAttribute("users", users);
 		}
 		ControllerUtils.setCommonModel(model);
-		model.addAttribute("context", "users");
+		model.addAttribute("context", "context/users");
 		model.addAttribute("pagesize", pageSize);
 		model.addAttribute("page", page);
 
