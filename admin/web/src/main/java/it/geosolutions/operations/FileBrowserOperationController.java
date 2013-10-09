@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -114,15 +115,28 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	}
 
-	private HashMap<String, Operation> getAvailableOperations() {
+	/**
+	 * Provide a HashMap of every LocalOperation bean loaded
+	 * @return
+	 */
+	private HashMap<String, List<Operation>> getAvailableOperations() {
         
-        HashMap<String, Operation> ocontrollersHashMap = new HashMap<String, Operation>();
+        HashMap<String, List<Operation>> ocontrollersHashMap = new HashMap<String, List<Operation>>();
         
 		String[] lista = applicationContext.getBeanNamesForType(LocalOperation.class);
 		for (String s : lista) {
 			LocalOperation fo = (LocalOperation)applicationContext.getBean(s);
 			if(!fo.isMultiple()) {
-				 ocontrollersHashMap.put(fo.getExtensions().get(0), fo);
+				List<String> exts = fo.getExtensions();
+				for (String extString : exts) {
+					if(ocontrollersHashMap.containsKey(extString)) {
+						ocontrollersHashMap.get(extString).add(fo);
+					}else {
+						List<Operation> olist = new ArrayList<Operation>();
+						olist.add(fo);
+						ocontrollersHashMap.put(extString, olist);
+					}
+				}
 			}
 		}
         

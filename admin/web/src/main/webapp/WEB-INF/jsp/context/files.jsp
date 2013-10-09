@@ -41,8 +41,10 @@
 							<c:forEach items="${operations}" var="entry">
 								<c:set var="fileext" value=".${entry.key}" /> 
 								<c:if test="${fn:endsWith(file.name, fileext)}">
-									<a data-toggle="modal" class="btn ${fn:toLowerCase(entry.value.name)}" data-target="#${fn:toLowerCase(entry.value.name)}"
-										data-fileid="${file.name}" href="../../operation/${entry.value.RESTPath}/${file.name}">${entry.value.name}</a>
+								<c:forEach items="${entry.value}" var="op">
+									<a data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
+										data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}">${op.name}</a>
+									</c:forEach>
 								</c:if>
 							</c:forEach>
 						</td>
@@ -83,26 +85,31 @@
 
 <c:forEach items="${operations}" var="entry">
 <!-- TODO: create only if they are used in the file list! -->
-<div id="${fn:toLowerCase(entry.value.name)}" class="modal hide fade" tabindex="-1" role="dialog"
+<c:forEach items="${entry.value}" var="op">
+<div id="${fn:toLowerCase(op.name)}" class="modal hide fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">x</button>
-		<h3 id="myModalLabel">${entry.value.name}</h3>
+		<h3 id="myModalLabel">${op.name}</h3>
 	</div>
 	<div class="modal-body">
 	</div>
-</div></c:forEach>
+</div>
+</c:forEach>
+</c:forEach>
 
 <script type="text/javascript">
 	$(function() {
 
 	<c:forEach items="${operations}" var="entry">
-		formUtils.initModalForm('#${fn:toLowerCase(entry.value.name)}');
-		$('.${fn:toLowerCase(entry.value.name)}').on('click', function() {
+	<c:forEach items="${entry.value}" var="op">
+		formUtils.initModalForm('#${fn:toLowerCase(op.name)}');
+		$('.${fn:toLowerCase(op.name)}').on('click', function() {
 			var fileId = $(this).data('fileid');
-			formUtils.changeAction('#${fn:toLowerCase(entry.value.name)}', '../../operation/${entry.value.RESTPath}/' + fileId);
+			formUtils.changeAction('#${fn:toLowerCase(op.name)}', '../../operation/${op.RESTPath}/' + fileId);
 		})
+	</c:forEach>
 	</c:forEach>
 
 	});

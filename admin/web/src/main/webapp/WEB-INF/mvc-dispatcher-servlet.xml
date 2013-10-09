@@ -17,6 +17,26 @@
 			<property name="geobatchPassword" value="admin"></property>
 	</bean>
 
+	<bean id="NDVI" class="it.geosolutions.operations.NDVIOperation">
+			<property name="path" value="NDVI"/>
+			<property name="jspName" value="ndvi"/>
+			<property name="flowID" value="ndviingestion"/>
+			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"></property>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+	</bean>
+
+	<bean id="CSV" class="it.geosolutions.operations.CSVOperation">
+			<property name="path" value="CSV"/>
+			<property name="jspName" value="csv"/>
+			<property name="flowID" value="csvingestion"/>
+			<property name="basedirString" value="G:/OpenSDIManager/test_shapes/"></property>
+			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
+			<property name="geobatchUsername" value="admin"></property>
+			<property name="geobatchPassword" value="admin"></property>
+	</bean>
+
 	<bean id="flowstatus" class="it.geosolutions.operations.FlowStatusOperation">
 			<property name="path" value="flowstatus"/>
 			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"></property>
@@ -34,11 +54,13 @@
 	</bean>
 
 	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
+
 	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
 			<property name="operationName" value="NDVIBrowser"/>
 			<property name="canNavigate" value="false"></property>
 			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_shapes/"></property>
 	</bean>
+
 	<bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
 			<property name="operationName" value="CSVBrowser"/>
 			<property name="canNavigate" value="true"></property>
