@@ -69,6 +69,7 @@
 			</c:if>
 		</tbody>
 	</table>
+<c:if test="${empty directory }">
 	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/fileBrowserOp/">
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
@@ -82,7 +83,7 @@
 	    <input id="addFile" type="button" value="Add File" class="btn" />
 		<input type="submit" value="Upload" class="btn btn-primary "/>
 	</form:form>
-
+</c:if>
 <c:forEach items="${operations}" var="entry">
 <!-- TODO: create only if they are used in the file list! -->
 <c:forEach items="${entry.value}" var="op">
