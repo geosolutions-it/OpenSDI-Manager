@@ -80,6 +80,6 @@ function postData(targetId){
 			}*/
 		};
 
-		$(this).ajaxSubmit(options);
-		return false;   
+	$(this).ajaxSubmit(options);
+	return false;   
 }

@@ -257,7 +257,7 @@ public class OperationEngineController implements ApplicationContextAware{
 		        for(String val : vals)
 		            System.out.println(" -> " + val);
 		    }
-	
+	/*
 		    System.out.println("-- HEADERS --");
 		    for( Object o : gotHeaders.keySet()) {
 	        	
@@ -267,7 +267,8 @@ public class OperationEngineController implements ApplicationContextAware{
 	        	System.out.println( " -> "+ gotHeaders.get(o) );
 	        	
 	        }
-	        
+	        */
+		    
 	        if(null != files && files.size() > 0) {
 	            for (MultipartFile multipartFile : files) {
 	                String fileName = multipartFile.getOriginalFilename();
