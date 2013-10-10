@@ -31,6 +31,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
+import sun.util.logging.resources.logging;
+
 @Controller
 public class FlowStatusOperation implements GeoBatchOperation {
 	
@@ -194,28 +196,30 @@ public class FlowStatusOperation implements GeoBatchOperation {
 			
 			try {
 				it.geosolutions.geobatch.services.rest.model.RESTConsumerStatus.Status status = service.getConsumerStatus(id).getStatus();
+				String log =  service.getConsumerLog(id);
 				switch (status) {
-				case SUCCESS:
-					model.addAttribute("messageType", "success");
-					model.addAttribute("messageJsp", "flow_success");
-					model.addAttribute("operationMessage", "Success!");
-					model.addAttribute("flowMessage", "Operation Ended Successfully");
-					break;
-				case FAIL:
-					model.addAttribute("messageType", "error");
-					model.addAttribute("messageJsp", "flow_general");
-					model.addAttribute("operationMessage", "Failed!");
-					model.addAttribute("flowMessage", "Operation Failed");
-					break;
-				case RUNNING:
-					model.addAttribute("messageType", "block");
-					model.addAttribute("messageJsp", "flow_success");
-					model.addAttribute("operationMessage", "Success!");
-					model.addAttribute("flowMessage", "Operation Running");
-					break;
-				default:
-					break;
+					case SUCCESS:
+						model.addAttribute("messageType", "success");
+						model.addAttribute("messageJsp", "flow_success");
+						model.addAttribute("operationMessage", "Success!");
+						model.addAttribute("flowMessage", "Operation Ended Successfully");
+						break;
+					case FAIL:
+						model.addAttribute("messageType", "error");
+						model.addAttribute("messageJsp", "flow_general");
+						model.addAttribute("operationMessage", "Failed!");
+						model.addAttribute("flowMessage", "Operation Failed");
+						break;
+					case RUNNING:
+						model.addAttribute("messageType", "block");
+						model.addAttribute("messageJsp", "flow_success");
+						model.addAttribute("operationMessage", "Success!");
+						model.addAttribute("flowMessage", "Operation Running");
+						break;
+					default:
+						break;
 				}
+				model.addAttribute("flowLog", log);
 				
 			} catch (NotFoundRestEx e) {
 				model.addAttribute("messageType", "error");
