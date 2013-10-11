@@ -46,7 +46,7 @@ public class Users {
 
 	}
 
-	@RequestMapping(value = "/users/", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String userList(ModelMap model) {
 		return "redirect:/users/0";
 	}

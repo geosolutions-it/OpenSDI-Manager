@@ -19,12 +19,12 @@ public class AgrometController {
 	@Autowired
 	AgrometDescriptorService agrometDescriptorService;
 	
-	@RequestMapping(value="/agromet/", method = RequestMethod.GET)
+	@RequestMapping(value="/agromet", method = RequestMethod.GET)
 	public String handleGet(ModelMap model) {
 		List<AgrometDescriptor> cds =agrometDescriptorService.getAll();
 		model.addAttribute("factors",cds);
 		ControllerUtils.setCommonModel(model);
-		model.addAttribute("context", "factors");
+		model.addAttribute("context", "context/factors");
 		return "template";
  
 	}

@@ -19,12 +19,12 @@ public class CropController {
 	@Autowired
 	CropDescriptorService cropDescriptorService;
 	
-	@RequestMapping(value="/crops/", method = RequestMethod.GET)
+	@RequestMapping(value="/crops", method = RequestMethod.GET)
 	public String handleGet(ModelMap model) {
 		List<CropDescriptor> cds =cropDescriptorService.getAll();
 		model.addAttribute("crops",cds);
 		ControllerUtils.setCommonModel(model);
-		model.addAttribute("context", "crops");
+		model.addAttribute("context", "context/crops");
 		return "template";
  
 	}
