@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -50,7 +49,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	private String operationName = "FileBrowser";
 
-	private String operationRESTPath = "filebrowser";
+	private String operationRestPath = "filebrowser";
 
 	private String operationJSP = "files";
 
@@ -174,8 +173,16 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	@Override
 	public String getRESTPath() {
-		return operationRESTPath ;
+		return operationRestPath ;
 	}
+
+	/**
+	 * @param operationRestPath the operationRestPath to set
+	 */
+	public void setRESTPath(String operationRestPath) {
+		this.operationRestPath = operationRestPath;
+	}
+
 
 	@Override
 	public String getJsp() {
@@ -196,13 +203,13 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 		Map<String, String[]> parameters = request.getParameterMap();
 
 	    for(String key : parameters.keySet()) {
-	        System.out.println(key);
+	        System.out.println(key);  // debug
 	        String[] vals = parameters.get(key);
-	        for(String val : vals)
-	            System.out.println(" -> " + val);
+	        for(String val : vals)  // debug
+	            System.out.println(" -> " + val);  // debug
 	        if(key.equalsIgnoreCase("d")) {
-	        	// TODO: millemila check!!!
 	        	String dirString = parameters.get(key)[0].trim();
+	        	dirString = dirString.replace("..", "");
 	        	if(dirString.startsWith("/")) {
 	        		dirString = dirString.substring(1);
 	        	}
@@ -218,7 +225,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	    }
 		
 		if(gotParam != null) {
-			System.out.println(gotParam);
+			System.out.println(gotParam);  // debug
 		}
 		String gotAction = request.getParameter("action");
 		String fileToDel = request.getParameter("toDel");
@@ -226,11 +233,12 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 				&& fileToDel != null ) {
 			String deleteFileString = baseDir + fileToDel;
 			boolean res = deleteFile(deleteFileString);
-			System.out.println("Deletted: "+res);
+			System.out.println("Deletted: "+res);  // debug
 		}
 		
 		model.addAttribute("operationName", this.operationName);	
-
+		model.addAttribute("operationRESTPath", this.getRESTPath());
+		
 		fb.setBaseDir(baseDir);			
 		fb.setRegex(null);
 		fb.setScanDiretories(canNavigate);

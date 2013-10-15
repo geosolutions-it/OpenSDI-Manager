@@ -36,7 +36,7 @@
 						</c:if>
 						<td>
 							<c:if test="${file.isDirectory}">
-								<a class="btn" href="?d=${directory}/${file.name}">Open ${file.name} folder</a>
+								<a class="btn" href="?d=${directory}/${file.name}">Open folder</a>
 							</c:if>
 							<c:forEach items="${operations}" var="entry">
 								<c:set var="fileext" value=".${entry.key}" /> 
@@ -70,7 +70,7 @@
 		</tbody>
 	</table>
 <c:if test="${empty directory }">
-	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/fileBrowserOp/">
+	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
 	    	<tr>
@@ -153,7 +153,7 @@
 	function delFile(fileName){
 		$.ajax({
 			type : 'POST',
-			url : "../../operation/fileBrowserOp/",
+			url : "../../operation/${operationRESTPath}/",
 			data : {
 				"action": "delete", 
 				"toDel" : fileName

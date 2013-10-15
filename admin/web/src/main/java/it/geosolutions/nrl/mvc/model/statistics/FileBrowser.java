@@ -36,8 +36,11 @@ public class FileBrowser {
 		File dir = new File(baseDir);
 		if( !dir.isDirectory() ) return null;
 		File[] children = dir.listFiles();
-		List<JSPFile> fileList = new LinkedList<JSPFile>();
 		List<JSPFile> dirList = new LinkedList<JSPFile>();
+		if(children == null) {
+			return dirList;
+		}
+		List<JSPFile> fileList = new LinkedList<JSPFile>();
 		for (int i=0;i<children.length;i++){
 			String name = children[i].getName();
 			if(regex!=null){
