@@ -68,6 +68,8 @@
 			<property name="RESTPath" value="fileBrowserOp"/>
 			<property name="operationName" value="NDVIBrowser"/>
 			<property name="canNavigate" value="false"/>
+			<property name="canUpload" value="false"/>
+			<property name="canDelete" value="false"/>
 			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_geotiff/"/>
 	</bean>
 
@@ -75,6 +77,8 @@
 			<property name="RESTPath" value="fileBrowserOpCSV"/>
 			<property name="operationName" value="CSVBrowser"/>
 			<property name="canNavigate" value="true"/>
+			<property name="canUpload" value="true"/>
+			<property name="canDelete" value="true"/>
 			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_csv/"/>
 	</bean>
 	

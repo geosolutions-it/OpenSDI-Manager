@@ -32,11 +32,11 @@
 						<td>${file.name}</td>
 						</c:if>
 						<c:if test="${file.isDirectory}">
-						<td><a href="?d=${directory}/${file.name}">${file.name}/</a></td>
+						<td><a href="?d=${directory}${file.name}">${file.name}/</a></td>
 						</c:if>
 						<td>
 							<c:if test="${file.isDirectory}">
-								<a class="btn" href="?d=${directory}/${file.name}">Open folder</a>
+								<a class="btn" href="?d=${directory}${file.name}">Open folder</a>
 							</c:if>
 							<c:forEach items="${operations}" var="entry">
 								<c:set var="fileext" value=".${entry.key}" /> 
@@ -52,7 +52,7 @@
 						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
 						<td>${file.lastModified}</td>
 						<td>
-							<c:if test="${not file.isDirectory}">
+							<c:if test="${(not file.isDirectory) and canDelete }">
 								<button class="btn btn-mini btn-danger" onClick="delFile('${file.name}')">Delete</button> 
 							</c:if>
 						</td>
@@ -69,7 +69,7 @@
 			</c:if>
 		</tbody>
 	</table>
-<c:if test="${empty directory }">
+<c:if test="${empty directory and canUpload }">
 	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
@@ -84,6 +84,7 @@
 		<input type="submit" value="Upload" class="btn btn-primary "/>
 	</form:form>
 </c:if>
+
 <c:forEach items="${operations}" var="entry">
 <!-- TODO: create only if they are used in the file list! -->
 <c:forEach items="${entry.value}" var="op">
@@ -149,15 +150,20 @@
     		return false;
     	});
 	});
-	
+
+<c:if test="${canDelete}">
 	function delFile(fileName){
+		var data = {
+				"action": "delete", 
+				"toDel" : fileName
+			};
+<c:if test="${not empty directory}">
+		data["d"] = "${directory}";
+</c:if>
 		$.ajax({
 			type : 'POST',
 			url : "../../operation/${operationRESTPath}/",
-			data : {
-				"action": "delete", 
-				"toDel" : fileName
-			},
+			data : data,
 			success : function(response) {
 				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
 			},
@@ -166,5 +172,6 @@
 			}
 		});
 	}
+</c:if>
 </script>
 </div>

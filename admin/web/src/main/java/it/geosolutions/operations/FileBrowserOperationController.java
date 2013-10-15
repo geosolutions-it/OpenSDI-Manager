@@ -57,6 +57,10 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	
 	private Boolean canNavigate;
 	
+	private Boolean canUpload;
+	
+	private Boolean canDelete;
+	
 	private UUID uniqueKey;
 		
 	public FileBrowserOperationController() {
@@ -209,18 +213,36 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	            System.out.println(" -> " + val);  // debug
 	        if(key.equalsIgnoreCase("d")) {
 	        	String dirString = parameters.get(key)[0].trim();
+
+	        	// prevent directory traversing
 	        	dirString = dirString.replace("..", "");
+	        	// clean path
+	        	dirString = dirString.replace("/./", "/");
+	        	dirString = dirString.replaceAll("/{2,}", "/");
+	        	
 	        	if(dirString.startsWith("/")) {
 	        		dirString = dirString.substring(1);
 	        	}
-	        	baseDir = baseDir + dirString;
-	        	model.addAttribute("directory", dirString);
+	        	
+	        	//remove last slash
+	        	
+	        	if(dirString.lastIndexOf("/")>=0 && 
+	        			dirString.lastIndexOf("/")==(dirString.length()-1)){
+	        		System.out.println("stripping last slash"); // debug
+	        		dirString = dirString.substring(0, dirString.length()-1);
+	        	}
+	        	
+	        	//second check
 	        	if(dirString.lastIndexOf("/")>=0) {
 		        	model.addAttribute("directoryBack", dirString.substring(0, dirString.lastIndexOf("/")));
 	        	}
 	        	else {
 	        		model.addAttribute("directoryBack", "");
 				}
+	        	
+	        	dirString = dirString.concat("/");
+	        	baseDir = baseDir + dirString;
+	        	model.addAttribute("directory", dirString);
 	        }
 	    }
 		
@@ -233,7 +255,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 				&& fileToDel != null ) {
 			String deleteFileString = baseDir + fileToDel;
 			boolean res = deleteFile(deleteFileString);
-			System.out.println("Deletted: "+res);  // debug
+			System.out.println("Deletted "+deleteFileString+": "+res);  // debug
 		}
 		
 		model.addAttribute("operationName", this.operationName);	
@@ -266,6 +288,9 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 		model.addAttribute("operations", getAvailableOperations()); 
 		
+		model.addAttribute("canDelete", this.canDelete);	
+		model.addAttribute("canUpload", this.canUpload);	
+		
 		model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
 		model.addAttribute("formId", uniqueKey.toString().substring(27, 36));
 		
@@ -283,6 +308,10 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 	 * @param defaultBaseDir the defaultBaseDir to set
 	 */
 	public void setDefaultBaseDir(String defaultBaseDir) {
+		if(!defaultBaseDir.endsWith("/")) {
+			System.out.println("[WARN] defaultBaseDir not ending with slash \"\\\", appending one");
+			defaultBaseDir = defaultBaseDir.concat("/");
+		}
 		this.defaultBaseDir = defaultBaseDir;
 	}
 
@@ -308,5 +337,37 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 			}
 		}
 		return false;
+	}
+
+
+	/**
+	 * @return the canUpload
+	 */
+	public Boolean getCanUpload() {
+		return canUpload;
+	}
+
+
+	/**
+	 * @param canUpload the canUpload to set
+	 */
+	public void setCanUpload(Boolean canUpload) {
+		this.canUpload = canUpload;
+	}
+
+
+	/**
+	 * @return the canDelete
+	 */
+	public Boolean getCanDelete() {
+		return canDelete;
+	}
+
+
+	/**
+	 * @param canDelete the canDelete to set
+	 */
+	public void setCanDelete(Boolean canDelete) {
+		this.canDelete = canDelete;
 	}
 }
