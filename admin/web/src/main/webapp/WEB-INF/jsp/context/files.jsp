@@ -69,7 +69,7 @@
 			</c:if>
 		</tbody>
 	</table>
-<c:if test="${empty directory and canUpload }">
+<c:if test="${ canUpload }">
 	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
@@ -80,6 +80,7 @@
 	        </tr>
 	    </table>
 	    <br/>
+	    <input id="basedir" type="hidden" name="d" value="${directory}" />
 	    <input id="addFile" type="button" value="Add File" class="btn" />
 		<input type="submit" value="Upload" class="btn btn-primary "/>
 	</form:form>
