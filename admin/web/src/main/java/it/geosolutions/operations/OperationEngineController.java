@@ -51,19 +51,19 @@ public class OperationEngineController implements ApplicationContextAware{
 	
 	/**
 	 * Encapsulate operation Jsp into the template
-	 * @param operationName
+	 * @param operationId
 	 * @param gotParam
 	 * @param request
 	 * @param model
 	 * @return String template jsp to display
 	 */
-	@RequestMapping(value = "/operationManager/{operationName}/{gotParam:.+}", method = RequestMethod.GET)
-	public String issueGetToTemplate(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operationManager/{operationId}/{gotParam:.+}", method = RequestMethod.GET)
+	public String issueGetToTemplate(	@PathVariable(value = "operationId") String operationId,
 										@PathVariable(value = "gotParam") String gotParam,
 										HttpServletRequest request,
 										ModelMap model) {
 		
-		String opJsp = issueGetToOperation(operationName, gotParam, request, model);
+		String opJsp = issueGetToOperation(operationId, gotParam, request, model);
 		model.addAttribute("context", opJsp);
 		
 		return "template";
@@ -72,42 +72,42 @@ public class OperationEngineController implements ApplicationContextAware{
 	
 	/**
 	 * Proxy operationManager requests without params
-	 * @param operationName
+	 * @param operationId
 	 * @param gotParam
 	 * @param request
 	 * @param model
 	 * @return String template jsp to display
 	 */
-	@RequestMapping(value = "/operationManager/{operationName}", method = RequestMethod.GET)
-	public String issueGetToTemplate(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operationManager/{operationId}", method = RequestMethod.GET)
+	public String issueGetToTemplate(	@PathVariable(value = "operationId") String operationId,
 										HttpServletRequest request,
 										ModelMap model) {
-		return issueGetToTemplate(operationName, null, request, model);
+		return issueGetToTemplate(operationId, null, request, model);
 	}
 
 	
 	/**
 	 * 
-	 * @param operationName
+	 * @param operationId
 	 * @param gotParam
 	 * @param request
 	 * @param model
 	 * @return String template jsp to display
 	 */
-	@RequestMapping(value = "/operation/{operationName}/{gotParam:.+}", method = RequestMethod.GET)
-	public String issueGetToOperation(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operation/{operationId}/{gotParam:.+}", method = RequestMethod.GET)
+	public String issueGetToOperation(	@PathVariable(value = "operationId") String operationId,
 										@PathVariable(value = "gotParam") String gotParam,
 										HttpServletRequest request,
 										ModelMap model) {
 		
 		System.out.println("Handling by issueGetToOperation : OperationEngine GET");		
-		System.out.println(operationName);
+		System.out.println(operationId);
 	    
 		// TODO: check gotParam for security
 		
-		if(applicationContext.containsBean(operationName) && applicationContext.isTypeMatch(operationName, Operation.class)) {
+		if(applicationContext.containsBean(operationId) && applicationContext.isTypeMatch(operationId, Operation.class)) {
 		
-			Operation op = (Operation)applicationContext.getBean(operationName);
+			Operation op = (Operation)applicationContext.getBean(operationId);
 			
 			if(gotParam != null) {
 				model.addAttribute("gotParam", gotParam);
@@ -131,31 +131,31 @@ public class OperationEngineController implements ApplicationContextAware{
 
 	/**
 	 * Proxy function for issueGetToOperation with path variable
-	 * @param operationName
+	 * @param operationId
 	 * @param request
 	 * @param model
 	 * @return template jsp to display
 	 */
-	@RequestMapping(value = "/operation/{operationName}", method = RequestMethod.GET)
-	public String issueGetToOperation(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operation/{operationId}", method = RequestMethod.GET)
+	public String issueGetToOperation(	@PathVariable(value = "operationId") String operationId,
 										HttpServletRequest request,
 										ModelMap model) {
-		return issueGetToOperation(operationName, null, request, model);
+		return issueGetToOperation(operationId, null, request, model);
 	}
 	
 	
-	@RequestMapping(value = "/operation/{operationName}", method = RequestMethod.POST)
-	public String issuePostToOperation(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operation/{operationId}", method = RequestMethod.POST)
+	public String issuePostToOperation(	@PathVariable(value = "operationId") String operationId,
 										@RequestHeader HttpHeaders  gotHeaders,
 										@ModelAttribute("uploadFile") FileUpload uploadFile,
 										HttpServletRequest request,
 										ModelMap model) {
-		return issuePostToOperation(operationName, null, gotHeaders, uploadFile, request, model);
+		return issuePostToOperation(operationId, null, gotHeaders, uploadFile, request, model);
 	}
 
 	/**
 	 *  Issue a POST request to the desired Operation
-	 * @param operationName
+	 * @param operationId
 	 * @param gotParam
 	 * @param gotHeaders
 	 * @param uploadFile
@@ -163,8 +163,8 @@ public class OperationEngineController implements ApplicationContextAware{
 	 * @param model
 	 * @return template jsp to display returned message
 	 */
-	@RequestMapping(value = "/operation/{operationName}/{gotParam:.+}", method = RequestMethod.POST)
-	public String issuePostToOperation(	@PathVariable(value = "operationName") String operationName,
+	@RequestMapping(value = "/operation/{operationId}/{gotParam:.+}", method = RequestMethod.POST)
+	public String issuePostToOperation(	@PathVariable(value = "operationId") String operationId,
 										@PathVariable(value="gotParam") String gotParam,
 										@RequestHeader HttpHeaders  gotHeaders,
 										@ModelAttribute("uploadFile") FileUpload uploadFile,
@@ -174,10 +174,10 @@ public class OperationEngineController implements ApplicationContextAware{
 		System.out.println("Handling by issuePostToOperation : OperationEngine POST");
 
 		
-		if(applicationContext.containsBean(operationName) && applicationContext.isTypeMatch(operationName, Operation.class)) {
+		if(applicationContext.containsBean(operationId) && applicationContext.isTypeMatch(operationId, Operation.class)) {
 			
 			
-			Operation operation = (Operation)applicationContext.getBean(operationName);
+			Operation operation = (Operation)applicationContext.getBean(operationId);
 
 			if(operation instanceof GeoBatchOperation) {
 
