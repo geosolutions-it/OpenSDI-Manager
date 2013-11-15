@@ -3,8 +3,9 @@
 
 <div id="message" class="modal hide fade alert alert-${messageType}"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<button type="button" class="close" data-dismiss="modal">×</button>
-	<div class="modal-body" style="text-align: center;">
+	<!-- this message is inside a modal with a close button, we don't need other close
+	<button type="button" class="close" data-dismiss="modal">x</button> -->
+	<div class="message-body" style="text-align: center;">
 		<c:if test="${(not empty messageCode)}">
 			<strong><spring:message code="${messageCode}"/></strong>
 		</c:if>

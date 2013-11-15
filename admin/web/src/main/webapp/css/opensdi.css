@@ -1,0 +1,40 @@
+@import url(jquery-mapstore-footer.css);
+
+div.login-form-controls{
+	
+	width:500px;
+}
+
+.login-container{
+	
+	width:700px;
+}
+
+.width700{
+	width:700px;
+}
+.modal form {
+	margin:0px;
+}
+body{
+	background-color:#FAFAFA;
+}
+
+/* Help */ 
+#helpOpener{
+	background-image: url(../img/help.png);
+	background-color: #f8f8f8;
+	border: none;
+	background-position: 0 0;
+	height: 20px;
+	width: 60px;
+	padding-left: 20px;
+	margin-top: 8px;
+	color: #777777;
+}
+#helpOpener:hover{
+	cursor: pointer;
+	color: #181818;
+}
+
+/* FOOTER on jquery-mapstore-footer.css*/

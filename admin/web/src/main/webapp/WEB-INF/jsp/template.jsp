@@ -2,12 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>OpenSDI Manager ${PageTitle}</title>
+<title>OpenSDI-Manager Portal ${PageTitle}</title>
+<!--[if IE ]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<![endif]-->
 <link href="<c:url value="/css/bootstrap.min.css"/>" media="all" type="text/css"
 	rel="stylesheet">
-<link href="<c:url value="/css/nrl.css"/>" media="all" type="text/css"
+<link href="<c:url value="/css/opensdi.css"/>" media="all" type="text/css"
 	rel="stylesheet">
-<link id="theme" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+<!-- <link id="theme" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"> -->
 <script src="<c:url value="/js/jquery-1.10.2.min.js"/>"></script>
 <script src="<c:url value="/js/jquery-validate.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
