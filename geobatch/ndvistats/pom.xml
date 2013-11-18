@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <parent>
+        <groupId>it.geosolutions.opensdi</groupId>
+        <artifactId>geobatch-root</artifactId>    
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!--     Module Description                                      -->
+    <!-- =========================================================== -->
+
+    <groupId>it.geosolutions.geobatch</groupId>
+    <artifactId>nrl-action-ndvistats</artifactId>
+    <packaging>jar</packaging>
+
+    <name>GeoBatch action: NDVI stats generation</name>
+    <description>GeoBatch action: NDVI ImageMosaic and data processing for statistics generation</description>
+
+    <properties>
+    	<nrl.project.version>1.0-SNAPSHOT</nrl.project.version>
+    	<!-- <geobatch.version>1.4-SNAPSHOT</geobatch.version> -->
+    	<geobatch.version>${project.parent.version}</geobatch.version>
+    </properties>
+
+    <!-- =========================================================== -->
+    <!--     Dependencies                                            -->
+    <!-- =========================================================== -->
+
+    <dependencies>
+
+        <!-- =========================================================== -->
+        <!--     GeoBatch deps                                           -->
+        <!-- =========================================================== -->
+        <!-- import pack plugin definition -->
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-actions</artifactId>
+            <type>pom</type>
+            <version>${geobatch.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-action-imagemosaic</artifactId>
+            </dependency>
+
+        <!--        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-core-model</artifactId>
+            </dependency>
+
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fsm-core</artifactId>
+            </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+           <groupId>org.geotools</groupId>
+           <artifactId>gt-process-feature</artifactId>
+           <version>${gt.version}</version>
+         </dependency>
+        <!-- <dependency>
+           <groupId>org.geotools.jdbc</groupId>
+           <artifactId>gt-jdbc-jdbc</artifactId>
+           <version>${geotools.version}</version>
+         </dependency> -->
+
+
+        <!-- =========================================================== -->
+
+        <!--        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-fs-catalog</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions.geobatch</groupId>
+            <artifactId>gb-dao-xstream</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!--<version>4.11</version>-->
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- JAI-Ext -->
+		<dependency>
+		   <groupId>it.geosolutions.jaiext.zonal</groupId>
+		   <artifactId>jt-zonal</artifactId>
+		   <version>1.0-SNAPSHOT</version>
+	    </dependency>
+        
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>it.geosolutions.opensdi</groupId>
+		    <artifactId>nrl-core</artifactId>
+		    <version>${nrl.project.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowConfiguration>
+
+    <id>ndvistats</id>
+    <name>NDVI stats generation</name>
+    <description>Generate a CSV file with a geotiff mask and a zone filter</description>
+	
+    <corePoolSize>2</corePoolSize>
+    <maximumPoolSize>2</maximumPoolSize>
+    <keepAliveTime>1500</keepAliveTime>
+    <workQueueSize>100</workQueueSize>
+	
+    <autorun>true</autorun>
+	
+    <EventGeneratorConfiguration>
+        <id>ndvistats_event_gen</id>
+        <serviceID>fsEventGeneratorService</serviceID>
+        <wildCard>*.xml</wildCard>
+        <watchDirectory>ndvistats/in</watchDirectory>
+        <osType>OS_UNDEFINED</osType>
+        <eventType>FILE_ADDED</eventType>
+        <interval>0 0/15 4-6 * * ?</interval>
+    </EventGeneratorConfiguration>
+
+    <EventConsumerConfiguration>
+        <id>ndvistats_consumer</id>
+        
+		<listenerId>Logger</listenerId>
+        <listenerId>Cumulator</listenerId>
+        <listenerId>Status</listenerId>
+
+        <performBackup>false</performBackup>
+        <preserveInput>true</preserveInput>
+        
+        <NDVIStatsConfiguration>
+            <id>NDVIIngestConfiguration</id>
+            <name>NDVI CSV stats preparation</name>
+            <description>Prepare time interval in TIF filenames </description>
+            <defaultMaskUrl>file:/home/alediator/CROP_MASKS/agri_merge_erase.shp</defaultMaskUrl>
+			<dbType>postgis</dbType>
+			<dbHost>localhost</dbHost>
+			<dbPort>5432</dbPort>
+			<dbSchema>public</dbSchema>
+			<dbName>NRL_db</dbName>
+			<dbUser>geosolutions</dbUser>
+			<dbPasswd>geosolutions</dbPasswd>
+			<tiffDirectory>/home/alediator/test_tiff/ndvi</tiffDirectory>
+			<outputDirectory>/home/alediator/test_csv</outputDirectory>
+			<csvSeparator>,</csvSeparator>
+        </NDVIStatsConfiguration>
+
+    </EventConsumerConfiguration>
+
+    <ListenerConfigurations>
+        <LoggingProgressListener>
+            <serviceID>loggingListenerService</serviceID>
+            <id>Logger</id>
+            <loggerName>it.geosolutions.geobatch</loggerName>
+        </LoggingProgressListener>
+        <CumulatingProgressListener>
+            <serviceID>cumulatingListenerService</serviceID>
+            <id>Cumulator</id>
+        </CumulatingProgressListener>
+        <StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>Status</id>
+        </StatusProgressListener>
+    </ListenerConfigurations>
+</FlowConfiguration>

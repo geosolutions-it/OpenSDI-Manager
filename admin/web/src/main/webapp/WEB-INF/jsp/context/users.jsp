@@ -21,13 +21,15 @@
 					<td>${user.name}</td>
 					<td>${user.role}</td>
 
-					<td><c:if test="${user.name != 'admin'}">
+					<td>
 							<a data-toggle="modal" class="btn edit-user" data-target="#edit"
 								data-userid="${user.id}" href="edit/${user.id}">Edit</a>
+						 	<c:if test="${(user.name != null) && (username != user.name)}">
 							<a data-toggle="modal" data-target="#delete"
 								class="btn delete-user" data-userid="${user.id}"
 								href="delete/${user.id}">Delete</a>
-						</c:if></td>
+							</c:if>
+					</td>
 
 				</tr>
 			</c:forEach>
@@ -96,6 +98,7 @@
 		formUtils.initModalForm('#create');
 		formUtils.initModalForm('#edit');
 		formUtils.initModalForm('#delete');
+		
 		$('.delete-user').on('click', function() {
 			var userId = $(this).data('userid');
 			formUtils.changeAction('#delete', 'delete/' + userId);

@@ -18,7 +18,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:/applicationContext.xml 
-			classpath*:/applicationContextGBSecurity.xml</param-value>
+			classpath:/applicationContextGBSecurity.xml</param-value>
 	</context-param>
 	<!--  spring context loader -->
 	<listener>

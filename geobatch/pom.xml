@@ -7,7 +7,7 @@
   <!-- =========================================================== -->
   <!-- Project Description -->
   <!-- =========================================================== -->
-  <groupId>it.geosolutions.nrl</groupId>
+  <groupId>it.geosolutions.opensdi</groupId>
   <artifactId>geobatch-root</artifactId>
   <packaging>pom</packaging>
 
@@ -75,6 +75,7 @@
   </mailingLists>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <root.basedir>${project.basedir}</root.basedir>
     <site.basedir>${root.basedir}/build/</site.basedir>
     <site.outdir>${site.basedir}/${project.version}/</site.outdir>
@@ -106,6 +107,7 @@
     <stress.skip.pattern>**/*StressTest.java</stress.skip.pattern>
     <test.maxHeapSize>512M</test.maxHeapSize>
     <src.output>${basedir}/target</src.output>
+    <jetty.port>10091</jetty.port>
   </properties>
   
   <!-- Profiles set on the command-line overwrite default properties. -->
@@ -1934,6 +1936,7 @@
   <modules>
     <module>csvingest</module>
     <module>ndviingest</module>
+    <module>ndvistats</module>
     <module>webapp</module>
   </modules>
 </project>

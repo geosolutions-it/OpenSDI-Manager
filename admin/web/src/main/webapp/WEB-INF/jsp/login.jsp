@@ -2,10 +2,14 @@
 <!DOCTYPE html>
 <html>
 <title>Login Page</title>
+<!--[if IE ]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<![endif]-->
 <link href="css/bootstrap.min.css" media="all" type="text/css"
 	rel="stylesheet">
-<link href="css/nrl.css" media="all" type="text/css"
+<link href="css/opensdi.css" media="all" type="text/css"
 	rel="stylesheet">
+<script src="<c:url value="/js/jquery-1.10.2.min.js"/>"></script>
 </head>
 <body onload='document.f.j_username.focus();'>
 	<%@ include file="common/banner.jsp"%>

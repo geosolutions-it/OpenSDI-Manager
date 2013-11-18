@@ -157,7 +157,7 @@ public class Start {
 
     public final static String WAR_PATH = "war.path";
 
-    public final static String WAR_PATH_DEFAULT = "target/webapp";
+    public final static String WAR_PATH_DEFAULT = "src/main/webapp";
 
     public final static String TEMP_DIR = "temp.dir";
 

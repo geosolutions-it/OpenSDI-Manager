@@ -1,0 +1,80 @@
+/**
+ *  Copyright (C) 2007 - 2013 GeoSolutions S.A.S.
+ *  http://www.geo-solutions.it
+ *
+ *  GPLv3 + Classpath exception
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ *  CSS style for jquery-mapstore-footer.js
+ *
+ *  @author Alejandro Diaz
+ */
+ html,body{
+    height: 100%
+}
+
+/*#holder{
+    min-height: 100%;
+    position:relative;
+}*/
+
+#footer{
+	text-align: left;
+	font-size:12px;
+}
+#footer{
+	/* Style for make it more similar to mapstore bar */
+	border-width: 2px 0 0 0;
+	border-style: solid;
+	border-color: #d0d0d0;
+	overflow: hidden;
+	background-color: #eaeaea;
+	height: 22px;
+}
+#creditsDialog{
+	width: 390px;
+	height: 430px;
+}
+#creditsOpener{
+	/* force w & h */
+	width: 59px;
+	height: 18px;
+	/* from ext x-btn */
+	border:0 none;
+    background-color:transparent;
+    cursor:pointer;
+    overflow:visible;
+    -moz-outline:0 none;
+    outline:0 none;
+    /* from ext x-btn-text */
+	padding-left: 18px;
+	font: normal 11px arial,tahoma,verdana,helvetica;
+	color: #333;
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+	margin: 0;
+	overflow: visible;
+	background-position: 0 center;
+	background-repeat: no-repeat;
+}
+#creditsOpener:hover{
+	border: 1px solid;
+}
+.icon-geoexplorer{
+	background-image: url(../img/geoexplorer.png);
+}

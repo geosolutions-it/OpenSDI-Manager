@@ -6,87 +6,29 @@
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<context:component-scan base-package="it.geosolutions.nrl.mvc" />
+	<context:component-scan base-package="it.geosolutions.opensdi.mvc" />
 	<!--  <context:component-scan base-package="it.geosolutions.operations" /> -->
 	
 	<bean id="zip2pgOp" class="it.geosolutions.operations.Zip2pgOperation">
 			<property name="path" value="zip2pgOp"/>
-			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
 	</bean>
 
 	<bean id="GeoTiffOp" class="it.geosolutions.operations.GeotiffPublishOperation">
 			<property name="path" value="GeoTiffOp"/>
 			<property name="flowID" value="geotiff_publish"/>
-			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
-	</bean>
-
-	<bean id="NDVI" class="it.geosolutions.operations.NDVIOperation">
-			<property name="path" value="NDVI"/>
-			<property name="jspName" value="ndvi"/>
-			<property name="flowID" value="ndviingestion"/>
-			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
-	</bean>
-
-	<bean id="CSV" class="it.geosolutions.operations.CSVOperation">
-			<property name="path" value="CSV"/>
-			<property name="jspName" value="csv"/>
-			<property name="flowID" value="csvingestion"/>
-			<property name="basedirString" value="G:/OpenSDIManager/test_csv/"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
 	</bean>
 
 	<bean id="flowstatus" class="it.geosolutions.operations.FlowStatusOperation">
 			<property name="path" value="flowstatus"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
-	</bean>
-
-	<bean id="NDVIStatistics" class="it.geosolutions.operations.NDVIStatisticsOperation">
-			<property name="path" value="NDVIStats"/>
-			<property name="basedirString" value="G:/OpenSDIManager/test_geotiff/"/>
-			<property name="gbinputdirString" value="G:/OpenSDIManager/gbinputdir/"/>
-			<property name="geobatchRestUrl" value="http://localhost:8081/geobatch/rest/"/>
-			<property name="geobatchUsername" value="admin"/>
-			<property name="geobatchPassword" value="admin"/>
 	</bean>
 
 	<bean id="OpEngine" class="it.geosolutions.operations.OperationEngineController"/>
-
-	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
-			<property name="RESTPath" value="fileBrowserOp"/>
-			<property name="operationName" value="NDVIBrowser"/>
-			<property name="canNavigate" value="false"/>
-			<property name="canUpload" value="false"/>
-			<property name="canDelete" value="false"/>
-			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_geotiff/"/>
-	</bean>
-
-	<bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
-			<property name="RESTPath" value="fileBrowserOpCSV"/>
-			<property name="operationName" value="CSVBrowser"/>
-			<property name="canNavigate" value="true"/>
-			<property name="canUpload" value="true"/>
-			<property name="canDelete" value="true"/>
-			<property name="defaultBaseDir" value="G:/OpenSDIManager/test_csv/"/>
-	</bean>
 	
 	<bean id="activeOpListOp" class="it.geosolutions.operations.ActiveOperationsListOperation"/>
 
 	<bean id="multipartResolver"
 	 class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
- 	
+	
 	 <bean id="handlerMapping"
       class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
     </bean>

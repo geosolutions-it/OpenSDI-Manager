@@ -2,7 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <div id="message" class="alert alert-${messageType}" aria-labelledby="myModalLabel">
-	<div class="modal-body" style="text-align: center;">
+	<div class="message-body" style="text-align: center;">
 		<c:if test="${(not empty messageCode)}">
 			<strong><spring:message code="${messageCode}"/></strong>
 		</c:if>

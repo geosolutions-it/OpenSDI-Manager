@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="osdim" uri="../../tld/osdim.tld"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <div class="container" id="${containerId}">
 	<h2>File Browser</h2>
@@ -15,14 +16,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:if test="${not empty directory }">
+			<c:if test="${not empty directory && directory!='/'}">
 				<tr>
 					<td><a href="?d=${directoryBack}">.. /</a></td>
 					<td>Folder</td>
 					<td></td>
 					<td>
 						<a class="btn" href="?d=${directoryBack}">Up one folder</a>
-					</td>
+					</td><td></td>
 				</tr>				
 			</c:if>
 			<c:if test="${not empty fileBrowser.files }">
@@ -42,8 +43,8 @@
 								<c:set var="fileext" value=".${entry.key}" /> 
 								<c:if test="${fn:endsWith(file.name, fileext)}">
 								<c:forEach items="${entry.value}" var="op">
-									<a data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
-										data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}">${op.name}</a>
+									<button data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
+										data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}?d=${directory == '/'?'': osdim:encodeURIComponent(directory)}">${op.name}</button>
 									</c:forEach>
 								</c:if>
 							</c:forEach>
@@ -53,7 +54,7 @@
 						<td>${file.lastModified}</td>
 						<td>
 							<c:if test="${(not file.isDirectory) and canDelete }">
-								<button class="btn btn-mini btn-danger" onClick="delFile('${file.name}')">Delete</button> 
+								<button class="btn btn-mini btn-danger" data-confirm="are you sure to delete the file '${file.name}'" data-filename="${file.name}" onClick="confirmDelete('${file.name}')">Delete</button> 
 							</c:if>
 						</td>
 					</tr>
@@ -74,8 +75,9 @@
 	    <p>Select files to upload. Press Add button to add more file inputs.</p>
 	    <table id="fileTable">
 	    	<tr>
-	            <td>
-					<input  name="files[0]" type="file" />
+	            <td><div class="input-append">
+					<input  name="files[0]" type="file" accept="${not empty accept ?accept :''}" />
+					</div>
 				</td>
 	        </tr>
 	    </table>
@@ -117,23 +119,21 @@
 
 	});
 
-	function remrow(id){
-		$('#row_'+ id).remove();
-		if(id>1){
-			$('#rembtn_'+ (id-1)).show();
-		}
-	}
 	
 	$(document).ready(function() {
 	    $(":file").filestyle();
+	    var fileIndex =$('#fileTable tr').children().length;
 	    //add more file components if Add is clicked
 	    $('#addFile').click(function() {
-	        var fileIndex = $('#fileTable tr').children().length;
-	        $(".remrow").hide();
+	        fileIndex++;
+	        //$(".remrow").hide();
 	        $('#fileTable').append(
 	                '<tr id="row_'+ fileIndex +'"><td>'+
-	                '   <input type="file" name="files['+ fileIndex +']" /> <input id="rembtn_'+ fileIndex +'" type="button" value="Remove" class="remrow btn btn-danger" name="clear'+ fileIndex +'" onClick="remrow('+ fileIndex +')"/>'+
-	                '</td></tr>');
+	                '<div class="input-append" >' + 
+	                '    <input type="file" name="files['+ fileIndex +']" id="files['+ fileIndex +']" accept="${not empty accept ?accept :''}" /> '+
+	                '<input id="rembtn_'+ fileIndex +'" type="button" value="Remove" class="remrow btn btn-danger" name="clear'+ fileIndex +'" onclick="delete('+ fileIndex +')"/>'+
+	            	'</div>'    + 
+                '</td></tr>');
 		    $(":file").filestyle();
 	    });
 	    
@@ -174,5 +174,19 @@
 		});
 	}
 </c:if>
+
+	function confirmDelete(filename) {
+		if (!$('#deleteFileConfirmModal').length) {
+			$('body').append('<div id="deleteFileConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" data-dismiss="modal" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#deleteFileConfirmModal').find('.modal-body').text("Are you sure that you want to delete '"+filename+"'?");
+		
+		$('#dataConfirmOK').on('click', function(){
+			delFile(filename);
+		} );
+		$('#deleteFileConfirmModal').modal({show:true});
+		return false;
+	}
+
 </script>
 </div>
