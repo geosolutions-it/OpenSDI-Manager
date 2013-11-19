@@ -13,7 +13,7 @@
     <property name="locations">
         <list>
             <!-- used for overriding props during maven tests -->
-            <value>classpath*:gb-nrl-config.properties</value>
+            <value>classpath*:gb-nrl-config-ovr.properties</value>
             <!-- used for externalized override -->
             <value>${gb-nrl-ovr}</value>
         </list>
