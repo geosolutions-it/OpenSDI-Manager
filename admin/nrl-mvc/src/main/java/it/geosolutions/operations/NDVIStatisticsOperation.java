@@ -43,7 +43,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class NDVIStatisticsOperation implements LocalOperation {
+public class NDVIStatisticsOperation extends GeoBatchOperationImpl implements LocalOperation {
 
 /**
  * The name of this Operation
@@ -66,12 +66,6 @@ private String[] extensions = { "tiff" };
 private String basedirString = "G:/OpenSDIManager/test_geotiff/";
 
 private String gbinputdirString = "G:/OpenSDIManager/gbinputdir/";
-
-private String geobatchRestUrl = "http://localhost:8081/geobatch/rest/";
-
-private String geobatchUsername = "admin";
-
-private String geobatchPassword = "admin";
 
 private String flowID = "ndvistats";
 
@@ -187,7 +181,7 @@ public static final String NDVI_FILE_NAME_EXTENSION = ".tif";
 private String getNDVIFileName(String yearS, String monthS, String dekadS) {
     Integer year = Integer.decode(yearS);
     String mm = monthS.length() == 1 ? "0" + monthS : monthS;
-    Integer month = Integer.decode(mm);
+    Integer month = Integer.decode(monthS);
     Dekad dekad = dekadS.equals("2") ? Dekad.SECOND
             : dekadS.equals("3") ? Dekad.THIRD : Dekad.FIRST;
     
@@ -336,48 +330,6 @@ public String getJsp() {
  */
 public void setPath(String path) {
     this.path = path;
-}
-
-/**
- * @return the geostoreRestUrl
- */
-public String getGeobatchRestUrl() {
-    return geobatchRestUrl;
-}
-
-/**
- * @param geobatchRestUrl the geostoreRestUrl to set
- */
-public void setGeobatchRestUrl(String geobatchRestUrl) {
-    this.geobatchRestUrl = geobatchRestUrl;
-}
-
-/**
- * @return the geostoreUsername
- */
-public String getGeobatchUsername() {
-    return geobatchUsername;
-}
-
-/**
- * @param geobatchUsername the geostoreUsername to set
- */
-public void setGeobatchUsername(String geobatchUsername) {
-    this.geobatchUsername = geobatchUsername;
-}
-
-/**
- * @return the geostorePassword
- */
-public String getGeobatchPassword() {
-    return geobatchPassword;
-}
-
-/**
- * @param geobatchPassword the geostorePassword to set
- */
-public void setGeobatchPassword(String geobatchPassword) {
-    this.geobatchPassword = geobatchPassword;
 }
 
 @Override

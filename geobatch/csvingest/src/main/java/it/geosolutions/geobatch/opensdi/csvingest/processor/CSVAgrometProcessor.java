@@ -67,7 +67,7 @@ public class CSVAgrometProcessor extends CSVProcessor {
                 agromet.setProvince(nextLine[idx++]);
                 agromet.setYear(Integer.parseInt(nextLine[idx++]));
                 agromet.setMonth(nextLine[idx++]);
-                agromet.setDek(Integer.parseInt(nextLine[idx++]));
+                agromet.setDec(Integer.parseInt(nextLine[idx++]));
                 agromet.setFactor(nextLine[idx++]);
                 setSVars(agromet);
 
@@ -105,7 +105,7 @@ public class CSVAgrometProcessor extends CSVProcessor {
         Month3 emon = Month3.valueOf(agromet.getMonth().toUpperCase());
 
         agromet.setS_yr( agromet.getYear()+ emon.getAdd());
-        agromet.setS_dec(agromet.getDek() + emon.getPos()*3);
+        agromet.setS_dec(agromet.getDec() + emon.getPos()*3);
     }
 
 

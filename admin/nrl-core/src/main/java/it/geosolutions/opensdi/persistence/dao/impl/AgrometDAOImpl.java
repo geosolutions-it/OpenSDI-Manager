@@ -70,7 +70,7 @@ public class AgrometDAOImpl extends BaseDAO<AgroMet, Long> implements AgrometDAO
         search.addFilterEqual("province", agroMet.getProvince());
         search.addFilterEqual("year", agroMet.getYear());
         search.addFilterEqual("month", agroMet.getMonth());
-        search.addFilterEqual("dek", agroMet.getDek());
+        search.addFilterEqual("dec", agroMet.getDec());
         
         AgroMet found;
         try {
