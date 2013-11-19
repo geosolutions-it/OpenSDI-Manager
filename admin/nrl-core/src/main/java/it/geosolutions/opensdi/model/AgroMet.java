@@ -12,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "AgroMet")
 @Table(name = "agromet", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"factor" , "district" , "province" , "year", "month", "dek"})})
+    @UniqueConstraint(columnNames = {"factor" , "district" , "province" , "year", "month", "dec"})})
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "agromet")
 @XmlRootElement(name = "AgroMet")
 public class AgroMet {
@@ -35,7 +35,7 @@ public class AgroMet {
     private String month;// character varying(3) NOT NULL,
 
     @Column(nullable = false, updatable = false)
-    private int dek;// TODO to dek if possible in table"dec" bigint NOT NULL,
+    private int dec;// TODO to dek if possible in table"dec" bigint NOT NULL,
 
     @Column(nullable = false, updatable = false)
     private String factor; //factor character varying(255) NOT NULL,
@@ -87,12 +87,12 @@ public class AgroMet {
         this.month = month;
     }
 
-    public int getDek() {
-        return dek;
+    public int getDec() {
+        return dec;
     }
 
-    public void setDek(int dek) {
-        this.dek = dek;
+    public void setDec(int dec) {
+        this.dec = dec;
     }
 
     public String getFactor() {
@@ -130,7 +130,7 @@ public class AgroMet {
     @Override
     public String toString() {
         return "AgroMet{" + "id=" + id + ", dist=" + district + ", prov=" + province 
-                + ", yr=" + year + ", mn=" + month + ", dk=" + dek
+                + ", yr=" + year + ", mn=" + month + ", dec=" + dec
                 + ", factor=" + factor + ", value=" + value
                 + ", s_yr=" + s_yr + ", s_dec=" + s_dec + '}';
     }

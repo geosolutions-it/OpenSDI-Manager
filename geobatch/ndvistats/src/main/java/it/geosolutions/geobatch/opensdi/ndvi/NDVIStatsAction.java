@@ -344,6 +344,10 @@ private void generateCSV(GridCoverage2D coverage, SimpleFeatureCollection fc,
     // dv_20130101_20130110.tif
     year = ndviFileName.substring(3, 7);
     month = ndviFileName.substring(7, 9);
+    // Remove "0"
+    if(month.startsWith("0")){
+        month = month.replace("0", "");
+    }
     Calendar cal = new GregorianCalendar(Integer.decode(year),
             Integer.decode(month) - 1, 1);
     month = MONTH_FORMAT.format(cal.getTime());
