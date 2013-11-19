@@ -21,16 +21,11 @@
  */
 package it.geosolutions.opensdi.persistence.dao;
 
-import com.googlecode.genericdao.dao.jpa.GenericDAO;
-
 import it.geosolutions.opensdi.model.CropData;
 
 /**
- * 
  * @author ETj (etj at geo-solutions.it)
  */
-public interface CropDataDAO extends GenericDAO<CropData, Long> {
-        
-      
-}
+public interface CropDataDAO extends GenericNRLDAO<CropData, Long> {
 
+}

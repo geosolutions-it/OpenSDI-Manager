@@ -53,7 +53,7 @@ public class AgrometDAOTest extends BaseDAOTest {
             cd.setProvince("prov");
             cd.setYear(2013);
             cd.setMonth("Jan");
-            cd.setDek(0);
+            cd.setDec(0);
             cd.setFactor(FACTOR);
             cd.setValue(42.0);
 
@@ -96,7 +96,7 @@ public class AgrometDAOTest extends BaseDAOTest {
             cd.setProvince("prov");
             cd.setYear(2013);
             cd.setMonth("Jan");
-            cd.setDek(0);
+            cd.setDec(0);
             cd.setFactor(FACTOR);
             cd.setValue(42.0);
 
@@ -143,7 +143,7 @@ public class AgrometDAOTest extends BaseDAOTest {
             cd.setProvince("prov");
             cd.setYear(2013);
             cd.setMonth("Jan");
-            cd.setDek(0);
+            cd.setDec(0);
             cd.setFactor(FACTOR);
             cd.setValue(42.0);
 
@@ -166,7 +166,7 @@ public class AgrometDAOTest extends BaseDAOTest {
                 cd.setProvince("prov");
                 cd.setYear(2013);
                 cd.setMonth("Jan");
-                cd.setDek(0);
+                cd.setDec(0);
                 cd.setFactor(FACTOR);
                 cd.setValue(999.0);
 
