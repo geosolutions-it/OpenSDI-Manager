@@ -124,18 +124,22 @@
 	    $(":file").filestyle();
 	    var fileIndex =$('#fileTable tr').children().length;
 	    //add more file components if Add is clicked
+	    var idRow = "row_" + fileIndex;
 	    $('#addFile').click(function() {
 	        fileIndex++;
 	        //$(".remrow").hide();
 	        $('#fileTable').append(
-	                '<tr id="row_'+ fileIndex +'"><td>'+
+	                '<tr id="'+ idRow +'"><td>'+
 	                '<div class="input-append" >' + 
 	                '    <input type="file" name="files['+ fileIndex +']" id="files['+ fileIndex +']" accept="${not empty accept ?accept :''}" /> '+
-	                '<input id="rembtn_'+ fileIndex +'" type="button" value="Remove" class="remrow btn btn-danger" name="clear'+ fileIndex +'" onclick="delete('+ fileIndex +')"/>'+
+	                '<input id="rembtn_'+ fileIndex +'" type="button" value="Remove" class="remrow btn btn-danger" name="clear'+ fileIndex 
+	                	+'"onclick="$(\'#' + idRow + '\').remove()"/>'+
 	            	'</div>'    + 
                 '</td></tr>');
 		    $(":file").filestyle();
 	    });
+
+	    
 	    
     	$("#${formId}").submit(function() {
     		var options = {
