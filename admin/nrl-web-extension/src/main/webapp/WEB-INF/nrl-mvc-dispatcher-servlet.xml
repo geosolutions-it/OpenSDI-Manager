@@ -40,4 +40,14 @@
 			<property name="canDelete" value="true"/>
 	</bean>
 
+	<bean id="fileBrowserOpCropMask" class="it.geosolutions.operations.FileBrowserOperationController">
+	                <property name="RESTPath" value="fileBrowserOpCropMask"/>
+	                <property name="operationName" value="CropMask"/>
+	                <property name="canNavigate" value="true"/>
+	                <property name="canUpload" value="true"/>
+	                <property name="canDelete" value="true"/>
+	                <property name="defaultBaseDir" value="/home/geosolutions/admin/crop_masks/"/>
+	</bean>
+
+
 </beans>
