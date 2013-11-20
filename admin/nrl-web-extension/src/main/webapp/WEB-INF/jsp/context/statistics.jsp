@@ -10,23 +10,20 @@
 		<div class="control-group">
 			<label class="control-label">Regions</label>
 			<div class="controls">
-				<c:forEach items="${regions.elements}" var="elem">
+				<c:forEach items="${regions.elements}" var="elem" varStatus="status">
+					<c:choose>
+					<c:when test="${status.index == 0}">
+					<label class="radio"> <input type="radio" name="region"
+						value="${elem.value}" checked="true">${elem.label}
+					</label>
+					</c:when>
+					<c:otherwise>
 					<label class="radio"> <input type="radio" name="region"
 						value="${elem.value}">${elem.label}
 					</label>
+					</c:otherwise>
+					</c:choose>
 				</c:forEach>
-				<!-- Disable custom region
-				<c:if test="${not empty regions.fileBrowser }">
-					<label class="radio"> <input class="custom-selector"
-						type="radio" name="region" value="file">Custom
-					</label>
-					<select name="region_file" id="region_file"
-						class="input-block-level" disabled>
-						<c:forEach items="${regions.fileBrowser.fileNames}" var="file">
-							<option value="${file}">${file}</option>
-						</c:forEach>
-					</select>
-				</c:if>-->
 			</div>
 		</div>
 		<div class="control-group">
@@ -34,7 +31,7 @@
 			<div class="controls">
 				<c:forEach items="${masks.elements}" var="elem">
 					<label class="radio"> <input type="radio" name="mask"
-						value="${elem.value}">${elem.label}
+						value="${elem.value}" checked="true">${elem.label}
 					</label>
 				</c:forEach>
 				<label class="radio"> <input type="radio" name="mask"
