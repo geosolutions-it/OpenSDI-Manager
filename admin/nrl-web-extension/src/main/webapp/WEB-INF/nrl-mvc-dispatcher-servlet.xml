@@ -9,45 +9,59 @@
 	<context:component-scan base-package="it.geosolutions.opensdi.mvc" />
 
 	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
-			<property name="RESTPath" value="fileBrowserOp"/>
-			<property name="operationName" value="NDVIBrowser"/>
-			<property name="canNavigate" value="false"/>
-			<property name="canUpload" value="false"/>
-			<property name="canDelete" value="false"/>
+	   <property name="fileRegex" value=".*\.tif" />
+	   <property name="RESTPath" value="fileBrowserOp"/>
+	   <property name="operationName" value="NDVIBrowser"/>
+	   <property name="canNavigate" value="true"/>
+	   <property name="canUpload" value="true"/>
+	   <property name="canDelete" value="true"/>
+	   <property name="defaultBaseDir" value="/home/geosolutions/admin/test_geotiff/"/>
+	   <property name="accept" value="image/tif,image/tiff"/>
+	   <property name="allowedOperations">
+	    <list>
+	     <value>NDVI</value>
+	    </list>
+	   </property>
 	</bean>
-	
+
 	<bean id="NDVI" class="it.geosolutions.operations.NDVIOperation">
-			<property name="path" value="NDVI"/>
-			<property name="jspName" value="ndvi"/>
-			<property name="flowID" value="ndviingestion"/>
+        <property name="path" value="NDVI"/>
+        <property name="jspName" value="ndvi"/>
+        <property name="flowID" value="ndviingestion"/>
 	</bean>
 
 	<bean id="CSV" class="it.geosolutions.operations.CSVOperation">
-			<property name="path" value="CSV"/>
-			<property name="jspName" value="csv"/>
-			<property name="flowID" value="csvingestion"/>
+        <property name="path" value="CSV"/>
+        <property name="jspName" value="csv"/>
+        <property name="flowID" value="csvingestion"/>
 	</bean>
 
 	<bean id="NDVIStatistics" class="it.geosolutions.operations.NDVIStatisticsOperation">
-			<property name="path" value="NDVIStats"/>
+        <property name="path" value="NDVIStats"/>
 	</bean>
 
-	<bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
-			<property name="RESTPath" value="fileBrowserOpCSV"/>
-			<property name="operationName" value="CSVBrowser"/>
-			<property name="canNavigate" value="true"/>
-			<property name="canUpload" value="true"/>
-			<property name="canDelete" value="true"/>
-	</bean>
+	 <bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
+		<property name="RESTPath" value="fileBrowserOpCSV"/>
+		<property name="fileRegex" value=".*\.csv" />
+		<property name="operationName" value="CSVBrowser"/>
+		<property name="canNavigate" value="true"/>
+		<property name="canUpload" value="true"/>
+		<property name="canDelete" value="true"/>
+		<property name="defaultBaseDir" value="/home/geosolutions/admin/test_csv/"/>
+		<property name="accept" value="text/csv"/>
+		<property name="allowedOperations">
+		<list>
+		 <value>CSV</value>
+		</list>
+		</property>
+	 </bean>
 
 	<bean id="fileBrowserOpCropMask" class="it.geosolutions.operations.FileBrowserOperationController">
-	                <property name="RESTPath" value="fileBrowserOpCropMask"/>
-	                <property name="operationName" value="CropMask"/>
-	                <property name="canNavigate" value="true"/>
-	                <property name="canUpload" value="true"/>
-	                <property name="canDelete" value="true"/>
-	                <property name="defaultBaseDir" value="/home/geosolutions/admin/crop_masks/"/>
+        <property name="RESTPath" value="fileBrowserOpCropMask"/>
+        <property name="operationName" value="CropMask"/>
+        <property name="canNavigate" value="true"/>
+        <property name="canUpload" value="true"/>
+        <property name="canDelete" value="true"/>
+        <property name="defaultBaseDir" value="/home/geosolutions/admin/crop_masks/"/>
 	</bean>
-
-
 </beans>
