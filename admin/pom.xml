@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <name>Crop Information Portal</name>
+    <name>OpenSDI-Manager Portal</name>
     
     <developers>
         <developer>
@@ -24,6 +24,11 @@
         <developer>
             <name>Lorenzo Pini</name>
             <id>Gnafu</id>
+            <organization>GeoSolutions</organization>
+        </developer>
+        <developer>
+            <name>Alejandro Diaz</name>
+            <id>alediator</id>
             <organization>GeoSolutions</organization>
         </developer>
     </developers>
@@ -540,7 +545,7 @@
         <module>nrl-core</module>
         <module>nrl-mvc</module>
         <module>nrl-web-extension</module>
-       
+        <module>fileBrowserSHP-web-extension</module>
   </modules>
   <build>
    <plugins>
