@@ -19,7 +19,7 @@ import org.hibernate.annotations.Index;
 
 @Entity(name = "CropData")
 @Table(name = "cropdata", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"cropdescriptor" , "district" , "province" , "year"})})
+    @UniqueConstraint(columnNames = {"crop" , "district" , "province" , "year"})})
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "cropdata")
 @XmlRootElement(name = "CropData")
 public class CropData {
@@ -29,7 +29,7 @@ public class CropData {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name="cropdescriptor", nullable = false, updatable = false)
+    @JoinColumn(name="crop", nullable = false, updatable = false)
     @ForeignKey(name = "crop_type")
     private CropDescriptor cropDescriptor;
 
