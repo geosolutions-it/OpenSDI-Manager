@@ -24,6 +24,7 @@ import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.dto.StatsBean;
 import it.geosolutions.opensdi.mvc.model.statistics.InputSelectorConfig;
 import it.geosolutions.opensdi.mvc.model.statistics.StatisticsConfigList;
+import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.DekadUtils;
 
 import java.io.File;
@@ -43,7 +44,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class NDVIStatisticsOperation extends FileBrowserOperationController implements LocalOperation {
+public class NDVIStatisticsOperation extends FileBrowserOperationController
+        implements LocalOperation {
 
 /**
  * The name of this Operation
@@ -67,16 +69,13 @@ private String basedirString = "G:/OpenSDIManager/test_geotiff/";
 
 private String gbinputdirString = "G:/OpenSDIManager/gbinputdir/";
 
-private String geobatchRestUrl = "http://localhost:8081/geobatch/rest/";
-
-private String geobatchUsername = "admin";
-
-private String geobatchPassword = "admin";
-
 private String flowID = "ndvistats";
 
 @Autowired
 StatisticsConfigList statisticsConfigs;
+
+@Autowired
+GeoBatchClient geobatchClient;
 
 private final static Logger LOGGER = LoggerFactory
         .getLogger(NDVIStatisticsOperation.class);
@@ -84,23 +83,23 @@ private final static Logger LOGGER = LoggerFactory
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
         List<MultipartFile> files) {
-    
+
     // Copy file browser files
     String fileBrowser = super.getJsp(model, request, files);
-    
-    if(request.getParameter("fileBrowser") != null 
-            || request.getAttribute("fileBrowser") != null){
+
+    if (request.getParameter("fileBrowser") != null
+            || request.getAttribute("fileBrowser") != null) {
         // just common fileBrowser
         return fileBrowser;
-    }else{
+    } else {
         // Common form
         System.out.println("getJSP di NDVIStatistics");
-    
+
         // TODO: How make this config? parametric xml or request parameters?
         setRegions("regions", model);
         setMask("masks", model);
         // setGranule(granule,model);
-    
+
         return "statistics";
     }
 
@@ -147,7 +146,7 @@ public Object getBlob(Object inputParam, HttpServletRequest request) {
                 year = vals[0];
             } else if (key.equalsIgnoreCase("dekad")) {
                 granule_dekad = vals[0];
-            }else if (key.equalsIgnoreCase("mask_file")) {
+            } else if (key.equalsIgnoreCase("mask_file")) {
                 // Get the file from the values and default baseDir
                 sb.setForestMaskFullPath("file:" + defaultBaseDir + vals[0]);
             }
@@ -198,10 +197,10 @@ public static final String NDVI_FILE_NAME_EXTENSION = ".tif";
 private String getNDVIFileName(String yearS, String monthS, String dekadS) {
     Integer year = Integer.decode(yearS);
     String mm = monthS.length() == 1 ? "0" + monthS : monthS;
-    Integer month = Integer.decode(mm);
+    Integer month = Integer.decode(monthS);
     Dekad dekad = dekadS.equals("2") ? Dekad.SECOND
             : dekadS.equals("3") ? Dekad.THIRD : Dekad.FIRST;
-    
+
     // First day: can be 01, 11 or 21
     String ddStart = DekadUtils.getFirstDay(year, month, dekad.ordinal()) + "";
     if (ddStart.length() == 1) {
@@ -349,48 +348,6 @@ public void setPath(String path) {
     this.path = path;
 }
 
-/**
- * @return the geostoreRestUrl
- */
-public String getGeobatchRestUrl() {
-    return geobatchRestUrl;
-}
-
-/**
- * @param geobatchRestUrl the geostoreRestUrl to set
- */
-public void setGeobatchRestUrl(String geobatchRestUrl) {
-    this.geobatchRestUrl = geobatchRestUrl;
-}
-
-/**
- * @return the geostoreUsername
- */
-public String getGeobatchUsername() {
-    return geobatchUsername;
-}
-
-/**
- * @param geobatchUsername the geostoreUsername to set
- */
-public void setGeobatchUsername(String geobatchUsername) {
-    this.geobatchUsername = geobatchUsername;
-}
-
-/**
- * @return the geostorePassword
- */
-public String getGeobatchPassword() {
-    return geobatchPassword;
-}
-
-/**
- * @param geobatchPassword the geostorePassword to set
- */
-public void setGeobatchPassword(String geobatchPassword) {
-    this.geobatchPassword = geobatchPassword;
-}
-
 @Override
 public String getFlowID() {
     return flowID;
@@ -412,6 +369,27 @@ public String getGbinputdirString() {
  */
 public void setGbinputdirString(String gbinputdirString) {
     this.gbinputdirString = gbinputdirString;
+}
+
+/**
+ * @return the geobatchRestUrl
+ */
+public String getGeobatchRestUrl() {
+    return geobatchClient.getGeobatchRestUrl();
+}
+
+/**
+ * @return the geostoreUsername
+ */
+public String getGeobatchUsername() {
+    return geobatchClient.getGeobatchUsername();
+}
+
+/**
+ * @return the geostorePassword
+ */
+public String getGeobatchPassword() {
+    return geobatchClient.getGeobatchPassword();
 }
 
 }

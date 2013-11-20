@@ -10,6 +10,13 @@
        default-autowire="byName">
 
     <context:annotation-config />
+      
+    <!-- GeoStore REST Client -->
+    <bean id="geoStoreClient" class="it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient">
+      <property name="geostoreRestUrl" value="http://localhost/geostore"></property>
+      <property name="username" value="admin"></property>
+      <property name="password" value="admin"></property>
+    </bean> 
     
     <bean id="geobatchClient" class="it.geosolutions.opensdi.service.impl.GeoBatchClientImpl">
     	<property name="geobatchRestUrl" value="http://localhost/geobatch"/>

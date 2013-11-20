@@ -13,30 +13,5 @@
             http://cxf.apache.org/core                      http://cxf.apache.org/schemas/core.xsd
             http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.0.xsd"
        default-autowire="byName">
-       
-       
-       <!-- ==================================================================== -->
-	    <!-- PLEASE DO NO CHANGE THE PROPERTIES IN THIS FILE                      -->
-	    <!-- ==================================================================== -->
-	    <!-- If you need to customize something for your junit tests, create a file test/resources/nrl-config-ovr.properties -->
-	    <!-- If you need to customize something in the running application, define the java arg -Dnrl-ovr=/PATH/TO/YOUR/OVR -->
-	    <!-- ==================================================================== -->
-	
-	    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	        <property name="order" value="0"/>
-	        <property name="locations">
-	            <list>
-	                <value>classpath:nrl-config.properties</value>
-	            </list>
-	        </property>
-	        <property name="ignoreResourceNotFound" value="true"/>
-	    </bean>
-	    
-		<!-- GeoStore REST Client -->
-		<bean id="geoStoreClient" class="it.geosolutions.geostore.services.rest.AdministratorGeoStoreClient">
-			<property name="geostoreRestUrl" value="${geostore.resturl}"></property>
-			<property name="username" value="${geostore.user}"></property>
-			<property name="password" value="${geostore.password}"></property>
-		</bean> 
 		
 </beans>
