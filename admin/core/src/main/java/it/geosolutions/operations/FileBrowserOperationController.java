@@ -55,7 +55,7 @@ public class FileBrowserOperationController implements ApplicationContextAware, 
 
 	private String operationJSP = "files";
 
-	private String defaultBaseDir;
+	protected String defaultBaseDir;
 	
 	private Boolean canNavigate;
 	

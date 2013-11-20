@@ -24,7 +24,10 @@
             <groupId>it.geosolutions.opensdi</groupId>
             <artifactId>opensdi-core</artifactId>
         </dependency>
-        
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>

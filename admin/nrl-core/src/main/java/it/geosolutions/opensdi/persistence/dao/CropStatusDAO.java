@@ -23,24 +23,9 @@ package it.geosolutions.opensdi.persistence.dao;
 
 import it.geosolutions.opensdi.model.CropStatus;
 
-import com.googlecode.genericdao.dao.jpa.GenericDAO;
-
 /**
  * 
  * @author adiaz
  */
-public interface CropStatusDAO extends GenericDAO<CropStatus, Long> {
-
-	/**
-	 * Remove a CropStatus record by id
-	 * 
-	 * @param crop
-	 * @param month
-	 * @param factor
-	 * @param dec
-	 * 
-	 * @return
-	 */
-	public boolean removeByPK(String crop, String month, String factor,
-			Integer dec);
+public interface CropStatusDAO extends GenericNRLDAO<CropStatus, Long> {
 }

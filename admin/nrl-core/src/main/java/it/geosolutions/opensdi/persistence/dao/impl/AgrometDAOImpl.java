@@ -22,6 +22,8 @@
 
 package it.geosolutions.opensdi.persistence.dao.impl;
 
+import java.io.Serializable;
+
 import com.googlecode.genericdao.search.Search;
 
 import it.geosolutions.opensdi.model.AgroMet;
@@ -62,28 +64,17 @@ public class AgrometDAOImpl extends BaseDAO<AgroMet, Long> implements AgrometDAO
         return super.removeById(id); 
     }
 
-    @Override
-    public boolean removeByPK(AgroMet agroMet) {
-        Search search = new Search(AgroMet.class);
-        search.addFilterEqual("factor", agroMet.getFactor());
-        search.addFilterEqual("district", agroMet.getDistrict());
-        search.addFilterEqual("province", agroMet.getProvince());
-        search.addFilterEqual("year", agroMet.getYear());
-        search.addFilterEqual("month", agroMet.getMonth());
-        search.addFilterEqual("dec", agroMet.getDec());
-        
-        AgroMet found;
-        try {
-            found = searchUnique(search);
-        } catch (NonUniqueResultException e) {
-            LOGGER.error("Non unique result searching for Agromet " + search, e);
-            return false;
-        } catch (NoResultException e) {
-            return false;
-        }
+private static String[] PKNames = { "factor", "district", "province", "year", "month", "dec" };
 
-        return remove(found);
-    }
+/**
+ * Obtain array for the pknames ordered to be used in
+ * {@link BaseDAO#removeByPK(Serializable...)}
+ * 
+ * @return array with names of the pk aggregated
+ */
+public String[] getPKNames() {
+    return PKNames;
+}
 
 
 }

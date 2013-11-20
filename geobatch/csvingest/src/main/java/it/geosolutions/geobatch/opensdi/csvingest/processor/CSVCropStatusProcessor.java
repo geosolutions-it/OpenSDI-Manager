@@ -20,107 +20,117 @@
 package it.geosolutions.geobatch.opensdi.csvingest.processor;
 
 import it.geosolutions.geobatch.opensdi.csvingest.utils.CSVIngestUtils;
+import it.geosolutions.geobatch.opensdi.csvingest.utils.CSVPropertyType;
 import it.geosolutions.opensdi.model.CropStatus;
+import it.geosolutions.opensdi.persistence.dao.GenericNRLDAO;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import au.com.bytecode.opencsv.CSVReader;
-
-import com.googlecode.genericdao.search.Search;
-
 /**
- *
  * @author adiaz
  */
-public class CSVCropStatusProcessor extends CSVProcessor {
+public class CSVCropStatusProcessor extends
+        GenericCSVProcessor<CropStatus, Long> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CSVCropStatusProcessor.class);
+private final static Logger LOGGER = LoggerFactory
+        .getLogger(CSVCropStatusProcessor.class);
 
-    private final static List<String> HEADERS =
-            Collections.unmodifiableList(Arrays.asList("*","factor","crop","month","dec","max","min","opt"));
+private final static List<String> HEADERS = Collections.unmodifiableList(Arrays
+        .asList("*", "factor", "crop", "month", "dec", "max", "min", "opt"));
 
-    public CSVCropStatusProcessor() {
+@Override
+public List<String> getHeaders() {
+    return HEADERS;
+}
+
+static List<CSVPropertyType> TYPES;
+static {
+    TYPES = new LinkedList<CSVPropertyType>();
+    // "*",
+    TYPES.add(CSVPropertyType.IGNORE);
+    // "factor"
+    TYPES.add(CSVPropertyType.STRING);
+    // "crop"
+    TYPES.add(CSVPropertyType.STRING);
+    // "month"
+    TYPES.add(CSVPropertyType.STRING);
+    // "dec"
+    TYPES.add(CSVPropertyType.INTEGER);
+    // "max"
+    TYPES.add(CSVPropertyType.DOUBLE);
+    // "min"
+    TYPES.add(CSVPropertyType.DOUBLE);
+    // "opt"
+    TYPES.add(CSVPropertyType.DOUBLE);
+}
+
+static List<Integer> PK_PROPERTIES;
+static {
+    PK_PROPERTIES = new LinkedList<Integer>();
+    // ID : crop, month, factor, dec);
+    PK_PROPERTIES.add(2);
+    PK_PROPERTIES.add(3);
+    PK_PROPERTIES.add(1);
+    PK_PROPERTIES.add(4);
+}
+
+@Override
+public List<Integer> getPkProperties() {
+    return PK_PROPERTIES;
+}
+
+@Override
+public GenericNRLDAO<CropStatus, Long> getDao() {
+    return cropStatusDAO;
+}
+
+@Override
+public List<CSVPropertyType> getTypes() {
+    return TYPES;
+}
+
+public CropStatus merge(CropStatus old, Object[] properties) {
+    CropStatus cropStatus;
+    if (old != null) {
+        cropStatus = (CropStatus) old;
+    } else {
+        cropStatus = new CropStatus();
     }
-
-
-    @Override
-    public List<String> getHeaders() {
-        return HEADERS;
+    int idx = 1;
+    // pk
+    cropStatus.setFactor((String) properties[idx++]);
+    cropStatus.setCrop((String) properties[idx++]);
+    String month = (String) properties[idx++];
+    cropStatus.setMonth(month);
+    Integer dec = (Integer) properties[idx++];
+    cropStatus.setDec(dec);
+    // data
+    cropStatus.setMax((Double) properties[idx++]);
+    cropStatus.setMin((Double) properties[idx++]);
+    cropStatus.setOpt((Double) properties[idx++]);
+    Integer sDec = null;
+    try {
+        sDec = CSVIngestUtils.getDecad(month, dec);
+    } catch (CSVProcessException e) {
+        LOGGER.error("Incorrect decad (month,dec) = (" + month + "," + dec
+                + ")", e);
     }
+    cropStatus.setS_dec(sDec);
+    return cropStatus;
+}
 
-    @Override
-    public void process(CSVReader reader) throws CSVProcessException {
-        String nextLine[];
-        long ok = 0;
+public void save(CropStatus entity) {
+    cropStatusDAO.save(entity);
+}
 
-        try {
-            while ((nextLine = reader.readNext()) != null) {
-                int idx = 0;
-                idx++; // rowid not needed
-                
-                // Parameters into the CSV
-                String factor = nextLine[idx++];
-                String crop = nextLine[idx++];
-                String month = nextLine[idx++];
-                Integer dec = Integer.parseInt(nextLine[idx++]);
-                Double max =  CSVIngestUtils.getDoubleValue(nextLine[idx++]);
-                Double min = CSVIngestUtils.getDoubleValue(nextLine[idx++]);
-                Double opt = CSVIngestUtils.getDoubleValue(nextLine[idx++]);
-        		Integer sDec = CSVIngestUtils.getDecad(month, dec);
-
-                try {
-
-            		if(max == null && min == null && opt == null){
-            			// we need to remove it!!
-            			cropStatusDAO.removeByPK(crop, month, factor, dec);
-            		}else {
-            			// looking for old record 
-                    	Search search = new Search(CropStatus.class);
-                    	search.addFilterEqual("crop", crop);
-                    	search.addFilterEqual("month", month);
-                    	search.addFilterEqual("factor", factor);
-                    	search.addFilterEqual("dec", dec);
-                    	CropStatus oldCropStatus = cropStatusDAO.searchUnique(search);
-                    	if(oldCropStatus != null){
-	            			// update!!
-	            			oldCropStatus.setMax(max);
-	                		oldCropStatus.setMin(min);
-	                		oldCropStatus.setOpt(opt);
-	                		oldCropStatus.setS_dec(sDec);
-	                        cropStatusDAO.save(oldCropStatus);
-                    	}else{
-	                		// it's a new record
-	                        CropStatus cropStatus = new CropStatus();
-	                		// pk
-	                        cropStatus.setFactor(factor);
-	                        cropStatus.setCrop(crop);
-	                        cropStatus.setMonth(month);
-	                        cropStatus.setDec(dec);
-	                        // data
-	                        cropStatus.setMax(max);
-	                        cropStatus.setMin(min);
-	                        cropStatus.setOpt(opt);
-	                        cropStatus.setS_dec(sDec);
-	                        cropStatusDAO.persist(cropStatus);
-                    	}
-                	}
-
-                    ok++;
-                } catch (Exception e) {
-                    throw new CSVProcessException("Could not persist #" + ok + " CropStatus", e);
-                }
-            }
-        } catch (IOException e) {
-            throw new CSVProcessException("Error in reading CSV file", e);
-        }
-
-        LOGGER.info("Crop status ingestion -- persisted "+ ok + " cropstatus");
-    }
+public void persist(CropStatus entity) {
+    cropStatusDAO.persist(entity);
+}
 
 }

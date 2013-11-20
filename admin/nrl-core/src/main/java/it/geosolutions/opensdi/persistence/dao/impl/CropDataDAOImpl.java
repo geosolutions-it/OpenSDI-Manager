@@ -25,33 +25,48 @@ package it.geosolutions.opensdi.persistence.dao.impl;
 import it.geosolutions.opensdi.model.CropData;
 import it.geosolutions.opensdi.persistence.dao.CropDataDAO;
 
+import java.io.Serializable;
+
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author ETj (etj at geo-solutions.it)
+ * @author adiaz
  */
 @Transactional(value = "opensdiTransactionManager")
-public class CropDataDAOImpl extends BaseDAO<CropData, Long> implements CropDataDAO {
+public class CropDataDAOImpl extends BaseDAO<CropData, Long> implements
+        CropDataDAO {
 
-    @Override
-    public void persist(CropData... entities) {
-        super.persist(entities);
-    }
+@Override
+public void persist(CropData... entities) {
+    super.persist(entities);
+}
 
-    @Override
-    public CropData merge(CropData entity) {
-        return super.merge(entity);
-    }
+@Override
+public CropData merge(CropData entity) {
+    return super.merge(entity);
+}
 
-    @Override
-    public boolean remove(CropData entity) {
-        return super.remove(entity);
-    }
+@Override
+public boolean remove(CropData entity) {
+    return super.remove(entity);
+}
 
-    @Override
-    public boolean removeById(Long id) {
-        return super.removeById(id);
-    }
+@Override
+public boolean removeById(Long id) {
+    return super.removeById(id);
+}
+
+private static String[] PKNames = { "crop", "district", "province", "year" };
+
+/**
+ * Obtain array for the pknames ordered to be used in
+ * {@link BaseDAO#removeByPK(Serializable...)}
+ * 
+ * @return array with names of the pk aggregated
+ */
+public String[] getPKNames() {
+    return PKNames;
+}
 
 }

@@ -25,6 +25,8 @@ package it.geosolutions.opensdi.persistence.dao.impl;
 import it.geosolutions.opensdi.model.AgrometDescriptor;
 import it.geosolutions.opensdi.persistence.dao.AgrometDescriptorDAO;
 
+import java.io.Serializable;
+
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,25 +34,39 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ETj
  */
 @Transactional(value = "opensdiTransactionManager")
-public class AgrometDescriptorDAOImpl extends BaseDAO<AgrometDescriptor, String> implements AgrometDescriptorDAO {
+public class AgrometDescriptorDAOImpl extends
+        BaseDAO<AgrometDescriptor, String> implements AgrometDescriptorDAO {
 
-    @Override
-    public void persist(AgrometDescriptor... entities) {
-        super.persist(entities);
-    }
+@Override
+public void persist(AgrometDescriptor... entities) {
+    super.persist(entities);
+}
 
-    @Override
-    public AgrometDescriptor merge(AgrometDescriptor entity) {
-        return super.merge(entity); 
-    }
+@Override
+public AgrometDescriptor merge(AgrometDescriptor entity) {
+    return super.merge(entity);
+}
 
-    @Override
-    public boolean remove(AgrometDescriptor entity) {
-        return super.remove(entity);
-    }
+@Override
+public boolean remove(AgrometDescriptor entity) {
+    return super.remove(entity);
+}
 
-    @Override
-    public boolean removeById(String id) {
-        return super.removeById(id); //To change body of generated methods, choose Tools | Templates.
-    }
+@Override
+public boolean removeById(String id) {
+    return super.removeById(id); // To change body of generated methods, choose
+                                 // Tools | Templates.
+}
+
+private static String[] PKNames = { "id" };
+
+/**
+ * Obtain array for the pknames ordered to be used in
+ * {@link BaseDAO#removeByPK(Serializable...)}
+ * 
+ * @return array with names of the pk aggregated
+ */
+public String[] getPKNames() {
+    return PKNames;
+}
 }

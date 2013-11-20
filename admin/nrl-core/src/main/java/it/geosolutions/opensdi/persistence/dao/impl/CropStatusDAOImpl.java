@@ -25,63 +25,47 @@ package it.geosolutions.opensdi.persistence.dao.impl;
 import it.geosolutions.opensdi.model.CropStatus;
 import it.geosolutions.opensdi.persistence.dao.CropStatusDAO;
 
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
+import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.googlecode.genericdao.search.Search;
-
 /**
- *
  * @author adiaz
  */
 @Transactional(value = "opensdiTransactionManager")
-public class CropStatusDAOImpl extends BaseDAO<CropStatus, Long> implements CropStatusDAO {
+public class CropStatusDAOImpl extends BaseDAO<CropStatus, Long> implements
+        CropStatusDAO {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CropStatusDAOImpl.class);
+@Override
+public void persist(CropStatus... entities) {
+    super.persist(entities);
+}
 
-    @Override
-    public void persist(CropStatus... entities) {
-        super.persist(entities);
-    }
+@Override
+public CropStatus merge(CropStatus entity) {
+    return super.merge(entity);
+}
 
-    @Override
-    public CropStatus merge(CropStatus entity) {
-        return super.merge(entity);
-    }
+@Override
+public boolean remove(CropStatus entity) {
+    return super.remove(entity);
+}
 
-    @Override
-    public boolean remove(CropStatus entity) {
-        return super.remove(entity);
-    }
+@Override
+public boolean removeById(Long id) {
+    return super.removeById(id);
+}
 
-    @Override
-    public boolean removeById(Long id) {
-        return super.removeById(id);
-    }
+private static String[] PKNames = { "crop", "month", "factor", "dec" };
 
-    @Override
-    public boolean removeByPK(String crop, String month, String factor, Integer dec) {
-    	Search search = new Search(CropStatus.class);
-    	search.addFilterEqual("crop", crop);
-    	search.addFilterEqual("month", month);
-    	search.addFilterEqual("factor", factor);
-    	search.addFilterEqual("dec", dec);
-        
-    	CropStatus found;
-        try {
-            found = searchUnique(search);
-        } catch (NonUniqueResultException e) {
-            LOGGER.error("Non unique result searching for CropStatus " + search, e);
-            return false;
-        } catch (NoResultException e) {
-            return false;
-        }
+/**
+ * Obtain array for the pknames ordered to be used in
+ * {@link BaseDAO#removeByPK(Serializable...)}
+ * 
+ * @return array with names of the pk aggregated
+ */
+public String[] getPKNames() {
+    return PKNames;
+}
 
-        return remove(found);
-    }
-    
 }

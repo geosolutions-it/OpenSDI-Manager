@@ -19,133 +19,134 @@
  */
 package it.geosolutions.geobatch.opensdi.csvingest.processor;
 
-import au.com.bytecode.opencsv.CSVReader;
+import it.geosolutions.geobatch.opensdi.csvingest.utils.CSVPropertyType;
 import it.geosolutions.opensdi.model.AgroMet;
-import java.io.IOException;
+import it.geosolutions.opensdi.persistence.dao.GenericNRLDAO;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author ETj (etj at geo-solutions.it)
+ * @author adiaz refactor to use GenericCSVProcessor
  */
-public class CSVAgrometProcessor extends CSVProcessor {
+public class CSVAgrometProcessor extends GenericCSVProcessor<AgroMet, Long> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CSVAgrometProcessor.class);
+// ID_ndv;distr;prov;year;mon;dec;factor;NDVI_avg;
+// last field is a value, but its name may change
 
-    //ID_ndv;distr;prov;year;mon;dec;factor;NDVI_avg;
-    // last field is a value, but its name may change
+private final static List<String> HEADERS = Collections.unmodifiableList(Arrays
+        .asList("*", "distr", "prov", "year", "mon", "dec", "factor", "*"));
 
-    private final static List<String> HEADERS =
-            Collections.unmodifiableList(Arrays.asList("*","distr","prov","year","mon","dec","factor","*"));
-  
-    public CSVAgrometProcessor() {
+static List<CSVPropertyType> TYPES;
+static {
+    TYPES = new LinkedList<CSVPropertyType>();
+    // "*",
+    TYPES.add(CSVPropertyType.IGNORE);
+    // "distr"
+    TYPES.add(CSVPropertyType.STRING);
+    // "prov"
+    TYPES.add(CSVPropertyType.STRING);
+    // "year"
+    TYPES.add(CSVPropertyType.INTEGER);
+    // "mon"
+    TYPES.add(CSVPropertyType.STRING);
+    // "dec"
+    TYPES.add(CSVPropertyType.INTEGER);
+    // "factor"
+    TYPES.add(CSVPropertyType.STRING);
+    // "*"
+    TYPES.add(CSVPropertyType.STRING);
+}
+
+static List<Integer> PK_PROPERTIES;
+static {
+    PK_PROPERTIES = new LinkedList<Integer>();
+    // ID : "factor", "district", "province", "year", "month", "dec"
+    PK_PROPERTIES.add(6);
+    PK_PROPERTIES.add(1);
+    PK_PROPERTIES.add(2);
+    PK_PROPERTIES.add(3);
+    PK_PROPERTIES.add(4);
+    PK_PROPERTIES.add(5);
+}
+
+@Override
+public List<Integer> getPkProperties() {
+    return PK_PROPERTIES;
+}
+
+@Override
+public List<String> getHeaders() {
+    return HEADERS;
+}
+
+@Override
+public GenericNRLDAO<AgroMet, Long> getDao() {
+    return agrometDAO;
+}
+
+@Override
+public List<CSVPropertyType> getTypes() {
+    return TYPES;
+}
+
+public AgroMet merge(AgroMet old, Object[] properties) {
+    AgroMet agromet;
+    if (old != null) {
+        agromet = (AgroMet) old;
+    } else {
+        agromet = new AgroMet();
+    }
+    int idx = 1;
+    agromet.setDistrict((String) properties[idx++]);
+    agromet.setProvince((String) properties[idx++]);
+    agromet.setYear((Integer) properties[idx++]);
+    agromet.setMonth((String) properties[idx++]);
+    agromet.setDec((Integer) properties[idx++]);
+    agromet.setFactor((String) properties[idx++]);
+    return agromet;
+}
+
+static enum Month3 {
+    JAN("Jan", 2, 0), FEB("Feb", 3, 0), MAR("Mar", 4, 0), APR("Apr", 5, 0), MAY(
+            "May", 6, 0), JUN("Jun", 7, 0), JUL("Jul", 8, 0), AUG("Aug", 9, 0), SEP(
+            "Sep", 10, 0), OCT("Oct", 11, 0), NOV("Nov", 0, 1), DEC("Dec", 1, 1);
+
+    private String lit;
+
+    private int pos;
+
+    private int add;
+
+    private Month3(String lit, int pos, int add) {
+        this.lit = lit;
+        this.pos = pos;
+        this.add = add;
     }
 
-
-    @Override
-    public List<String> getHeaders() {
-        return HEADERS;
+    public String getLit() {
+        return lit;
     }
 
-    @Override
-    public void process(CSVReader reader) throws CSVProcessException{
-//    @Transactional(value = "opensdiTransactionManager")
-//    private void ingestCropProvince(CSVReader reader) throws ActionException {
-        String nextLine[];
-        long line = 0;
-
-        try {
-            while ((nextLine = reader.readNext()) != null) {
-                AgroMet agromet = new AgroMet();
-                int idx = 0;
-                idx++; // rowid not needed
-                agromet.setDistrict(nextLine[idx++]);
-                agromet.setProvince(nextLine[idx++]);
-                agromet.setYear(Integer.parseInt(nextLine[idx++]));
-                agromet.setMonth(nextLine[idx++]);
-                agromet.setDec(Integer.parseInt(nextLine[idx++]));
-                agromet.setFactor(nextLine[idx++]);
-                setSVars(agromet);
-
-                String valS = nextLine[idx++];
-                if(valS == null || valS.isEmpty()) {
-                    // LOGGER.warn("Empty value line#"+line + " for " + agromet);
-                    boolean removed = agrometDAO.removeByPK(agromet);
-                    if(removed) {
-                        LOGGER.info("Removed " + agromet);
-                    } else {
-                        LOGGER.info("Can't find for removal " + agromet);
-                    }
-                    continue;
-                    //agromet.setValue(0d);
-                } else {
-                    agromet.setValue(Double.parseDouble(valS));
-                }
-
-                try {
-                    agrometDAO.persist(agromet);
-                    line++;
-                } catch (Exception e) {
-//                    LOGGER.warn("Could not persist " + cropData, e);
-                    throw new CSVProcessException("Could not persist #" + line + " " + agromet, e);
-                }
-            }
-        } catch (IOException e) {
-            throw new CSVProcessException("Error in reading CSV file", e);
-        }
-
-        LOGGER.info("Agromet ingestion -- persisted "+ line + " entries");
+    public int getPos() {
+        return pos;
     }
 
-    private void setSVars(AgroMet agromet) {
-        Month3 emon = Month3.valueOf(agromet.getMonth().toUpperCase());
-
-        agromet.setS_yr( agromet.getYear()+ emon.getAdd());
-        agromet.setS_dec(agromet.getDec() + emon.getPos()*3);
+    public int getAdd() {
+        return add;
     }
 
+}
 
-    static enum Month3 {
-        JAN("Jan", 2, 0),
-        FEB("Feb", 3, 0),
-        MAR("Mar", 4, 0),
-        APR("Apr", 5, 0),
-        MAY("May", 6, 0),
-        JUN("Jun", 7, 0),
-        JUL("Jul", 8, 0),
-        AUG("Aug", 9, 0),
-        SEP("Sep", 10, 0),
-        OCT("Oct", 11, 0),
-        NOV("Nov", 0, 1),
-        DEC("Dec", 1, 1);
+public void save(AgroMet entity) {
+    agrometDAO.save(entity);
+}
 
-
-        private String lit;
-        private int pos;
-        private int add;
-
-        private Month3(String lit, int pos, int add) {
-            this.lit = lit;
-            this.pos = pos;
-            this.add = add;
-        }
-
-        public String getLit() {
-            return lit;
-        }
-
-        public int getPos() {
-            return pos;
-        }
-
-        public int getAdd() {
-            return add;
-        }
-
-    }
+public void persist(AgroMet entity) {
+    agrometDAO.persist(entity);
+}
 
 }
