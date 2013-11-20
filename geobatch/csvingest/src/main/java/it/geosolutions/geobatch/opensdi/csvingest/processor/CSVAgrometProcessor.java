@@ -58,7 +58,7 @@ static {
     // "factor"
     TYPES.add(CSVPropertyType.STRING);
     // "*"
-    TYPES.add(CSVPropertyType.STRING);
+    TYPES.add(CSVPropertyType.DOUBLE);
 }
 
 static List<Integer> PK_PROPERTIES;
@@ -107,7 +107,16 @@ public AgroMet merge(AgroMet old, Object[] properties) {
     agromet.setMonth((String) properties[idx++]);
     agromet.setDec((Integer) properties[idx++]);
     agromet.setFactor((String) properties[idx++]);
+    agromet.setValue((Double) properties[idx++]);
+    setSVars(agromet);
     return agromet;
+}
+
+private void setSVars(AgroMet agromet) {
+    Month3 emon = Month3.valueOf(agromet.getMonth().toUpperCase());
+
+    agromet.setS_yr(agromet.getYear() + emon.getAdd());
+    agromet.setS_dec(agromet.getDec() + emon.getPos() * 3);
 }
 
 static enum Month3 {
@@ -142,7 +151,7 @@ static enum Month3 {
 }
 
 public void save(AgroMet entity) {
-    agrometDAO.save(entity);
+    agrometDAO.merge(entity);
 }
 
 public void persist(AgroMet entity) {

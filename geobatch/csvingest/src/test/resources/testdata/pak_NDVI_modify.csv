@@ -1,0 +1,3 @@
+rowId,distr,prov,year,mon,dec,factor,NDVI_avg
+,Bolan,BALOCHISTAN,2013,Jan,1,fake_arg,0.010
+2,Bolan,BALOCHISTAN,2013,Feb,1,fake_arg,-0.020

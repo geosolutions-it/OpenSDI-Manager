@@ -57,7 +57,7 @@ public boolean removeById(Long id) {
     return super.removeById(id);
 }
 
-private static String[] PKNames = { "crop", "district", "province", "year" };
+private static String[] PKNames = { "cropDescriptor.id", "district", "province", "year" };
 
 /**
  * Obtain array for the pknames ordered to be used in
