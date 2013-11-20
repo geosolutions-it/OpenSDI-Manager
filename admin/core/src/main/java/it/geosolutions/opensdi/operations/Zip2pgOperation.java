@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,29 +26,45 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class GeotiffPublishOperation extends SingleFileLocalOperation {
+public class Zip2pgOperation extends SingleFileLocalOperation {
 	
 	/**
 	 * The name of this Operation
 	 */
-	public static String name = "GeotiffPublish";
+	public static String name = "Zip2pg";
 	
 	/**
 	 * The path were to GET the form and POST the request
 	 * Typically all lower case
 	 */
-	private String path;
+	private String path = "zip2pg";
 	
 	/**
 	 * File extension this Operation will work on
 	 */
-	private String[] extensions = {"tiff"};
+	private String[] extensions = {"zip"};
 	
 	/**
 	 * Directory where to scan for files
 	 */
+	private String basedirString = "G:/OpenSDIManager/test_shapes/";
 
-	
+	/**
+	 * Getter
+	 * @return the basedirString
+	 */
+	public String getBasedirString() {
+		return basedirString;
+	}
+
+	/**
+	 * Setter
+	 * @param basedirString the basedirString to set
+	 */
+	public void setBasedirString(String basedirString) {
+		this.basedirString = basedirString;
+	}
+
 	/**
 	 * @return the name
 	 */
@@ -83,11 +99,7 @@ public class GeotiffPublishOperation extends SingleFileLocalOperation {
 	}
 
 	// TODO: This jsp should be placed in a common folder, set in the OperationManager (OperationMapping)
-	@Override
-	public String getJsp() {
-		return "geotiffpublish";
-	}
-
+	
 	/**
 	 * @param path the path to set
 	 */

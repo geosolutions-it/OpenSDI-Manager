@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="it.geosolutions.opensdi.mvc" />
 
-	<bean id="fileBrowserOp" class="it.geosolutions.operations.FileBrowserOperationController">
+	<bean id="fileBrowserOp" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value=".*\.tif" />
 	   <property name="RESTPath" value="fileBrowserOp"/>
 	   <property name="operationName" value="NDVIBrowser"/>
@@ -24,23 +24,23 @@
 	   </property>
 	</bean>
 
-	<bean id="NDVI" class="it.geosolutions.operations.NDVIOperation">
+	<bean id="NDVI" class="it.geosolutions.opensdi.operations.NDVIOperation">
         <property name="path" value="NDVI"/>
         <property name="jspName" value="ndvi"/>
         <property name="flowID" value="ndviingestion"/>
 	</bean>
 
-	<bean id="CSV" class="it.geosolutions.operations.CSVOperation">
+	<bean id="CSV" class="it.geosolutions.opensdi.operations.CSVOperation">
         <property name="path" value="CSV"/>
         <property name="jspName" value="csv"/>
         <property name="flowID" value="csvingestion"/>
 	</bean>
 
-	<bean id="NDVIStatistics" class="it.geosolutions.operations.NDVIStatisticsOperation">
+	<bean id="NDVIStatistics" class="it.geosolutions.opensdi.operations.NDVIStatisticsOperation">
         <property name="path" value="NDVIStats"/>
 	</bean>
 
-	 <bean id="fileBrowserOpCSV" class="it.geosolutions.operations.FileBrowserOperationController">
+	 <bean id="fileBrowserOpCSV" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 		<property name="RESTPath" value="fileBrowserOpCSV"/>
 		<property name="fileRegex" value=".*\.csv" />
 		<property name="operationName" value="CSVBrowser"/>
@@ -56,7 +56,7 @@
 		</property>
 	 </bean>
 
-	<bean id="fileBrowserOpCropMask" class="it.geosolutions.operations.FileBrowserOperationController">
+	<bean id="fileBrowserOpCropMask" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
         <property name="RESTPath" value="fileBrowserOpCropMask"/>
         <property name="operationName" value="CropMask"/>
         <property name="canNavigate" value="true"/>

@@ -18,9 +18,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
+import org.springframework.beans.factory.annotation.Autowired;
 
-public interface RemoteOperation extends GeoBatchOperation {
-	
+import it.geosolutions.opensdi.service.GeoBatchClient;
+
+/**
+ * GeoBatch operation. It uses GeoBatchClient autowired for the GeoBatch access
+ * 
+ * @author adiaz
+ */
+public abstract class GeoBatchOperationImpl implements GeoBatchOperation{
+
+@Autowired
+GeoBatchClient geobatchClient;
+
+/**
+ * @return the geobatchRestUrl
+ */
+public String getGeobatchRestUrl(){
+    return geobatchClient.getGeobatchRestUrl();
+}
+
+/**
+ * @return the geostoreUsername
+ */
+public String getGeobatchUsername(){
+    return geobatchClient.getGeobatchUsername();
+}
+
+/**
+ * @return the geostorePassword
+ */
+public String getGeobatchPassword(){
+    return geobatchClient.getGeobatchPassword();
+}
+
 }

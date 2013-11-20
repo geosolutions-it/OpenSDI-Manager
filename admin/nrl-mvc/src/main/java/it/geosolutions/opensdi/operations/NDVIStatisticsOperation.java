@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.dto.StatsBean;

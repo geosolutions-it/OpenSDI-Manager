@@ -22,7 +22,7 @@
 /**
  * 
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import java.util.List;
 
