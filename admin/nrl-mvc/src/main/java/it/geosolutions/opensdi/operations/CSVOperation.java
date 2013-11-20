@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class NDVIOperation extends SingleFileLocalOperation {
+public class CSVOperation extends SingleFileLocalOperation {
 	
 	/**
 	 * The name of this Operation
 	 */
-	public static String name = "NDVI";
+	public static String name = "CSV";
 	
 	/**
 	 * The path were to GET the form and POST the request
@@ -42,12 +42,8 @@ public class NDVIOperation extends SingleFileLocalOperation {
 	/**
 	 * File extension this Operation will work on
 	 */
-	private String[] extensions = {"tif"};
-	
-	/**
-	 * Directory where to scan for files
-	 */
-	
+	private String[] extensions = {"csv"};
+
 	
 
 	/**
@@ -82,15 +78,12 @@ public class NDVIOperation extends SingleFileLocalOperation {
 	public boolean isMultiple() {
 		return false;
 	}
-
-	// TODO: This jsp should be placed in a common folder, set in the OperationManager (OperationMapping)
 	
-
 	/**
 	 * @param path the path to set
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
-
+	
 }

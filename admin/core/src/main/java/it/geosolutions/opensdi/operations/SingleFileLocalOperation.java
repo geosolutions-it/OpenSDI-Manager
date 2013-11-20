@@ -14,7 +14,7 @@
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *    Lesser General Public License for more details.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.utils.ControllerUtils;

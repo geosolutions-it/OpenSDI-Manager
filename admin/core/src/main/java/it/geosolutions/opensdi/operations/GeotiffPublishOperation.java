@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class CSVOperation extends SingleFileLocalOperation {
+public class GeotiffPublishOperation extends SingleFileLocalOperation {
 	
 	/**
 	 * The name of this Operation
 	 */
-	public static String name = "CSV";
+	public static String name = "GeotiffPublish";
 	
 	/**
 	 * The path were to GET the form and POST the request
@@ -42,10 +42,13 @@ public class CSVOperation extends SingleFileLocalOperation {
 	/**
 	 * File extension this Operation will work on
 	 */
-	private String[] extensions = {"csv"};
+	private String[] extensions = {"tiff"};
+	
+	/**
+	 * Directory where to scan for files
+	 */
 
 	
-
 	/**
 	 * @return the name
 	 */
@@ -78,12 +81,18 @@ public class CSVOperation extends SingleFileLocalOperation {
 	public boolean isMultiple() {
 		return false;
 	}
-	
+
+	// TODO: This jsp should be placed in a common folder, set in the OperationManager (OperationMapping)
+	@Override
+	public String getJsp() {
+		return "geotiffpublish";
+	}
+
 	/**
 	 * @param path the path to set
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 }

@@ -18,41 +18,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.operations;
+package it.geosolutions.opensdi.operations;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
-import it.geosolutions.opensdi.service.GeoBatchClient;
+import javax.servlet.http.HttpServletRequest;
 
-/**
- * GeoBatch operation. It uses GeoBatchClient autowired for the GeoBatch access
- * 
- * @author adiaz
- */
-public abstract class GeoBatchOperationImpl implements GeoBatchOperation{
+import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
 
-@Autowired
-GeoBatchClient geobatchClient;
+public interface Operation {
+	
+	/**
+	 * @return the name of this Operation
+	 */
+	public String getName();
+	
+	/*
+	 * Setter
+	public void setName(String name);
+	 */
+	
+	
+	/**
+	 * @return the REST path where to send GET and POST requests
+	 */
+	public String getRESTPath();
+	
+	/**
+	 * @return the Jsp name to build the GUI
+	 */
+	public String getJsp();
 
-/**
- * @return the geobatchRestUrl
- */
-public String getGeobatchRestUrl(){
-    return geobatchClient.getGeobatchRestUrl();
-}
-
-/**
- * @return the geostoreUsername
- */
-public String getGeobatchUsername(){
-    return geobatchClient.getGeobatchUsername();
-}
-
-/**
- * @return the geostorePassword
- */
-public String getGeobatchPassword(){
-    return geobatchClient.getGeobatchPassword();
-}
+	/**
+	 * @return the Jsp name to build the GUI end set the provided model with the right attributes
+	 */
+	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files);
 
 }
