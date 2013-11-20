@@ -135,8 +135,8 @@ public void process(CSVReader reader) throws CSVProcessException {
                     if (!itsKey
                             && !CSVPropertyType.IGNORE.equals(getTypes().get(
                                     idx))) {
-                        // Remove only if all other values not ignored are null
-                        isRemove = isRemove ? value == null : false;
+                        // Remove only if all other values not ignored are null or empty
+                        isRemove = isRemove ? value == null || "".equals(value) : false;
                     }
                     idx++;
                 }

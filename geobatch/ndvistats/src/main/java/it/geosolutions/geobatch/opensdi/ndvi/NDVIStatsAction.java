@@ -39,12 +39,8 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.EventObject;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,7 +93,6 @@ import com.vividsolutions.jts.geom.Geometry;
 @Action(configurationClass = NDVIStatsConfiguration.class)
 public class NDVIStatsAction extends BaseAction<EventObject> {
 
-private static DateFormat MONTH_FORMAT = new SimpleDateFormat("MMM");
 private static ROIGeometry defaultROIMask;
 
 private NDVIStatsConfiguration configuration;
@@ -348,9 +343,7 @@ private void generateCSV(GridCoverage2D coverage, SimpleFeatureCollection fc,
     if(month.startsWith("0")){
         month = month.replace("0", "");
     }
-    Calendar cal = new GregorianCalendar(Integer.decode(year),
-            Integer.decode(month) - 1, 1);
-    month = MONTH_FORMAT.format(cal.getTime());
+    month = getMonthName(Integer.decode(month));
     dekad = ndviFileName.substring(9, 11);
     dekad = dekad.equals("01") ? "1" : dekad.equals("11") ? "2" : "3";
 
@@ -634,4 +627,28 @@ public static void disposeCoverage(GridCoverage coverage) {
         ImageUtilities.disposePlanarImageChain((PlanarImage) ri);
     }
 }
+
+/**
+ * @param month number (between 1 and 12)
+ * @return month name capitalized (in English)
+ */
+private String getMonthName(int month) {
+    for(MonthNames monthName: MonthNames.values()){
+        if(monthName.ordinal() == month-1){
+            return monthName.name();
+        }
+    }
+    return null;
+}
+
+/**
+ * Enumeration with the names of the months
+ * 
+ * @author adiaz
+ *
+ */
+private enum MonthNames{
+    Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Nov, Dic
+}
+
 }

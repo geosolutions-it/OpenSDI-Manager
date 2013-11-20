@@ -113,7 +113,7 @@ public CropData merge(CropData old, Object[] properties) {
 }
 
 public void save(CropData entity) {
-    cropDataDAO.save(entity);
+    cropDataDAO.merge(entity);
 }
 
 public void persist(CropData entity) {

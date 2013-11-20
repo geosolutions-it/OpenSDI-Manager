@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author adiaz
@@ -126,7 +127,7 @@ public CropStatus merge(CropStatus old, Object[] properties) {
 }
 
 public void save(CropStatus entity) {
-    cropStatusDAO.save(entity);
+    cropStatusDAO.merge(entity);
 }
 
 public void persist(CropStatus entity) {

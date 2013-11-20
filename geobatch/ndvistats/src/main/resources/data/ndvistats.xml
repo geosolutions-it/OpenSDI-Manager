@@ -36,7 +36,7 @@
             <id>NDVIIngestConfiguration</id>
             <name>NDVI CSV stats preparation</name>
             <description>Prepare time interval in TIF filenames </description>
-            <defaultMaskUrl>file:/home/alediator/CROP_MASKS/agri_merge_erase.shp</defaultMaskUrl>
+            <defaultMaskUrl>file:/home/geosolutions/admin/crop_masks/agri_merge_erase.shp</defaultMaskUrl>
 			<dbType>postgis</dbType>
 			<dbHost>localhost</dbHost>
 			<dbPort>5432</dbPort>
@@ -44,8 +44,8 @@
 			<dbName>NRL_db</dbName>
 			<dbUser>geosolutions</dbUser>
 			<dbPasswd>geosolutions</dbPasswd>
-			<tiffDirectory>/home/alediator/test_tiff/ndvi</tiffDirectory>
-			<outputDirectory>/home/alediator/test_csv</outputDirectory>
+			<tiffDirectory>/home/geosolutions/admin/test_tiff/ndvi</tiffDirectory>
+			<outputDirectory>/home/geosolutions/admin/test_csv</outputDirectory>
 			<csvSeparator>,</csvSeparator>
         </NDVIStatsConfiguration>
 

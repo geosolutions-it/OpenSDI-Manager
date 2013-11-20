@@ -1,0 +1,3 @@
+rowid,factor,crop,month,dec,max,min,opt,
+1,"Tmax_avg","fake_crop_2","Apr",1,16,42,15,20
+1,"Tmax_avg","fake_crop_2","May",1,16,42,15,20
