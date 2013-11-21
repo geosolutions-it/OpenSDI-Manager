@@ -73,6 +73,11 @@ public abstract class CSVProcessor {
 
     abstract public void process(CSVReader reader) throws CSVProcessException;
 
+    public abstract int getInsertCount();
+    public abstract int getFailCount();
+    public abstract int getRemoveCount();
+    public abstract int getUpdateCount();
+
     protected Map<String, CropDescriptor> getCropDescriptors() {
         List<CropDescriptor> descList = cropDescriptorDAO.findAll();
         Map<String, CropDescriptor> ret = new HashMap<String, CropDescriptor>();

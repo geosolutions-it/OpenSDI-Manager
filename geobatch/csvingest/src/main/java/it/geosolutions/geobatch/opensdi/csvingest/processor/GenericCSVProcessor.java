@@ -43,6 +43,11 @@ public abstract class GenericCSVProcessor<T, ID extends Serializable> extends
 private final static Logger LOGGER = LoggerFactory
         .getLogger(GenericCSVProcessor.class);
 
+int insertCount;
+int updateCount;
+int removeCount;
+int failCount;
+
 /**
  * Flag indicates don't fail if one row fail
  */
@@ -106,6 +111,10 @@ public void process(CSVReader reader) throws CSVProcessException {
 
     try {
         int line = 1;
+        insertCount = 0;
+        updateCount = 0;
+        removeCount = 0;
+        failCount = 0;
         while ((nextLine = reader.readNext()) != null) {
             line++;
             try {
@@ -135,24 +144,30 @@ public void process(CSVReader reader) throws CSVProcessException {
                     if (!itsKey
                             && !CSVPropertyType.IGNORE.equals(getTypes().get(
                                     idx))) {
-                        // Remove only if all other values not ignored are null or empty
-                        isRemove = isRemove ? value == null || "".equals(value) : false;
+                        // Remove only if all other values not ignored are null
+                        // or empty
+                        isRemove = isRemove ? value == null || "".equals(value)
+                                : false;
                     }
                     idx++;
                 }
                 // Update model
                 if (isRemove) {
                     getDao().removeByPK(keys);
+                    removeCount++;
                 } else {
                     T old = getDao().searchByPK(keys);
                     T updatedOrCreated = merge(old, properties);
                     if (old != null) {
                         save(updatedOrCreated);
+                        updateCount++;
                     } else {
                         persist(updatedOrCreated);
+                        insertCount++;
                     }
                 }
             } catch (Exception e) {
+                failCount++;
                 LOGGER.error("Error parsing CSV in line " + line);
                 // Just break if rowByRow is disabled
                 if (!rowByRow) {
@@ -161,10 +176,40 @@ public void process(CSVReader reader) throws CSVProcessException {
                 }
             }
         }
+
     } catch (IOException e) {
         throw new CSVProcessException("Error in reading CSV file", e);
     }
 
     LOGGER.info("CSV ingestion -- managed " + ok + " entities");
 }
+
+/**
+ * @return the insertCount
+ */
+public int getInsertCount() {
+    return insertCount;
+}
+
+/**
+ * @return the updateCount
+ */
+public int getUpdateCount() {
+    return updateCount;
+}
+
+/**
+ * @return the removeCount
+ */
+public int getRemoveCount() {
+    return removeCount;
+}
+
+/**
+ * @return the failCount
+ */
+public int getFailCount() {
+    return failCount;
+}
+
 }
