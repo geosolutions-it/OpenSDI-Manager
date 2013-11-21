@@ -43,27 +43,6 @@ public class Zip2pgOperation extends SingleFileLocalOperation {
 	 * File extension this Operation will work on
 	 */
 	private String[] extensions = {"zip"};
-	
-	/**
-	 * Directory where to scan for files
-	 */
-	private String basedirString = "G:/OpenSDIManager/test_shapes/";
-
-	/**
-	 * Getter
-	 * @return the basedirString
-	 */
-	public String getBasedirString() {
-		return basedirString;
-	}
-
-	/**
-	 * Setter
-	 * @param basedirString the basedirString to set
-	 */
-	public void setBasedirString(String basedirString) {
-		this.basedirString = basedirString;
-	}
 
 	/**
 	 * @return the name

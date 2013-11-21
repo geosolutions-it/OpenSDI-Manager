@@ -129,6 +129,18 @@
                 <version>${nrl.version}</version>
                 <type>war</type>
             </dependency>
+            <dependency>
+                <groupId>it.geosolutions.opensdi</groupId>
+                <artifactId>fileBrowserSHP-web-extension</artifactId>
+                <version>${nrl.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>it.geosolutions.opensdi</groupId>
+                <artifactId>destination-web-extension</artifactId>
+                <version>${nrl.version}</version>
+                <type>war</type>
+            </dependency>
 	
 			<!-- =========================================================== -->
             <!--     APACHE COMMONS                                          -->
@@ -546,6 +558,7 @@
         <module>nrl-mvc</module>
         <module>nrl-web-extension</module>
         <module>fileBrowserSHP-web-extension</module>
+        <module>destination-web-extension</module>
   </modules>
   <build>
    <plugins>

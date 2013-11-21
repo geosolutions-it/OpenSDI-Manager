@@ -24,18 +24,35 @@
     	<property name="geobatchPassword" value="admin"/>
     </bean>
   
-      <bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
-          <property name="ignoreResourceNotFound" value="true"/>
-          <property name="order" value="10"/>
-          <property name="locations">
-              <list>
-                  <!-- used for overriding props during maven tests -->
-                  <value>classpath*:opensdi-config-ovr.properties</value>
-                  <!-- used for externalized override -->
-                  <value>${nrl-ovr}</value>
-              </list>
-          </property>
-      </bean>
+    <bean id="zip2pgOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
+        <property name="path" value="zip2pgOp"/>
+    </bean>
+
+    <bean id="GeoTiffOp" class="it.geosolutions.opensdi.operations.GeotiffPublishOperation">
+        <property name="path" value="GeoTiffOp"/>
+        <property name="flowID" value="geotiff_publish"/>
+    </bean>
+
+    <bean id="flowstatus" class="it.geosolutions.opensdi.operations.FlowStatusOperation">
+        <property name="path" value="flowstatus"/>
+    </bean>
+
+    <bean id="OpEngine" class="it.geosolutions.opensdi.operations.OperationEngineController"/>
+    
+    <bean id="activeOpListOp" class="it.geosolutions.opensdi.operations.ActiveOperationsListOperation"/>
+  
+    <bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="order" value="10"/>
+        <property name="locations">
+            <list>
+                <!-- used for overriding props during maven tests -->
+                <value>classpath*:opensdi-config-ovr.properties</value>
+                <!-- used for externalized override -->
+                <value>${opensdi-ovr}</value>
+            </list>
+        </property>
+    </bean>
     
 
 </beans>
