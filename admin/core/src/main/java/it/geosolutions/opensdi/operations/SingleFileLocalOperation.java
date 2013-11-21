@@ -41,8 +41,6 @@ public abstract class SingleFileLocalOperation extends GeoBatchOperationImpl imp
     protected String flowID ;
     protected String basedirString;
     
-    
-    
     @Override
     public Object getBlob(Object inputParam, HttpServletRequest request) {
         
@@ -88,14 +86,14 @@ public abstract class SingleFileLocalOperation extends GeoBatchOperationImpl imp
     /**
      * @param flowID the flowID to set
      */
-    public void setFlowID(String flowID) {
+    public final void setFlowID(String flowID) {
         this.flowID = flowID;
     }
     
     public String getBasedirString() {
         return basedirString;
     }
-    public void setBasedirString(String basedirString) {
+    public final void setBasedirString(String basedirString) {
         if(!basedirString.endsWith("/")) {
             LOGGER.warn("basedirString not ending with slash \"/\", appending one");
             basedirString = basedirString.concat("/");
@@ -105,7 +103,7 @@ public abstract class SingleFileLocalOperation extends GeoBatchOperationImpl imp
     public String getJspName() {
         return jspName;
     }
-    public void setJspName(String jspName) {
+    public final void setJspName(String jspName) {
         this.jspName = jspName;
     }
 

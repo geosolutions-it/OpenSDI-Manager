@@ -8,23 +8,9 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="it.geosolutions.opensdi.mvc" />
 	<!--  <context:component-scan base-package="it.geosolutions.opensdi.operations" /> -->
-	
-	<bean id="zip2pgOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
-			<property name="path" value="zip2pgOp"/>
-	</bean>
 
-	<bean id="GeoTiffOp" class="it.geosolutions.opensdi.operations.GeotiffPublishOperation">
-			<property name="path" value="GeoTiffOp"/>
-			<property name="flowID" value="geotiff_publish"/>
-	</bean>
-
-	<bean id="flowstatus" class="it.geosolutions.opensdi.operations.FlowStatusOperation">
-			<property name="path" value="flowstatus"/>
-	</bean>
-
-	<bean id="OpEngine" class="it.geosolutions.opensdi.operations.OperationEngineController"/>
-	
-	<bean id="activeOpListOp" class="it.geosolutions.opensdi.operations.ActiveOperationsListOperation"/>
+	<import resource="classpath:/spring-security.xml" />
+	<import resource="classpath*:/applicationContext.xml" />
 
 	<bean id="multipartResolver"
 	 class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>

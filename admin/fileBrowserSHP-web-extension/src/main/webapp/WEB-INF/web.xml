@@ -24,10 +24,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:/applicationContext.xml
-            /WEB-INF/mvc-dispatcher-servlet.xml
             /WEB-INF/fileBrowserSHP-opensdi.xml
-           /WEB-INF/spring-security.xml 
+            /WEB-INF/mvc-dispatcher-servlet.xml
         </param-value>
     </context-param>
 
