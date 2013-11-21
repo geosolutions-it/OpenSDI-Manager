@@ -158,6 +158,17 @@ public class CSVIngestAction extends BaseAction<EventObject> implements Initiali
         LOGGER.info("Processing CSV " + file.getName() + " with " + processor.getClass().getSimpleName());
         try {
             processor.process(reader);
+            String successMsg =   
+                  "\n***************************************************" 
+                + "\n********** SUCCESS: CSV ingestion resume **********" 
+                + "\n***************************************************"
+                + "\n* Records inserted: "+ processor.getInsertCount()
+                + "\n* Records updated: "+ processor.getUpdateCount()
+                + "\n* Records removed: "+ processor.getRemoveCount()
+                + "\n* Falied records: "+ processor.getFailCount()
+                + "\n***************************************************";
+            LOGGER.info(successMsg);
+            listenerForwarder.progressing(99, successMsg);
         } catch (CSVProcessException ex) {
             throw new ActionException(this, "Error processing " + file.getName(), ex);
         }

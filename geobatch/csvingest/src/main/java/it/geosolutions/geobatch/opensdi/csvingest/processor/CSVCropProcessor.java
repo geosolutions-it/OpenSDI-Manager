@@ -100,8 +100,7 @@ public CropData merge(CropData old, Object[] properties) {
     }
     int idx = 1;
     String cropDescrId = (String) properties[idx++];
-    // all descriptors are in lower case!!
-    cropData.setCropDescriptor(getCropDescriptors().get(cropDescrId.toLowerCase()));
+    cropData.setCropDescriptor(getCropDescriptors().get(cropDescrId));
     cropData.setDistrict((String) properties[idx++]);
     cropData.setProvince((String) properties[idx++]);
     cropData.setYear((Integer) properties[idx++]);
