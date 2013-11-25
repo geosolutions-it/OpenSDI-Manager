@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.opensdi.service;
+package it.geosolutions.opensdi.dao;
 
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
@@ -27,38 +27,32 @@ import it.geosolutions.opensdi.operations.GeoBatchOperation;
 import it.geosolutions.opensdi.operations.LocalOperation;
 import it.geosolutions.opensdi.operations.RemoteOperation;
 
+import java.util.List;
+
 /**
- * Simple envelop to use same parameters for GeoBatch connection and operations on all
- * controllers
+ * DAO interface for GeoBatch runs
  * 
  * @author adiaz
  */
-public interface GeoBatchClient {
+public interface GeoBatchRunInfoDAO {
 
 /**
- * @return the geobatchRestUrl
+ * Obtain run information for a file identified by compositeId
+ * 
+ * @param compositeId identifier of the file (to concatenate)
+ * 
+ * @return List of runs for a composite id
  */
-public String getGeobatchRestUrl();
+public List<GeobatchRunInfo> getRunInfo(String... compositeId);
 
 /**
- * @return the geostoreUsername
+ * Obtain last run for a compositeId
+ * 
+ * @param compositeId unique ID for a file
+ * 
+ * @return last execution for this file or null if not found 
  */
-public String getGeobatchUsername();
-
-/**
- * @return the geostorePassword
- */
-public String getGeobatchPassword();
-
-/**
- * @param geobatchUsername the geobatchUsername to set
- */
-public void setGeobatchUsername(String geobatchUsername);
-
-/**
- * @param geobatchPassword the geobatchPassword to set
- */
-public void setGeobatchPassword(String geobatchPassword);
+public GeobatchRunInfo getLastRunInfo(String... compositeId);
 
 /**
  * Obtain last run updated or not for a compositeId
@@ -71,6 +65,35 @@ public void setGeobatchPassword(String geobatchPassword);
 public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, String... compositeId);
 
 /**
+ * Obtain a execution for a known runUid and file
+ * 
+ * @param runUid
+ * @param compositeId unique ID for a file
+ * 
+ * @return run information or null if not found
+ */
+public GeobatchRunInfo getRunInfoByUid(String runUid, String... compositeId); 
+
+/**
+ * Obtain a execution for a known runUid and file
+ * 
+ * @param runUid
+ * @param fileId unique ID for a file
+ * 
+ * @return run information or null if not found
+ */
+public GeobatchRunInfo searchUnique(String runUid, String fileId);
+
+/**
+ * Obtain all executions for a known file
+ * 
+ * @param fileId unique ID for a file
+ * 
+ * @return all runs or null if not found
+ */
+public List<GeobatchRunInfo> search(String fileId); 
+
+/**
  * Update execution status 
  * 
  * @param runUid to be updated
@@ -80,12 +103,21 @@ public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, String... compositeI
  */
 public GeobatchRunInfo updateRunInfo(String runUid, String status);
 
+/**
+ * Update run information
+ * 
+ * @param runInfo
+ * 
+ * @return run information updated
+ */
+public GeobatchRunInfo updateRunInfo(GeobatchRunInfo runInfo);
+
 
 /**
  * Save run information for a GeoBatch operation
  * 
  * @param obj parameters for the operation
- * @param operation executedrunUid
+ * @param operation executed
  * 
  * @return GeobatchRunInfo stored
  */

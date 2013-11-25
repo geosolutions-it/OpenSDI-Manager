@@ -4,10 +4,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
-	    	http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-			http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-2.5.xsd
-			http://www.springframework.org/schema/aop       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+	    	http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/aop       http://www.springframework.org/schema/aop/spring-aop.xsd"
        default-autowire="byName">
+
+    <!-- Ehcache configuration -->
+    <import resource="classpath:/ehcache-applicationContext.xml" />
 
     <context:annotation-config />
       
@@ -16,13 +19,16 @@
       <property name="geostoreRestUrl" value="http://localhost/geostore"></property>
       <property name="username" value="admin"></property>
       <property name="password" value="admin"></property>
-    </bean> 
+    </bean>  
     
-    <bean id="geobatchClient" class="it.geosolutions.opensdi.service.impl.GeoBatchClientImpl">
-    	<property name="geobatchRestUrl" value="http://localhost/geobatch"/>
-    	<property name="geobatchUsername" value="admin"/>
-    	<property name="geobatchPassword" value="admin"/>
+    <!-- Geobatch configuration -->
+    <bean id="geobatchClientConfiguration" class="it.geosolutions.opensdi.service.impl.GeoBatchClientConfigurationImpl">
+        <property name="geobatchRestUrl" value="http://localhost/geobatch"/>
+        <property name="geobatchUsername" value="admin"/>
+        <property name="geobatchPassword" value="admin"/>
     </bean>
+    <bean id="geoBatchRunInfoDAO" class="it.geosolutions.opensdi.dao.impl.GeoBatchRunInfoDAOGeoStoreImpl" />
+    <bean id="geobatchClient" class="it.geosolutions.opensdi.service.impl.GeoBatchClientImpl" />
   
     <bean id="zip2pgOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
         <property name="path" value="zip2pgOp"/>

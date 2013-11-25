@@ -20,12 +20,24 @@
  */
 package it.geosolutions.opensdi.service.impl;
 
+import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
+import it.geosolutions.geostore.services.rest.GeoStoreClient;
+import it.geosolutions.opensdi.dao.GeoBatchRunInfoDAO;
+import it.geosolutions.opensdi.dto.GeobatchRunInfo;
+import it.geosolutions.opensdi.model.FileUpload;
+import it.geosolutions.opensdi.operations.GeoBatchOperation;
+import it.geosolutions.opensdi.operations.LocalOperation;
+import it.geosolutions.opensdi.operations.RemoteOperation;
+import it.geosolutions.opensdi.service.GeoBatchClient;
+import it.geosolutions.opensdi.service.GeoBatchClientConfiguration;
+
 import java.io.Serializable;
 
-import it.geosolutions.opensdi.service.GeoBatchClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Simple envelop to use same parameters for GeoBatch connection on all controllers
+ * Simple envelop to use same parameters for GeoBatch connection and GeoBatch
+ * operations on all controllers
  * 
  * @author adiaz
  */
@@ -34,50 +46,97 @@ public class GeoBatchClientImpl implements GeoBatchClient, Serializable {
 /** serialVersionUID */
 private static final long serialVersionUID = 7299932957642777660L;
 
-private String geobatchRestUrl;
-private String geobatchUsername;
-private String geobatchPassword;
+@Autowired
+protected GeoBatchClientConfiguration geobatchConfiguration;
+
+@Autowired
+protected GeoStoreClient geostoreClient;
+
+@Autowired
+protected GeoBatchRunInfoDAO geoBatchRunInfoDAO;
 
 /**
  * @return the geobatchRestUrl
  */
 public String getGeobatchRestUrl() {
-    return geobatchRestUrl;
+    return geobatchConfiguration.getGeobatchRestUrl();
 }
 
 /**
  * @param geobatchRestUrl the geobatchRestUrl to set
  */
 public void setGeobatchRestUrl(String geobatchRestUrl) {
-    this.geobatchRestUrl = geobatchRestUrl;
+    geobatchConfiguration.setGeobatchRestUrl(geobatchRestUrl);
 }
 
 /**
  * @return the geobatchUsername
  */
 public String getGeobatchUsername() {
-    return geobatchUsername;
+    return geobatchConfiguration.getGeobatchUsername();
 }
 
 /**
  * @param geobatchUsername the geobatchUsername to set
  */
 public void setGeobatchUsername(String geobatchUsername) {
-    this.geobatchUsername = geobatchUsername;
+    geobatchConfiguration.setGeobatchUsername(geobatchUsername);
 }
 
 /**
  * @return the geobatchPassword
  */
 public String getGeobatchPassword() {
-    return geobatchPassword;
+    return geobatchConfiguration.getGeobatchPassword();
 }
 
 /**
  * @param geobatchPassword the geobatchPassword to set
  */
 public void setGeobatchPassword(String geobatchPassword) {
-    this.geobatchPassword = geobatchPassword;
+    geobatchConfiguration.setGeobatchPassword(geobatchPassword);
+}
+
+/**
+ * @return the geoBatchRunInfoDAO
+ */
+public GeoBatchRunInfoDAO getGeoBatchRunInfoDAO() {
+    return geoBatchRunInfoDAO;
+}
+
+/**
+ * @param geoBatchRunInfoDAO the geoBatchRunInfoDAO to set
+ */
+public void setGeoBatchRunInfoDAO(GeoBatchRunInfoDAO geoBatchRunInfoDAO) {
+    this.geoBatchRunInfoDAO = geoBatchRunInfoDAO;
+}
+
+@Override
+public GeobatchRunInfo getLastRunInfo(Boolean updateStatus,
+        String... compositeId) {
+    return geoBatchRunInfoDAO.getLastRunInfo(updateStatus, compositeId);
+}
+
+@Override
+public GeobatchRunInfo updateRunInfo(String flowUid, String status) {
+    return geoBatchRunInfoDAO.updateRunInfo(flowUid, status);
+}
+
+@Override
+public GeobatchRunInfo saveRunInfo(Object[] parameters, GeoBatchOperation operation) {
+    return geoBatchRunInfoDAO.saveRunInfo(parameters, operation);
+}
+
+@Override
+public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation,
+        RESTRunInfo runInfo) {
+    return geoBatchRunInfoDAO.saveRunInfo(runUid, operation, runInfo);
+}
+
+@Override
+public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation,
+        FileUpload uploadFile) {
+    return geoBatchRunInfoDAO.saveRunInfo(runUid, operation, uploadFile);
 }
 
 }
