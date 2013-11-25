@@ -21,43 +21,59 @@
 
 package it.geosolutions.opensdi.model;
 
+import it.geosolutions.opensdi.dto.GeobatchRunInfo;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 /**
  * File utility class to provide JSP compliant methods
  * 
  * @author Lorenzo Pini
  */
-public class JSPFile extends File{
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	private static final long serialVersionUID = 6112519219077616669L;
-	
-	public JSPFile(String path) {
-		super(path);
-	}
+public class JSPFile extends File {
+private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+private static final long serialVersionUID = 6112519219077616669L;
+private Map<String, GeobatchRunInfo> runInfo;
 
-	/**
-	 * Expose length() method as Size
-	 * @return long length of file
-	 */
-	public long getSize() {
-		return this.length();
-	}
-	
-	/**
-	 * Expose isDirectory() method
-	 * @return boolean isDirectory()
-	 */
-	public boolean getIsDirectory() {
-		return this.isDirectory();
-	}
-	
-	/**
-	 * Expose lastModified() method 
-	 * @return String formatted last modified value
-	 */
-	public String getLastModified() {
-		return sdf.format(this.lastModified());
-	}
+/**
+ * Expose length() method as Size
+ * 
+ * @return long length of file
+ */
+public long getSize() {
+    return this.length();
+}
+
+/**
+ * Expose isDirectory() method
+ * 
+ * @return boolean isDirectory()
+ */
+public boolean getIsDirectory() {
+    return this.isDirectory();
+}
+
+/**
+ * Expose lastModified() method
+ * 
+ * @return String formatted last modified value
+ */
+public String getLastModified() {
+    return sdf.format(this.lastModified());
+}
+
+public Map<String, GeobatchRunInfo> getRunInfo() {
+    return runInfo;
+}
+
+public void setRunInfo(Map<String, GeobatchRunInfo> runInfo) {
+    this.runInfo = runInfo;
+}
+
+public JSPFile(String path) {
+    super(path);
+}
+
 }

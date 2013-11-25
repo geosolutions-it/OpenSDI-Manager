@@ -4,7 +4,7 @@
 <%@ taglib prefix="osdim" uri="../../tld/osdim.tld"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <div class="container" id="${containerId}">
-	<h2>File Browser</h2>
+	<h2>File Browser <c:if test="${showRunInformation}"><span><a class="btn btn-primary" href="./?update=true">Update status</a></span></c:if></h2>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -13,6 +13,11 @@
 				<th>Size</th>
 				<th>LastModified</th>
 				<th>Delete File</th>
+				<c:if test="${showRunInformation}">
+				<th>Status</th>
+				<th>Last execution</th>
+				<th>View</th>
+				</c:if>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,6 +62,30 @@
 								<button class="btn btn-mini btn-danger" data-confirm="are you sure to delete the file '${file.name}'" data-filename="${file.name}" onClick="confirmDelete('${file.name}')">Delete</button> 
 							</c:if>
 						</td>
+						<c:if test="${showRunInformation}">
+							<!--${file.runInfo}-->
+							<c:forEach items="${operations}" var="entry">
+								<c:set var="fileext" value=".${entry.key}" /> 
+								<c:if test="${fn:endsWith(file.name, fileext)}">
+								<c:forEach items="${file.runInfo}" var="op">
+									<c:choose>
+										<c:when test="${not empty op.value}">
+											<td><span class="fileStatus status_${op.value.flowStatus}">${op.value.flowStatus}</span></td>
+											<td><span class="fileRunDate">${op.value.lastExecution}</span></td>
+											<td>
+												<a class="btn btn-primary" href="../../operationManager/flowstatus/?id=${op.value.flowUid}">LOG</a>
+											</td>
+										</c:when>
+										<c:otherwise>
+											<td><span class="fileStatus status_none">-</span></td>
+											<td><span class="fileRunDate">-</span></td>
+											<td><span class="emptyFlowId">-</span></td>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								</c:if>
+							</c:forEach>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -181,7 +210,7 @@
 
 	function confirmDelete(filename) {
 		if (!$('#deleteFileConfirmModal').length) {
-			$('body').append('<div id="deleteFileConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" data-dismiss="modal" id="dataConfirmOK">OK</a></div></div>');
+			$('body').append('<div id="deleteFileConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" data-dismiss="modal" id="dataConfirmOK">OK</a></div></div>');
 		} 
 		$('#deleteFileConfirmModal').find('.modal-body').text("Are you sure that you want to delete '"+filename+"'?");
 		

@@ -52,6 +52,7 @@
         <hibernate-validator.version>3.1.0.GA</hibernate-validator.version>-->
         <hibernate-generic-dao.version>1.1.0</hibernate-generic-dao.version>
         <servlet-api.version>2.5</servlet-api.version>
+        <ehcache.version>2.7.4</ehcache.version>
         <jstl.version>1.2</jstl.version>
         <jetty.port>9191</jetty.port>
     </properties>
@@ -547,6 +548,13 @@
                 <groupId>jstl</groupId>
                 <artifactId>jstl</artifactId>
                 <version>${jstl.version}</version>
+            </dependency>
+
+            <!-- Ehcache -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache.version}</version>
             </dependency>
         </dependencies>
      </dependencyManagement>

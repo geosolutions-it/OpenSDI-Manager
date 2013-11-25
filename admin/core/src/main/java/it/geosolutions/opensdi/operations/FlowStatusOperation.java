@@ -148,6 +148,8 @@ public class FlowStatusOperation extends GeoBatchOperationImpl implements GeoBat
 			try {
 				it.geosolutions.geobatch.services.rest.model.RESTConsumerStatus.Status status = service.getConsumerStatus(id).getStatus();
 				String log =  service.getConsumerLog(id);
+				// Update run Info
+				geobatchClient.updateRunInfo(id, status.name());
 				switch (status) {
 					case SUCCESS:
 						model.addAttribute("messageType", "success");
@@ -173,6 +175,8 @@ public class FlowStatusOperation extends GeoBatchOperationImpl implements GeoBat
 				model.addAttribute("flowLog", log);
 				
 			} catch (NotFoundRestEx e) {
+                                // Update run Info
+                                geobatchClient.updateRunInfo(id, "FAIL");
 				model.addAttribute("messageType", "error");
 				model.addAttribute("messageJsp", "flow_general");
 				model.addAttribute("operationMessage", "Error");
@@ -180,6 +184,8 @@ public class FlowStatusOperation extends GeoBatchOperationImpl implements GeoBat
 
 			}catch (Exception e) {
 				e.printStackTrace();
+                                // Update run Info
+                                geobatchClient.updateRunInfo(id, "FAIL");
 				model.addAttribute("messageType", "error");
 				model.addAttribute("messageJsp", "flow_general");
 				model.addAttribute("operationMessage", "Error");
