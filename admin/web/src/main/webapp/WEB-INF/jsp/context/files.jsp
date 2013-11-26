@@ -3,8 +3,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="osdim" uri="../../tld/osdim.tld"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+
+<c:set var="thisUrl" value="${requestScope['javax.servlet.forward.context_path']}${requestScope['javax.servlet.forward.servlet_path']}"/>
+
+<c:set var="pageName">File Browser</c:set>
+<c:if test="${showRunInformation}">
+	<c:set var="refreshButton"><div class="pull-right"><span>
+		<a class="btn btn-success" href="./?update=true">
+			<i class="icon-refresh icon-white" title="Refresh status of each run"></i>
+		</a>
+	</span></div></c:set>
+</c:if>
+
+<c:set var="pageTitle">${pageName}${refreshButton}</c:set>
+
 <div class="container" id="${containerId}">
-	<h2>File Browser <c:if test="${showRunInformation}"><span><a class="btn btn-primary" href="./?update=true">Update status</a></span></c:if></h2>
+	<h2>${pageTitle}</h2>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -14,9 +28,11 @@
 				<th>LastModified</th>
 				<th>Delete File</th>
 				<c:if test="${showRunInformation}">
-				<th>Status</th>
 				<th>Last execution</th>
-				<th>View</th>
+				<th>Status</th>
+				</c:if>
+				<c:if test="${showRunInformationHistory}">
+				<th>History</th>
 				</c:if>
 			</tr>
 		</thead>
@@ -70,16 +86,23 @@
 								<c:forEach items="${file.runInfo}" var="op">
 									<c:choose>
 										<c:when test="${not empty op.value}">
-											<td><span class="fileStatus status_${op.value.flowStatus}">${op.value.flowStatus}</span></td>
 											<td><span class="fileRunDate">${op.value.lastExecution}</span></td>
+											<td><span class="fileStatus status_${op.value.flowStatus}"><a class="btn btn-${(op.value.flowStatus == 'FAIL') ? 'danger' 
+												: ((op.value.flowStatus == 'RUNNING') ? 'warning' : 'success')}" 
+												href="../../operationManager/flowstatus/?id=${op.value.flowUid}">${op.value.flowStatus}</a></span></td>
+											<c:if test="${showRunInformationHistory}">
 											<td>
-												<a class="btn btn-primary" href="../../operationManager/flowstatus/?id=${op.value.flowUid}">LOG</a>
+												<a class="btn btn-history" href="../../operationManager/flowlog/?id=${op.value.internalUid}&returnUrl=${thisUrl}" 
+													title="Show file history"><i class="icon-time"></i></a>
 											</td>
+											</c:if>
 										</c:when>
 										<c:otherwise>
-											<td><span class="fileStatus status_none">-</span></td>
 											<td><span class="fileRunDate">-</span></td>
-											<td><span class="emptyFlowId">-</span></td>
+											<td><span class="fileStatus status_none">-</span></td>
+											<c:if test="${showRunInformationHistory}">
+											<td><span class="emptyHistory">-</span></td>
+											</c:if>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>

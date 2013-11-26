@@ -69,6 +69,8 @@ private Boolean canDelete;
 
 private Boolean showRunInformation;
 
+private Boolean showRunInformationHistory;
+
 private UUID uniqueKey;
 
 private String accept;
@@ -333,6 +335,7 @@ public String getJsp(ModelMap model, HttpServletRequest request,
     model.addAttribute("canDelete", this.canDelete);
     model.addAttribute("canUpload", this.canUpload);
     model.addAttribute("showRunInformation", this.showRunInformation);
+    model.addAttribute("showRunInformationHistory", this.showRunInformationHistory);
 
     model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
     model.addAttribute("formId", uniqueKey.toString().substring(27, 36));
@@ -476,6 +479,20 @@ public Boolean getShowRunInformation() {
  */
 public void setShowRunInformation(Boolean showRunInformation) {
     this.showRunInformation = showRunInformation;
+}
+
+/**
+ * @return the showRunInformationHistory
+ */
+public Boolean getShowRunInformationHistory() {
+    return showRunInformationHistory;
+}
+
+/**
+ * @param showRunInformationHistory the showRunInformationHistory to set
+ */
+public void setShowRunInformationHistory(Boolean showRunInformationHistory) {
+    this.showRunInformationHistory = showRunInformationHistory;
 }
 
 }

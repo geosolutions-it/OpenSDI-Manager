@@ -105,6 +105,22 @@
             </dependency>
             <dependency>
                 <groupId>it.geosolutions.opensdi</groupId>
+                <artifactId>opensdi-log-operation</artifactId>
+                <version>${nrl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>it.geosolutions.opensdi</groupId>
+                <artifactId>opensdi-log-operation-core</artifactId>
+                <version>${nrl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>it.geosolutions.opensdi</groupId>
+                <artifactId>opensdi-log-operation-web-extension</artifactId>
+                <version>${nrl.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>it.geosolutions.opensdi</groupId>
                 <artifactId>opensdi-test-core</artifactId>
                 <version>${nrl.version}</version>
             </dependency>
@@ -562,6 +578,7 @@
         <module>test-core</module>
         <module>core</module>
         <module>web</module>
+        <module>opensdi-log-operation</module>
         <module>nrl-core</module>
         <module>nrl-mvc</module>
         <module>nrl-web-extension</module>

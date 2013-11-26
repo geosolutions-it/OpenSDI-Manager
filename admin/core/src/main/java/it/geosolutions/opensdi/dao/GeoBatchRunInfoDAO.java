@@ -39,6 +39,16 @@ public interface GeoBatchRunInfoDAO {
 /**
  * Obtain run information for a file identified by compositeId
  * 
+ * @param updateStatus flag to check status of the run or not
+ * @param compositeId identifier of the file (to concatenate)
+ * 
+ * @return List of runs for a composite id
+ */
+public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus, String... compositeId);
+
+/**
+ * Obtain run information for a file identified by compositeId
+ * 
  * @param compositeId identifier of the file (to concatenate)
  * 
  * @return List of runs for a composite id

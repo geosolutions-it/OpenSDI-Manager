@@ -20,8 +20,9 @@
  */
 package it.geosolutions.opensdi.dto;
 
+import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
+
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -33,10 +34,6 @@ public class GeobatchRunInfo implements Serializable {
 
 /** serialVersionUID */
 private static final long serialVersionUID = -7174872618502299685L;
-
-private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-private static SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
 
 private Long id;
 
@@ -51,6 +48,8 @@ private String flowStatus;
 private Date lastExecutionDate;
 
 private Date lastCheckDate;
+
+private String[] compositeId;
 
 /**
  * @return the id
@@ -91,6 +90,7 @@ public String getInternalUid() {
  * @param internalUid the internalUid to set
  */
 public void setInternalUid(String internalUid) {
+    this.compositeId = GeoBatchRunInfoUtils.getCompositeId(internalUid);
     this.internalUid = internalUid;
 }
 
@@ -126,16 +126,7 @@ public void setFlowStatus(String flowStatus) {
  * @return the lastExecution
  */
 public String getLastExecution() {
-    Date today = new Date();
-    String lastExecution = null;
-    if (lastExecutionDate != null) {
-        lastExecution = sdf.format(lastExecutionDate);
-        if (lastExecution.equals(sdf.format(today))) {
-            // It's today, we show time!!
-            lastExecution = sdft.format(lastExecutionDate);
-        }
-    }
-    return lastExecution;
+    return GeoBatchRunInfoUtils.getDate(lastExecutionDate);
 }
 
 /**
@@ -149,7 +140,7 @@ public void setLastExecution(Date lastExecution) {
  * @return the lastCheck
  */
 public String getLastCheck() {
-    return lastCheckDate != null ? sdf.format(lastCheckDate) : null;
+    return GeoBatchRunInfoUtils.getDate(lastCheckDate);
 }
 
 /**
@@ -171,6 +162,20 @@ public Date getLastExecutionDate() {
  */
 public Date getLastCheckDate() {
     return lastCheckDate;
+}
+
+/**
+ * @return the compositeId
+ */
+public String[] getCompositeId() {
+    return compositeId;
+}
+
+/**
+ * @param compositeId the compositeId to set
+ */
+public void setCompositeId(String[] compositeId) {
+    this.compositeId = compositeId;
 }
 
 }

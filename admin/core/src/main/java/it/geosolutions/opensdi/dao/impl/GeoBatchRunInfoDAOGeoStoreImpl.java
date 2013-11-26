@@ -45,6 +45,7 @@ import it.geosolutions.opensdi.operations.LocalOperation;
 import it.geosolutions.opensdi.operations.RemoteOperation;
 import it.geosolutions.opensdi.service.GeoBatchClientConfiguration;
 import it.geosolutions.opensdi.service.impl.GeoBatchClientImpl;
+import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -77,11 +78,6 @@ protected RESTCategory geobatchExecutionCategory = null;
  * GeoStore client autowired
  */
 protected GeoStoreClient geostoreClient;
-
-/**
- * Separator for composite descriptors
- */
-public static final String SEPARATOR = "/";
 
 /**
  * Default status for a GeoBatch action
@@ -141,7 +137,7 @@ private void init(GeoStoreClient geostoreClient) {
  * @return List of runs for a composite id
  */
 public List<GeobatchRunInfo> getRunInfo(String... compositeId) {
-    return search(generateDecription(compositeId));
+    return search(compositeId != null && compositeId.length > 0 ? generateDecription(compositeId) : null);
 }
 
 /**
@@ -168,20 +164,33 @@ public GeobatchRunInfo getLastRunInfo(Boolean updateStatus,
     } else {
         GeobatchRunInfo runInfo = getLastRunInfo(compositeId);
         if (runInfo != null) {
-            RESTConsumerStatus status = null;
-            try {
-                status = getFlowService().getConsumerStatus(
-                        runInfo.getFlowUid());
-            } catch (Exception e) {
-                // status it's FAIL
-            }
-            runInfo.setFlowStatus(status != null ? status.getStatus().name()
-                    : "FAIL");
-            runInfo = updateRunInfo(runInfo);
+            runInfo = updateRunInfoStatus(runInfo);
         }
         return runInfo;
     }
+}
 
+/**
+ * Obtain run information for a file identified by compositeId
+ * 
+ * @param updateStatus flag to check status of the run or not
+ * @param compositeId identifier of the file (to concatenate)
+ * 
+ * @return List of runs for a composite id
+ */
+public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus, String... compositeId){
+    if (updateStatus == null || !updateStatus) {
+        return getRunInfo(compositeId);
+    } else {
+        List<GeobatchRunInfo> runInfoList = new LinkedList<GeobatchRunInfo>();
+        List<GeobatchRunInfo> searchResult = getRunInfo(compositeId);
+        if (searchResult != null && !searchResult.isEmpty()) {
+            for(GeobatchRunInfo runInfo: searchResult){
+                runInfoList.add(updateRunInfoStatus(runInfo));
+            }
+        }
+        return runInfoList;
+    }
 }
 
 /**
@@ -230,9 +239,15 @@ public GeobatchRunInfo searchUnique(String runUid, String description) {
  * @return all runs or null if not found
  */
 public List<GeobatchRunInfo> search(String fileId) {
-    SearchFilter filter = new AndFilter(new FieldFilter(BaseField.DESCRIPTION,
-            fileId, SearchOperator.EQUAL_TO), new CategoryFilter(CATEGORY_NAME,
-            SearchOperator.EQUAL_TO));
+    SearchFilter filter;
+    if(fileId != null){
+        filter = new AndFilter(new FieldFilter(BaseField.DESCRIPTION,
+                fileId, SearchOperator.EQUAL_TO), new CategoryFilter(CATEGORY_NAME,
+                SearchOperator.EQUAL_TO));
+    }else{
+        filter = new CategoryFilter(CATEGORY_NAME,
+                SearchOperator.EQUAL_TO);
+    }
     ResourceList list = geostoreClient.searchResources(filter, 0,
             Integer.MAX_VALUE, true, false);
     List<GeobatchRunInfo> resources = new LinkedList<GeobatchRunInfo>();
@@ -363,14 +378,7 @@ private GeobatchRunInfo getLastRunInfoCache(String id) {
  * @return concatenated String
  */
 private String generateDecription(String... compositeId) {
-    String description = "";
-    if (compositeId != null && compositeId.length > 0) {
-        description += compositeId[0];
-        for (int i = 1; i < compositeId.length; i++) {
-            description += SEPARATOR + compositeId[i];
-        }
-    }
-    return description;
+    return GeoBatchRunInfoUtils.generateDecription(compositeId);
 }
 
 /**
@@ -460,6 +468,27 @@ private GeobatchRunInfo searchUnique(String runUid) {
         result = getRunStatus(list.getList().get(0));
     }
     return result;
+}
+
+/**
+ * Obtain run information status and update it on stored data
+ * 
+ * @param runInfo
+ * 
+ * @return run information updated
+ */
+private GeobatchRunInfo updateRunInfoStatus(GeobatchRunInfo runInfo) {
+    RESTConsumerStatus status = null;
+    try {
+        status = getFlowService().getConsumerStatus(
+                runInfo.getFlowUid());
+    } catch (Exception e) {
+        // status it's FAIL
+    }
+    runInfo.setFlowStatus(status != null ? status.getStatus().name()
+            : "FAIL");
+    runInfo = updateRunInfo(runInfo);
+    return runInfo;
 }
 
 }
