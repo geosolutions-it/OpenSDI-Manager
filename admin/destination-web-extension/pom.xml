@@ -21,6 +21,11 @@
             <artifactId>opensdi-web</artifactId>
             <type>war</type>
         </dependency>
+        <dependency>
+            <groupId>it.geosolutions.opensdi</groupId>
+            <artifactId>opensdi-log-operation-web-extension</artifactId>
+            <type>war</type>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
