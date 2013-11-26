@@ -32,6 +32,7 @@ import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.service.GeoBatchClientConfiguration;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -137,6 +138,12 @@ public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation,
 public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation,
         FileUpload uploadFile) {
     return geoBatchRunInfoDAO.saveRunInfo(runUid, operation, uploadFile);
+}
+
+@Override
+public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus,
+        String... compositeId) {
+    return geoBatchRunInfoDAO.getRunInfo(updateStatus, compositeId);
 }
 
 }

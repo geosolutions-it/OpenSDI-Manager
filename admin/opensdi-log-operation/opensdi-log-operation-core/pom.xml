@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.geosolutions.opensdi</groupId>
+        <artifactId>opensdi-log-operation</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+  
+    <groupId>it.geosolutions.opensdi</groupId>
+    <artifactId>opensdi-log-operation-core</artifactId>
+    <packaging>jar</packaging>
+  
+    <name>OpenSDI Manager - Log operation - core</name>
+  
+    <dependencies>
+        <!-- Test -->
+        <dependency>
+            <groupId>it.geosolutions.opensdi</groupId>
+            <artifactId>opensdi-test-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Internal -->
+        <dependency>
+            <groupId>it.geosolutions.opensdi</groupId>
+            <artifactId>opensdi-core</artifactId>
+        </dependency>
+    </dependencies>
+    
+</project>

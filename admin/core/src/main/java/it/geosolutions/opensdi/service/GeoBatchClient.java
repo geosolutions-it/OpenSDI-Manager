@@ -20,6 +20,8 @@
  */
 package it.geosolutions.opensdi.service;
 
+import java.util.List;
+
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.model.FileUpload;
@@ -69,6 +71,16 @@ public void setGeobatchPassword(String geobatchPassword);
  * @return last execution for this file or null if not found 
  */
 public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, String... compositeId);
+
+/**
+ * Obtain run information for a file identified by compositeId
+ * 
+ * @param updateStatus flag to check status of the run or not
+ * @param compositeId identifier of the file (to concatenate)
+ * 
+ * @return List of runs for a composite id
+ */
+public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus, String... compositeId);
 
 /**
  * Update execution status 
