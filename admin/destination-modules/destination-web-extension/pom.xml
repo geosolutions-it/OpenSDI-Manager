@@ -4,18 +4,21 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>it.geosolutions.opensdi</groupId>
-        <artifactId>portal-root</artifactId>
+        <artifactId>destination-modules</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
   
     <groupId>it.geosolutions.opensdi</groupId>
     <artifactId>destination-web-extension</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
   
-    <name>Destination - OpenSDI-Manager extension</name>
+    <name>OpenSDI Manager - Destination - web extension</name>
   
     <dependencies>
+        <dependency>
+            <groupId>it.geosolutions.opensdi</groupId>
+            <artifactId>destination-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>it.geosolutions.opensdi</groupId>
             <artifactId>opensdi-web</artifactId>

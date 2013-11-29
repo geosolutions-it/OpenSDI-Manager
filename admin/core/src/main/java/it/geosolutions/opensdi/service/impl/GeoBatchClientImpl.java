@@ -22,6 +22,8 @@ package it.geosolutions.opensdi.service.impl;
 
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.geostore.services.rest.GeoStoreClient;
+import it.geosolutions.opensdi.config.GeoBatchRunInfoPostProcessor;
+import it.geosolutions.opensdi.config.GeoBatchRunInfoPostProcessorOperation;
 import it.geosolutions.opensdi.dao.GeoBatchRunInfoDAO;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.model.FileUpload;
@@ -32,6 +34,7 @@ import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.service.GeoBatchClientConfiguration;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +58,8 @@ protected GeoStoreClient geostoreClient;
 
 @Autowired
 protected GeoBatchRunInfoDAO geoBatchRunInfoDAO;
+
+protected List<GeoBatchRunInfoPostProcessor> postProcessors;
 
 /**
  * @return the geobatchRestUrl
@@ -115,35 +120,162 @@ public void setGeoBatchRunInfoDAO(GeoBatchRunInfoDAO geoBatchRunInfoDAO) {
 @Override
 public GeobatchRunInfo getLastRunInfo(Boolean updateStatus,
         String... compositeId) {
-    return geoBatchRunInfoDAO.getLastRunInfo(updateStatus, compositeId);
+    return postProcessAfterOperation(
+            getLastRunInfo(updateStatus, false, compositeId),
+            GeoBatchRunInfoPostProcessorOperation.READ);
+}
+
+/**
+ * Obtain last run updated or not for a compositeId
+ * 
+ * @param updateStatus flag to check status of the run or not
+ * @param complete flag to load extra information on the run information
+ * @param compositeId unique ID for a file in admin project
+ * @return last execution for this file or null if not found
+ */
+public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, Boolean complete,
+        String... compositeId) {
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.getLastRunInfo(updateStatus, compositeId),
+            GeoBatchRunInfoPostProcessorOperation.READ, complete);
 }
 
 @Override
 public GeobatchRunInfo updateRunInfo(String flowUid, String status) {
-    return geoBatchRunInfoDAO.updateRunInfo(flowUid, status);
+    return updateRunInfo(flowUid, status, false);
+}
+
+/**
+ * Update execution status
+ * 
+ * @param runUid to be updated
+ * @param status new status
+ * @param complete obtain a complete instance of run information
+ * @return updated run info
+ */
+public GeobatchRunInfo updateRunInfo(String runUid, String status,
+        Boolean complete) {
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.updateRunInfo(runUid, status),
+            GeoBatchRunInfoPostProcessorOperation.UPDATE, complete);
 }
 
 @Override
-public GeobatchRunInfo saveRunInfo(Object[] parameters, GeoBatchOperation operation) {
-    return geoBatchRunInfoDAO.saveRunInfo(parameters, operation);
+public GeobatchRunInfo saveRunInfo(Object[] parameters,
+        GeoBatchOperation operation) {
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.saveRunInfo(parameters, operation),
+            GeoBatchRunInfoPostProcessorOperation.CREATE);
 }
 
 @Override
 public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation,
         RESTRunInfo runInfo) {
-    return geoBatchRunInfoDAO.saveRunInfo(runUid, operation, runInfo);
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.saveRunInfo(runUid, operation, runInfo),
+            GeoBatchRunInfoPostProcessorOperation.CREATE);
 }
 
 @Override
 public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation,
         FileUpload uploadFile) {
-    return geoBatchRunInfoDAO.saveRunInfo(runUid, operation, uploadFile);
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.saveRunInfo(runUid, operation, uploadFile),
+            GeoBatchRunInfoPostProcessorOperation.CREATE);
 }
 
 @Override
 public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus,
         String... compositeId) {
-    return geoBatchRunInfoDAO.getRunInfo(updateStatus, compositeId);
+    return postProcessAfterOperation(
+            geoBatchRunInfoDAO.getRunInfo(updateStatus, compositeId),
+            GeoBatchRunInfoPostProcessorOperation.READ);
+}
+
+/**
+ * Register a post processor instance
+ * 
+ * @param postProcessor to be register
+ */
+public void registerPostProcessor(GeoBatchRunInfoPostProcessor postProcessor) {
+    if (this.postProcessors == null) {
+        postProcessors = new LinkedList<GeoBatchRunInfoPostProcessor>();
+    }
+    postProcessors.add(postProcessor);
+}
+
+/**
+ * Clean all run information for a compositeId
+ * 
+ * @param compositeId unique ID for a file in admin project
+ */
+public void cleanRunInformation(String... compositeId) {
+    GeobatchRunInfo lastRun = geoBatchRunInfoDAO
+            .cleanRunInformation(compositeId);
+    if (lastRun != null) {
+        // call to post processor
+        postProcessAfterOperation(lastRun,
+                GeoBatchRunInfoPostProcessorOperation.DELETE);
+    }
+}
+
+/**
+ * Process a list of GeoBatch run information DTO
+ * 
+ * @param originList
+ * @return post processed list
+ */
+protected List<GeobatchRunInfo> postProcessAfterOperation(
+        List<GeobatchRunInfo> originList, Object... parameters) {
+    if (originList != null && !originList.isEmpty()) {
+        // Process each bean, GeoBatchRunInfoPostProcessorOperation.CREATE
+        List<GeobatchRunInfo> result = new LinkedList<GeobatchRunInfo>();
+        for (GeobatchRunInfo origin : originList) {
+            result.add(postProcessAfterOperation(origin, parameters));
+        }
+        return result;
+    } else {
+        // Nothing to process
+        return originList;
+    }
+}
+
+/**
+ * Process a GeoBatch run information DTO
+ * 
+ * @param origin to process
+ * @param parameters for the post processor
+ * @return processed bean
+ */
+protected GeobatchRunInfo postProcessAfterOperation(GeobatchRunInfo origin,
+        Object... parameters) {
+    GeobatchRunInfo result = origin;
+    if (this.postProcessors != null) {
+        for (GeoBatchRunInfoPostProcessor postProcessor : this.postProcessors) {
+            origin = postProcessor
+                    .postProcessAfterOperation(origin, parameters);
+        }
+    }
+    return result;
+}
+
+/**
+ * Process a GeoBatch run information DTO
+ * 
+ * @param origin to process
+ * @param parameters for the post processor
+ * @return processed bean
+ */
+protected GeobatchRunInfo postProcessBeforeOperation(GeobatchRunInfo origin,
+        Object... parameters) {
+    GeobatchRunInfo result = origin;
+    if (this.postProcessors != null) {
+        for (GeoBatchRunInfoPostProcessor postProcessor : this.postProcessors) {
+            origin = postProcessor
+                    .postProcessAfterOperation(origin, parameters);
+        }
+    }
+    return result;
 }
 
 }

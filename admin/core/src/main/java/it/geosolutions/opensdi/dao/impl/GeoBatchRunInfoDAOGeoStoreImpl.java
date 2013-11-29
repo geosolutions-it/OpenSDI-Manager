@@ -336,6 +336,29 @@ public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation,
 }
 
 /**
+ * Clean all run information for a compositeId
+ * 
+ * @param compositeId unique ID for a file in admin project
+ * 
+ * @return last execution for this file or null if not found
+ */
+public GeobatchRunInfo cleanRunInformation(String... compositeId) {
+    GeobatchRunInfo last = null;
+    List<GeobatchRunInfo> list = search(generateDecription(compositeId));
+    if(list != null
+            && !list.isEmpty()){
+        // obtain last
+        last = list.get(0);
+        // Delete all resources
+        for(GeobatchRunInfo runInfo: list){
+            RESTResource resource = getRestResource(runInfo);
+            geostoreClient.deleteResource(resource.getId());
+        }
+    }
+    return last;
+}
+
+/**
  * Save default run information for an execution
  * 
  * @param runUid
