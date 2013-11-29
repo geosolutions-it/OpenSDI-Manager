@@ -441,14 +441,21 @@ private void generateCSV(GridCoverage2D coverage, SimpleFeatureCollection fc,
     int index = 0;
     for (ZoneGeometry statResult : statsResult) {
         FeatureAggregation featureAgregation = result.get(index++);
-        Double ndvi = (Double) statResult.getStatsPerBandNoClassifierNoRange(0)[0]
+        Double mean = (Double) statResult.getStatsPerBandNoClassifierNoRange(0)[0]
                 .getResult();
         // If the mean is 0, then no calculations are performed
-        if (ndvi != 0.0){
+        if (mean != 0.0) {
             // apply NDVI: Physical value = pixel value*0.004 - 0.1
-            ndvi = (ndvi * 0.004) - 0.1;
+            Double ndvi = (mean * 0.004) - 0.1;
             featureAgregation.getProperties().put("NDVI_avg", ndvi.toString());
-            data.add(featureAgregation.toRow());
+            if (mean > 0.0) {
+                // include data
+                data.add(featureAgregation.toRow());
+            } else {
+                // log error: the mean shouldn't be never less than 0
+                LOGGER.error("Zonal statistics corrupted not included for: "
+                        + featureAgregation.toRow());
+            }
         }
     }
 
