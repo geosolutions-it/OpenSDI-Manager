@@ -53,7 +53,7 @@ private static Random RANDOM = new Random();
  * We need the instance because we need to insert for this test
  */
 @Autowired
-private TraceServiceImpl traceService;
+private TraceService traceService;
 
 /**
  * Test for {@link TraceService#searchByRun(GeobatchRunInfo)} method

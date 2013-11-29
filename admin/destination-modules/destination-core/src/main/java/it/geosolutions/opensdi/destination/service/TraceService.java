@@ -56,4 +56,12 @@ public TraceDto searchClosestTraceByRun(GeobatchRunInfo runInfo);
  */
 public List<TraceDto> searchByRun(GeobatchRunInfo runInfo);
 
+/**
+ * Save trace element. Just for test proposal.
+ * 
+ * @param trace to be saved
+ * @return trace saved
+ */
+public TraceDto saveTrace(TraceDto trace);
+
 }
