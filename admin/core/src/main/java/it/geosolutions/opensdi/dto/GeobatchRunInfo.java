@@ -24,6 +24,7 @@ import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Run information for GeoBatch flow
@@ -50,6 +51,8 @@ private Date lastExecutionDate;
 private Date lastCheckDate;
 
 private String[] compositeId;
+
+private Map<String, Object> extraInformation;
 
 /**
  * @return the id
@@ -176,6 +179,20 @@ public String[] getCompositeId() {
  */
 public void setCompositeId(String[] compositeId) {
     this.compositeId = compositeId;
+}
+
+/**
+ * @return the extraInformation
+ */
+public Map<String, Object> getExtraInformation() {
+    return extraInformation;
+}
+
+/**
+ * @param extraInformation the extraInformation to set
+ */
+public void setExtraInformation(Map<String, Object> extraInformation) {
+    this.extraInformation = extraInformation;
 }
 
 }

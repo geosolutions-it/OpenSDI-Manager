@@ -22,6 +22,7 @@ package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.geobatch.services.rest.RESTFlowService;
 import it.geosolutions.geobatch.services.rest.exception.NotFoundRestEx;
+import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,180 +34,211 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class FlowStatusOperation extends GeoBatchOperationImpl implements GeoBatchOperation {
-	
-	/**
-	 * The name of this Operation
-	 */
-	public static String name = "FlowStatus";
-	
-	/**
-	 * The path were to GET the form and POST the request
-	 * Typically all lower case
-	 */
-	private String path = "flowstatus";
-	
-	/**
-	 * File extension this Operation will work on
-	 */
-	private String[] extensions = {};
-	
-	/**
-	 * Directory where to scan for files
-	 */
-	private String basedirString ;
+public class FlowStatusOperation extends GeoBatchOperationImpl implements
+        GeoBatchOperation {
 
-	/**
-	 * Getter
-	 * @return the basedirString
-	 */
-	public String getBasedirString() {
-		return basedirString;
-	}
+/**
+ * The name of this Operation
+ */
+public static String name = "FlowStatus";
 
-	/**
-	 * Setter
-	 * @param basedirString the basedirString to set
-	 */
-	public void setBasedirString(String basedirString) {
-		this.basedirString = basedirString;
-	}
+/**
+ * The path were to GET the form and POST the request Typically all lower case
+ */
+private String path = "flowstatus";
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+/**
+ * File extension this Operation will work on
+ */
+private String[] extensions = {};
 
-	/**
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
-	}
+/**
+ * Directory where to scan for files
+ */
+private String basedirString;
 
-	@Override
-	public String getRESTPath() {
-		return getPath();
-	}
+/**
+ * Show run information when get GeoBatch information
+ */
+private Boolean showRunInformation;
 
-	@Override
-	public List<String> getExtensions() {
-		List<String> l = new ArrayList<String>();
-		for (String s : extensions) {
-			l.add(s);
-		}
-		return l;
-	}
+/**
+ * Getter
+ * 
+ * @return the basedirString
+ */
+public String getBasedirString() {
+    return basedirString;
+}
 
-	@Override
-	public boolean isMultiple() {
-		return false;
-	}
+/**
+ * Setter
+ * 
+ * @param basedirString the basedirString to set
+ */
+public void setBasedirString(String basedirString) {
+    this.basedirString = basedirString;
+}
 
-	// TODO: This jsp should be placed in a common folder, set in the OperationManager (OperationMapping)
-	@Override
-	public String getJsp() {
-		return "flowstatus";
-	}
+/**
+ * @return the name
+ */
+public String getName() {
+    return name;
+}
 
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(String path) {
-		this.path = path;
-	}
+/**
+ * @return the path
+ */
+public String getPath() {
+    return path;
+}
 
-	@Override
-	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
-		
-		System.out.println("getJSP di flowStatus");
-		
-		String id = request.getParameter("id");
-		if(id != null) {
-			model.addAttribute("consumer_id", id);
-		}else {
-			model.addAttribute("consumer_id", "");
-		}
+@Override
+public String getRESTPath() {
+    return getPath();
+}
 
-		return "flowstatus";
+@Override
+public List<String> getExtensions() {
+    List<String> l = new ArrayList<String>();
+    for (String s : extensions) {
+        l.add(s);
+    }
+    return l;
+}
 
-	}
+@Override
+public boolean isMultiple() {
+    return false;
+}
 
-	@Override
-	public Object getBlob(Object inputParam,HttpServletRequest postRequest) {
-		
-		// TODO: refactor this
-		RESTFlowService service = (RESTFlowService) ((Object[])inputParam)[0];
-		HttpServletRequest request = (HttpServletRequest) ((Object[])inputParam)[1];
-		ModelMap model = (ModelMap) ((Object[])inputParam)[2];
-		
-		String id = request.getParameter("id");
-		if(id != null) {
-			
-			try {
-				it.geosolutions.geobatch.services.rest.model.RESTConsumerStatus.Status status = service.getConsumerStatus(id).getStatus();
-				String log =  service.getConsumerLog(id);
-				// Update run Info
-				geobatchClient.updateRunInfo(id, status.name());
-				switch (status) {
-					case SUCCESS:
-						model.addAttribute("messageType", "success");
-						model.addAttribute("messageJsp", "flow_success");
-						model.addAttribute("operationMessage", "Success!");
-						model.addAttribute("flowMessage", "Operation Ended Successfully");
-						break;
-					case FAIL:
-						model.addAttribute("messageType", "error");
-						model.addAttribute("messageJsp", "flow_general");
-						model.addAttribute("operationMessage", "Failed!");
-						model.addAttribute("flowMessage", "Operation Failed");
-						break;
-					case RUNNING:
-						model.addAttribute("messageType", "block");
-						model.addAttribute("messageJsp", "flow_success");
-						model.addAttribute("operationMessage", "Success!");
-						model.addAttribute("flowMessage", "Operation Running");
-						break;
-					default:
-						break;
-				}
-				model.addAttribute("flowLog", log);
-				
-			} catch (NotFoundRestEx e) {
-                                // Update run Info
-                                geobatchClient.updateRunInfo(id, "FAIL");
-				model.addAttribute("messageType", "error");
-				model.addAttribute("messageJsp", "flow_general");
-				model.addAttribute("operationMessage", "Error");
-				model.addAttribute("flowMessage", "Consumer not found, NotFoundRestEx");
+// TODO: This jsp should be placed in a common folder, set in the
+// OperationManager (OperationMapping)
+@Override
+public String getJsp() {
+    return "flowstatus";
+}
 
-			}catch (Exception e) {
-				e.printStackTrace();
-                                // Update run Info
-                                geobatchClient.updateRunInfo(id, "FAIL");
-				model.addAttribute("messageType", "error");
-				model.addAttribute("messageJsp", "flow_general");
-				model.addAttribute("operationMessage", "Error");
-				model.addAttribute("flowMessage", "Consumer not found");
-			}
-			
-		}else {
-			model.addAttribute("messageType", "info");
-			model.addAttribute("messageJsp", "flow_general");
-			model.addAttribute("operationMessage", "Error!");
-			model.addAttribute("flowMessage", "No Consumer ID passed");
-			return "common/static_messages";
-		}
-		        
-		return "common/static_messages";
-	}
+/**
+ * @param path the path to set
+ */
+public void setPath(String path) {
+    this.path = path;
+}
 
-	@Override
-	public String getFlowID() {
-		// TODO: parametric!!!
-		return "ds2ds_zip2pg";
-	}
+@Override
+public String getJsp(ModelMap model, HttpServletRequest request,
+        List<MultipartFile> files) {
+
+    System.out.println("getJSP di flowStatus");
+
+    String id = request.getParameter("id");
+    if (id != null) {
+        model.addAttribute("consumer_id", id);
+    } else {
+        model.addAttribute("consumer_id", "");
+    }
+
+    return "flowstatus";
+
+}
+
+@Override
+public Object getBlob(Object inputParam, HttpServletRequest postRequest) {
+
+    // TODO: refactor this
+    RESTFlowService service = (RESTFlowService) ((Object[]) inputParam)[0];
+    HttpServletRequest request = (HttpServletRequest) ((Object[]) inputParam)[1];
+    ModelMap model = (ModelMap) ((Object[]) inputParam)[2];
+
+    String id = request.getParameter("id");
+    if (id != null) {
+
+        try {
+            it.geosolutions.geobatch.services.rest.model.RESTConsumerStatus.Status status = service
+                    .getConsumerStatus(id).getStatus();
+            String log = service.getConsumerLog(id);
+            // Update run Info
+            GeobatchRunInfo runInfo = geobatchClient.updateRunInfo(id,
+                    status.name(), true);
+            if(Boolean.TRUE.equals(showRunInformation)){
+                // put in model
+                model.addAttribute("runInfo", runInfo);
+            }
+            switch (status) {
+            case SUCCESS:
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageJsp", "flow_success");
+                model.addAttribute("operationMessage", "Success!");
+                model.addAttribute("flowMessage",
+                        "Operation Ended Successfully");
+                break;
+            case FAIL:
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageJsp", "flow_general");
+                model.addAttribute("operationMessage", "Failed!");
+                model.addAttribute("flowMessage", "Operation Failed");
+                break;
+            case RUNNING:
+                model.addAttribute("messageType", "block");
+                model.addAttribute("messageJsp", "flow_success");
+                model.addAttribute("operationMessage", "Success!");
+                model.addAttribute("flowMessage", "Operation Running");
+                break;
+            default:
+                break;
+            }
+            model.addAttribute("flowLog", log);
+
+        } catch (NotFoundRestEx e) {
+            // Update run Info
+            geobatchClient.updateRunInfo(id, "FAIL");
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageJsp", "flow_general");
+            model.addAttribute("operationMessage", "Error");
+            model.addAttribute("flowMessage",
+                    "Consumer not found, NotFoundRestEx");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Update run Info
+            geobatchClient.updateRunInfo(id, "FAIL");
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageJsp", "flow_general");
+            model.addAttribute("operationMessage", "Error");
+            model.addAttribute("flowMessage", "Consumer not found");
+        }
+
+    } else {
+        model.addAttribute("messageType", "info");
+        model.addAttribute("messageJsp", "flow_general");
+        model.addAttribute("operationMessage", "Error!");
+        model.addAttribute("flowMessage", "No Consumer ID passed");
+        return "common/static_messages";
+    }
+
+    return "common/static_messages";
+}
+
+@Override
+public String getFlowID() {
+    // TODO: parametric!!!
+    return "ds2ds_zip2pg";
+}
+
+/**
+ * @return the showRunInformation
+ */
+public Boolean getShowRunInformation() {
+    return showRunInformation;
+}
+
+/**
+ * @param showRunInformation the showRunInformation to set
+ */
+public void setShowRunInformation(Boolean showRunInformation) {
+    this.showRunInformation = showRunInformation;
+}
 
 }

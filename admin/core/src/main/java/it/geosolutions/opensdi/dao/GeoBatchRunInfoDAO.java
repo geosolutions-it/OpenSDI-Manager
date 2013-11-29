@@ -37,6 +37,15 @@ import java.util.List;
 public interface GeoBatchRunInfoDAO {
 
 /**
+ * Clean all run information for a compositeId
+ * 
+ * @param compositeId unique ID for a file in admin project
+ * 
+ * @return last execution for this file or null if not found
+ */
+public GeobatchRunInfo cleanRunInformation(String... compositeId);
+
+/**
  * Obtain run information for a file identified by compositeId
  * 
  * @param updateStatus flag to check status of the run or not

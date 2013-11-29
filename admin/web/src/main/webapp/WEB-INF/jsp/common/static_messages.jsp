@@ -20,3 +20,8 @@
 	</div>
 
 </div>
+
+<!--  showRunInformation extension on FlowStatusOperation enabled -->					
+<c:if test="${not empty runInfo}">
+	<jsp:include page="../context/runinformationstatistics.jsp" />
+</c:if>

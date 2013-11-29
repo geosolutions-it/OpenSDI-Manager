@@ -20,6 +20,8 @@
  */
 package it.geosolutions.opensdi.utils;
 
+import it.geosolutions.opensdi.dto.GeobatchRunInfo;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -114,6 +116,42 @@ public static String getDate(Date origin) {
         }
     }
     return result;
+}
+
+/**
+ * Obtain file name of a run information
+ * 
+ * @param runInfo
+ * @param removeExtension flag to remove the extension
+ * @return second component of the id if <code>runInformation.compositeId</code>
+ *         ({path, fileName, operation}') or
+ *         <code>runInformation.internalUid</code> ('path/fileName/operation')
+ *         have known format
+ */
+public static String getFileName(GeobatchRunInfo runInfo,
+        boolean removeExtension) {
+    String fileName = null;
+    if (runInfo != null) {
+        String[] compositeId = runInfo.getCompositeId();
+        if (runInfo.getCompositeId() == null
+                || runInfo.getCompositeId().length < 2
+                && runInfo.getInternalUid() != null) {
+            // try to generate from the internal uid
+            compositeId = getCompositeId(runInfo.getInternalUid());
+        }
+        if (compositeId != null) {
+            // Known format: fileName it's the second component of the
+            // compositeId
+            fileName = compositeId[1];
+        }
+    }
+
+    // we need to remove the extension
+    if (fileName != null && removeExtension && fileName.contains(".")) {
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+    }
+
+    return fileName;
 }
 
 }

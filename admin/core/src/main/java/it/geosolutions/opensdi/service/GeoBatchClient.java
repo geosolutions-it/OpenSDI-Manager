@@ -20,18 +20,19 @@
  */
 package it.geosolutions.opensdi.service;
 
-import java.util.List;
-
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
+import it.geosolutions.opensdi.config.GeoBatchRunInfoPostProcessor;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.model.FileUpload;
 import it.geosolutions.opensdi.operations.GeoBatchOperation;
 import it.geosolutions.opensdi.operations.LocalOperation;
 import it.geosolutions.opensdi.operations.RemoteOperation;
 
+import java.util.List;
+
 /**
- * Simple envelop to use same parameters for GeoBatch connection and operations on all
- * controllers
+ * Simple envelop to use same parameters for GeoBatch connection and operations
+ * on all controllers
  * 
  * @author adiaz
  */
@@ -67,38 +68,64 @@ public void setGeobatchPassword(String geobatchPassword);
  * 
  * @param updateStatus flag to check status of the run or not
  * @param compositeId unique ID for a file in admin project
- * 
- * @return last execution for this file or null if not found 
+ * @return last execution for this file or null if not found
  */
-public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, String... compositeId);
+public GeobatchRunInfo getLastRunInfo(Boolean updateStatus,
+        String... compositeId);
+
+/**
+ * Clean all run information for a compositeId
+ * 
+ * @param compositeId unique ID for a file in admin project
+ */
+public void cleanRunInformation(String... compositeId);
+
+/**
+ * Obtain last run updated or not for a compositeId
+ * 
+ * @param updateStatus flag to check status of the run or not
+ * @param complete flag to load extra information on the run information
+ * @param compositeId unique ID for a file in admin project
+ * @return last execution for this file or null if not found
+ */
+public GeobatchRunInfo getLastRunInfo(Boolean updateStatus, Boolean complete,
+        String... compositeId);
 
 /**
  * Obtain run information for a file identified by compositeId
  * 
  * @param updateStatus flag to check status of the run or not
  * @param compositeId identifier of the file (to concatenate)
- * 
  * @return List of runs for a composite id
  */
-public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus, String... compositeId);
+public List<GeobatchRunInfo> getRunInfo(Boolean updateStatus,
+        String... compositeId);
 
 /**
- * Update execution status 
+ * Update execution status
  * 
  * @param runUid to be updated
  * @param status new status
- * 
  * @return updated run info
  */
 public GeobatchRunInfo updateRunInfo(String runUid, String status);
 
+/**
+ * Update execution status
+ * 
+ * @param runUid to be updated
+ * @param status new status
+ * @param complete obtain a complete instance of run information
+ * @return updated run info
+ */
+public GeobatchRunInfo updateRunInfo(String runUid, String status,
+        Boolean complete);
 
 /**
  * Save run information for a GeoBatch operation
  * 
  * @param obj parameters for the operation
  * @param operation executedrunUid
- * 
  * @return GeobatchRunInfo stored
  */
 public GeobatchRunInfo saveRunInfo(Object[] obj, GeoBatchOperation operation);
@@ -109,10 +136,10 @@ public GeobatchRunInfo saveRunInfo(Object[] obj, GeoBatchOperation operation);
  * @param runUid
  * @param operation
  * @param runInfo
- * 
  * @return run information saved
  */
-public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation, RESTRunInfo runInfo);
+public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation,
+        RESTRunInfo runInfo);
 
 /**
  * Save run information for a remote operation
@@ -120,9 +147,16 @@ public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation, REST
  * @param runUid
  * @param operation
  * @param uploadFile
- * 
  * @return run information saved
  */
-public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation, FileUpload uploadFile);
+public GeobatchRunInfo saveRunInfo(String runUid, RemoteOperation operation,
+        FileUpload uploadFile);
+
+/**
+ * Register a post processor instance
+ * 
+ * @param postProcessor to be register
+ */
+public void registerPostProcessor(GeoBatchRunInfoPostProcessor postProcessor);
 
 }

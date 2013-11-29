@@ -1,4 +1,5 @@
 @import url(jquery-mapstore-footer.css);
+@import url(extensions.css);
 
 div.login-form-controls{
 	
@@ -35,6 +36,12 @@ body{
 #helpOpener:hover{
 	cursor: pointer;
 	color: #181818;
+}
+
+/** singlefileoperation.jsp **/
+.help-block{
+	padding-top: 50px;
+	text-align: right;
 }
 
 /* FOOTER on jquery-mapstore-footer.css*/
