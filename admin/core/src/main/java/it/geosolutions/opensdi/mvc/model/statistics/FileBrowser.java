@@ -1,18 +1,13 @@
 package it.geosolutions.opensdi.mvc.model.statistics;
 
-import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.model.JSPFile;
-import it.geosolutions.opensdi.operations.Operation;
-import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.FileNameComparator;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,34 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class FileBrowser {
-    private String baseDir = "";
+    protected String baseDir = "";
 
-    private String regex;
+    protected String regex;
 
-    private Boolean scanDiretories;
-    
-    private Boolean updateStatus = false;
-
-    private HashMap<String, List<Operation>> availableOperations;
-
-    GeoBatchClient geoBatchClient;
-    
-    // Readed files
-    List<JSPFile> files;
-
-    /**
-     * @return the geoBatchClient
-     */
-    public GeoBatchClient getGeoBatchClient() {
-        return geoBatchClient;
-    }
-
-    /**
-     * @param geoBatchClient the geoBatchClient to set
-     */
-    public void setGeoBatchClient(GeoBatchClient geoBatchClient) {
-        this.geoBatchClient = geoBatchClient;
-    }
+    protected Boolean scanDiretories;
 
     /**
      * Utility to provide a list of JSPFile inside the basedir
@@ -65,54 +37,48 @@ public class FileBrowser {
      * @return
      */
     public List<JSPFile> getFiles() {
-        // Generate files just once when write JSP page!!
-        if(files != null){
-            return files;
-        }else{
-            File dir = new File(baseDir);
-            if (!dir.isDirectory())
-                return null;
-            File[] children = dir.listFiles();
-            List<JSPFile> dirList = new LinkedList<JSPFile>();
+        File dir = new File(baseDir);
+        if (!dir.isDirectory())
+            return null;
+        File[] children = dir.listFiles();
+        List<JSPFile> dirList = new LinkedList<JSPFile>();
 
-            if (children == null) {
-                return dirList;
-            }
-
-            List<JSPFile> fileList = new LinkedList<JSPFile>();
-            for (int i = 0; i < children.length; i++) {
-                String name = children[i].getName();
-                if (regex != null) {
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher match = pattern.matcher(name);
-                    if (match.matches() || (scanDiretories && children[i].isDirectory())) {
-                        if (children[i].isDirectory()) {
-                            dirList.add(new JSPFile(children[i].getPath()));
-                        } else {
-                            fileList.add(getJSPFile(children[i].getPath()));
-                        }
-                    }
-                } else {
-                    if ((scanDiretories || !children[i].isDirectory())) {
-                        if (children[i].isDirectory()) {
-                            dirList.add(new JSPFile(children[i].getPath()));
-                        } else {
-                            fileList.add(getJSPFile(children[i].getPath()));
-                        }
-
-                    }
-                }
-            }
-            // sort directories and files
-            Collections.sort(dirList, new FileNameComparator());
-            Collections.sort(fileList, new FileNameComparator());
-            // merge the two sorted lists
-            dirList.addAll(fileList);
-            // Sort files by name
-            
-            files = dirList;
+        if (children == null) {
             return dirList;
         }
+
+        List<JSPFile> fileList = new LinkedList<JSPFile>();
+        for (int i = 0; i < children.length; i++) {
+            String name = children[i].getName();
+            if (regex != null) {
+                Pattern pattern = Pattern.compile(regex);
+                Matcher match = pattern.matcher(name);
+                if (match.matches() || (scanDiretories && children[i].isDirectory())) {
+                    if (children[i].isDirectory()) {
+                        dirList.add(new JSPFile(children[i].getPath()));
+                    } else {
+                        fileList.add(getJSPFile(children[i].getPath()));
+                    }
+                }
+            } else {
+                if ((scanDiretories || !children[i].isDirectory())) {
+                    if (children[i].isDirectory()) {
+                        dirList.add(new JSPFile(children[i].getPath()));
+                    } else {
+                        fileList.add(getJSPFile(children[i].getPath()));
+                    }
+
+                }
+            }
+        }
+        // sort directories and files
+        Collections.sort(dirList, new FileNameComparator());
+        Collections.sort(fileList, new FileNameComparator());
+        // merge the two sorted lists
+        dirList.addAll(fileList);
+        // Sort files by name
+        
+        return dirList;
     }
     
     /**
@@ -122,21 +88,8 @@ public class FileBrowser {
      * 
      * @return JSPFile with last runInfo
      */
-    private JSPFile getJSPFile(String path){
+    protected JSPFile getJSPFile(String path){
         JSPFile jspFile = new JSPFile(path);
-        Map<String, GeobatchRunInfo> runStatus = new HashMap<String, GeobatchRunInfo>();
-        // Obtain runStatus for each operation available
-        if(availableOperations != null){
-            for(String extension:availableOperations.keySet()){
-                if(path.endsWith(extension)){
-                    for (Operation op: availableOperations.get(extension)){
-                        runStatus.put(op.getName(), geoBatchClient.getLastRunInfo(updateStatus, path, op.getName()));
-                    }
-                    break;
-                }
-            }
-        }
-        jspFile.setRunInfo(runStatus);
         return jspFile;
     }
 
@@ -212,29 +165,6 @@ public class FileBrowser {
 
     public void setRegex(String regex) {
         this.regex = regex;
-    }
-
-    public HashMap<String, List<Operation>> getAvailableOperations() {
-        return availableOperations;
-    }
-
-    public void setAvailableOperations(
-            HashMap<String, List<Operation>> availableOperations) {
-        this.availableOperations = availableOperations;
-    }
-    
-    /**
-     * @return the updateStatus
-     */
-    public Boolean getUpdateStatus() {
-        return updateStatus;
-    }
-
-    /**
-     * @param updateStatus the updateStatus to set
-     */
-    public void setUpdateStatus(Boolean updateStatus) {
-        this.updateStatus = updateStatus;
     }
 
 }

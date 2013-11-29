@@ -21,6 +21,7 @@
 package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.opensdi.model.FileUpload;
+import it.geosolutions.opensdi.mvc.model.statistics.ExtendedFileBrowser;
 import it.geosolutions.opensdi.mvc.model.statistics.FileBrowser;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.ControllerUtils;
@@ -126,9 +127,14 @@ public String saveFileAndList(
 
     model.addAttribute("uploadedFiles", fileNames);
     model.addAttribute("accept", accept);
-    FileBrowser fb = new FileBrowser();
-    fb.setAvailableOperations(availableOperations);
-    fb.setGeoBatchClient(geoBatchClient);
+    FileBrowser fb = null;
+    if(Boolean.TRUE.equals(this.showRunInformation)){
+        fb = new ExtendedFileBrowser();
+        ((ExtendedFileBrowser)fb).setAvailableOperations(availableOperations);  
+        ((ExtendedFileBrowser)fb).setGeoBatchClient(geoBatchClient);
+    }else{
+        fb = new FileBrowser();
+    }
     fb.setBaseDir(getDefaultBaseDir());
     fb.setRegex(fileRegex);
     fb.setScanDiretories(canNavigate);
@@ -241,10 +247,16 @@ public String getJsp(ModelMap model, HttpServletRequest request,
     HashMap<String, List<Operation>> availableOperations = getAvailableOperations();
 
     String baseDir = getDefaultBaseDir();
-    FileBrowser fb = new FileBrowser();
-    fb.setAvailableOperations(availableOperations);
-    fb.setGeoBatchClient(geoBatchClient);
-    fb.setUpdateStatus(update != null);
+
+    FileBrowser fb = null;
+    if(Boolean.TRUE.equals(this.showRunInformation)){
+        fb = new ExtendedFileBrowser();
+        ((ExtendedFileBrowser)fb).setAvailableOperations(availableOperations);  
+        ((ExtendedFileBrowser)fb).setGeoBatchClient(geoBatchClient);
+        ((ExtendedFileBrowser)fb).setUpdateStatus(update != null);
+    }else{
+        fb = new FileBrowser();
+    }
 
     Object gotParam = model.get("gotParam");
 
