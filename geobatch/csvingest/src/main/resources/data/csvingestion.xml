@@ -16,44 +16,35 @@
 	</EventGeneratorConfiguration>
 
 	<EventConsumerConfiguration>
-
-		<listenerId>ConsumerLogger0</listenerId>
-		<listenerId>Cumulator</listenerId> 	
-		
 		<CSVIngestConfiguration>
 			<id>csv</id>
 			<name>CSVIngestion</name>
 			<description>Ingest cropdata, cropdescriptor, agromet</description>
+			<!-- Listeners -->
+			<listenerId>ConsumerLogger0</listenerId>
+			<listenerId>Cumulator</listenerId>
+			<listenerId>Status</listenerId>
 		</CSVIngestConfiguration>
-
 	</EventConsumerConfiguration>
 
 
 	<ListenerConfigurations>
-<!--		<StatusProgressListener>
-			<serviceID>statusListenerService</serviceID>
-			<id>StatusActionLogger0</id>
-		</StatusProgressListener>
-
-		<LoggingProgressListener>
-			<serviceID>loggingListenerService</serviceID>
-			<id>ActionLogger0</id>
-
-			<loggerName>it.geosolutions.ActionLogger</loggerName>
-		</LoggingProgressListener>-->
-
 		<LoggingProgressListener>
 			<serviceID>loggingListenerService</serviceID>
 			<id>ConsumerLogger0</id>
-
 			<loggerName>it.geosolutions.ConsLogger</loggerName>
+			<appendToListenerForwarder>true</appendToListenerForwarder>
 		</LoggingProgressListener>
-
 		<CumulatingProgressListener>
 			<serviceID>cumulatingListenerService</serviceID>
 			<id>Cumulator</id>
+			<appendToListenerForwarder>true</appendToListenerForwarder>
 		</CumulatingProgressListener>
-
+        <StatusProgressListener>
+            <serviceID>statusListenerService</serviceID>
+            <id>Status</id>
+			<appendToListenerForwarder>true</appendToListenerForwarder>
+        </StatusProgressListener>
 	</ListenerConfigurations>
 
 </FlowConfiguration>

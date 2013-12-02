@@ -169,7 +169,7 @@ public void setCleanLogInformation(Boolean cleanLogInformation) {
 }
 
 public String getDefaultBaseDir() {
-    return basedirString.substring(0, basedirString.length()-1);
+    return basedirString;
 }
 
 }
