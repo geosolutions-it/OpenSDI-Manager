@@ -64,6 +64,7 @@ public Object getBlob(Object inputParam, HttpServletRequest request) {
     RESTRunInfo runInfo = new RESTRunInfo();
     List<String> flist = new ArrayList<String>();
 
+    String basedirString = getRunTimeDir();
     String fullPath = basedirString + fileName;
     flist.add(fullPath);
     LOGGER.info("request full path:" + fullPath);
@@ -148,7 +149,7 @@ public void prepareGetJsp(ModelMap model, String fileName) {
     if (Boolean.TRUE.equals(cleanLogInformation) && fileName != null) {
         // obtain last run info
         GeobatchRunInfo runInfo = geobatchClient.getLastRunInfo(false,
-                basedirString.substring(0, basedirString.length()-1), fileName, getName());
+                getRunTimeDir(), fileName, getName());
         model.addAttribute("runInfo", runInfo);
     }
 }
@@ -165,6 +166,10 @@ public Boolean getCleanLogInformation() {
  */
 public void setCleanLogInformation(Boolean cleanLogInformation) {
     this.cleanLogInformation = cleanLogInformation;
+}
+
+public String getDefaultBaseDir() {
+    return basedirString.substring(0, basedirString.length()-1);
 }
 
 }

@@ -22,6 +22,7 @@ package it.geosolutions.opensdi.utils;
 
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class GeoBatchRunInfoUtils {
 /**
  * Separator for composite descriptors
  */
-public static final String SEPARATOR = "/";
+public static final String SEPARATOR = System.getProperty("file.separator");
 
 /**
  * Format for day "dd/MM/yyyy"
@@ -152,6 +153,34 @@ public static String getFileName(GeobatchRunInfo runInfo,
     }
 
     return fileName;
+}
+
+/**
+ * Obtain run time directory
+ * 
+ * @return default directory if userName it's null or user directory otherwise
+ */
+public static String getRunDir(String defaultDirectory, String userName) {
+    String dir = null;
+    // Add separator if needed
+    if (defaultDirectory != null
+            && defaultDirectory.lastIndexOf(SEPARATOR) < defaultDirectory
+                    .length()) {
+        defaultDirectory += SEPARATOR;
+    }
+    // get user directory
+    if (userName != null) {
+        dir = defaultDirectory + userName + SEPARATOR;
+        File checkDir = new File(dir);
+        if (!checkDir.exists()) {
+            // create
+            checkDir.mkdir();
+        }
+    } else {
+        dir = defaultDirectory;
+    }
+    return dir;
+
 }
 
 }
