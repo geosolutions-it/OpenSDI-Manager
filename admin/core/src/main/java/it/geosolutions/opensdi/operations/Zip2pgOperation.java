@@ -27,63 +27,70 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class Zip2pgOperation extends SingleFileLocalOperation {
-	
-	/**
-	 * The name of this Operation
-	 */
-	public static String name = "Zip2pg";
-	
-	/**
-	 * The path were to GET the form and POST the request
-	 * Typically all lower case
-	 */
-	private String path = "zip2pg";
-	
-	/**
-	 * File extension this Operation will work on
-	 */
-	private String[] extensions = {"zip"};
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+/**
+ * The name of this Operation
+ */
+public String name = "Zip2pg";
 
-	/**
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
-	}
+/**
+ * The path were to GET the form and POST the request Typically all lower case
+ */
+private String path = "zip2pg";
 
-	@Override
-	public String getRESTPath() {
-		return getPath();
-	}
+/**
+ * File extension this Operation will work on
+ */
+private String[] extensions = { "zip" };
 
-	@Override
-	public List<String> getExtensions() {
-		List<String> l = new ArrayList<String>();
-		for (String s : extensions) {
-			l.add(s);
-		}
-		return l;
-	}
+/**
+ * @return the path
+ */
+public String getPath() {
+    return path;
+}
 
-	@Override
-	public boolean isMultiple() {
-		return false;
-	}
+@Override
+public String getRESTPath() {
+    return getPath();
+}
 
-	// TODO: This jsp should be placed in a common folder, set in the OperationManager (OperationMapping)
-	
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(String path) {
-		this.path = path;
-	}
+@Override
+public List<String> getExtensions() {
+    List<String> l = new ArrayList<String>();
+    for (String s : extensions) {
+        l.add(s);
+    }
+    return l;
+}
+
+@Override
+public boolean isMultiple() {
+    return false;
+}
+
+// TODO: This jsp should be placed in a common folder, set in the
+// OperationManager (OperationMapping)
+
+/**
+ * @param path the path to set
+ */
+public void setPath(String path) {
+    this.path = path;
+}
+
+/**
+ * @return the name
+ */
+public String getName() {
+    return name;
+}
+
+/**
+ * @param name the name to set
+ */
+public void setName(String name) {
+    this.name = name;
+}
 
 }
