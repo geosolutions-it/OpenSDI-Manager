@@ -61,7 +61,10 @@ public static String generateDecription(String... compositeId) {
     if (compositeId != null && compositeId.length > 0) {
         description += compositeId[0];
         for (int i = 1; i < compositeId.length; i++) {
-            description += SEPARATOR + compositeId[i];
+            if (!description.endsWith(SEPARATOR)) {
+                description += SEPARATOR;
+            }
+            description += compositeId[i];
         }
     }
     return description;
