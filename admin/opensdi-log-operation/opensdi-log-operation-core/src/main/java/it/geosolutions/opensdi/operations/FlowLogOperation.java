@@ -165,4 +165,9 @@ public void setShowPath(Boolean showPath) {
     this.showPath = showPath;
 }
 
+public String getDefaultBaseDir() {
+    // Don't use because the base dir it's on id parameter
+    return "/";
+}
+
 }

@@ -47,8 +47,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class FileBrowserOperationController implements ApplicationContextAware,
-        Operation {
+public class FileBrowserOperationController extends UserOperation implements
+        ApplicationContextAware, Operation {
 private final static Logger LOGGER = Logger
         .getLogger(FileBrowserOperationController.class);
 
@@ -76,12 +76,12 @@ private UUID uniqueKey;
 
 private String accept;
 
-@Autowired
-GeoBatchClient geoBatchClient;
-
 private String fileRegex;
 
 private List<String> allowedOperations;
+
+@Autowired
+GeoBatchClient geoBatchClient;
 
 public FileBrowserOperationController() {
     setDefaultBaseDir("G:/OpenSDIManager/test_shapes/");
@@ -111,7 +111,7 @@ public String saveFileAndList(
             if (!"".equalsIgnoreCase(fileName)) {
                 // Handle file content - multipartFile.getInputStream()
                 try {
-                    multipartFile.transferTo(new File(getDefaultBaseDir()
+                    multipartFile.transferTo(new File(getRunTimeDir()
                             + fileName));
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
@@ -128,14 +128,14 @@ public String saveFileAndList(
     model.addAttribute("uploadedFiles", fileNames);
     model.addAttribute("accept", accept);
     FileBrowser fb = null;
-    if(Boolean.TRUE.equals(this.showRunInformation)){
+    if (Boolean.TRUE.equals(this.showRunInformation)) {
         fb = new ExtendedFileBrowser();
-        ((ExtendedFileBrowser)fb).setAvailableOperations(availableOperations);  
-        ((ExtendedFileBrowser)fb).setGeoBatchClient(geoBatchClient);
-    }else{
+        ((ExtendedFileBrowser) fb).setAvailableOperations(availableOperations);
+        ((ExtendedFileBrowser) fb).setGeoBatchClient(geoBatchClient);
+    } else {
         fb = new FileBrowser();
     }
-    fb.setBaseDir(getDefaultBaseDir());
+    fb.setBaseDir(getRunTimeDir());
     fb.setRegex(fileRegex);
     fb.setScanDiretories(canNavigate);
     model.addAttribute("fileBrowser", fb);
@@ -246,15 +246,15 @@ public String getJsp(ModelMap model, HttpServletRequest request,
 
     HashMap<String, List<Operation>> availableOperations = getAvailableOperations();
 
-    String baseDir = getDefaultBaseDir();
+    String baseDir = getRunTimeDir();
 
     FileBrowser fb = null;
-    if(Boolean.TRUE.equals(this.showRunInformation)){
+    if (Boolean.TRUE.equals(this.showRunInformation)) {
         fb = new ExtendedFileBrowser();
-        ((ExtendedFileBrowser)fb).setAvailableOperations(availableOperations);  
-        ((ExtendedFileBrowser)fb).setGeoBatchClient(geoBatchClient);
-        ((ExtendedFileBrowser)fb).setUpdateStatus(update != null);
-    }else{
+        ((ExtendedFileBrowser) fb).setAvailableOperations(availableOperations);
+        ((ExtendedFileBrowser) fb).setGeoBatchClient(geoBatchClient);
+        ((ExtendedFileBrowser) fb).setUpdateStatus(update != null);
+    } else {
         fb = new FileBrowser();
     }
 
@@ -347,7 +347,8 @@ public String getJsp(ModelMap model, HttpServletRequest request,
     model.addAttribute("canDelete", this.canDelete);
     model.addAttribute("canUpload", this.canUpload);
     model.addAttribute("showRunInformation", this.showRunInformation);
-    model.addAttribute("showRunInformationHistory", this.showRunInformationHistory);
+    model.addAttribute("showRunInformationHistory",
+            this.showRunInformationHistory);
 
     model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
     model.addAttribute("formId", uniqueKey.toString().substring(27, 36));

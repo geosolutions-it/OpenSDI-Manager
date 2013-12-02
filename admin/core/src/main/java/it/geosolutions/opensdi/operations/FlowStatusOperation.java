@@ -241,4 +241,8 @@ public void setShowRunInformation(Boolean showRunInformation) {
     this.showRunInformation = showRunInformation;
 }
 
+public String getDefaultBaseDir() {
+    return basedirString;
+}
+
 }

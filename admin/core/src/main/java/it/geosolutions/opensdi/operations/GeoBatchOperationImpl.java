@@ -20,16 +20,16 @@
  */
 package it.geosolutions.opensdi.operations;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import it.geosolutions.opensdi.service.GeoBatchClient;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * GeoBatch operation. It uses GeoBatchClient autowired for the GeoBatch access
  * 
  * @author adiaz
  */
-public abstract class GeoBatchOperationImpl implements GeoBatchOperation{
+public abstract class GeoBatchOperationImpl extends UserOperation implements GeoBatchOperation {
 
 @Autowired
 GeoBatchClient geobatchClient;
@@ -37,21 +37,21 @@ GeoBatchClient geobatchClient;
 /**
  * @return the geobatchRestUrl
  */
-public String getGeobatchRestUrl(){
+public String getGeobatchRestUrl() {
     return geobatchClient.getGeobatchRestUrl();
 }
 
 /**
  * @return the geostoreUsername
  */
-public String getGeobatchUsername(){
+public String getGeobatchUsername() {
     return geobatchClient.getGeobatchUsername();
 }
 
 /**
  * @return the geostorePassword
  */
-public String getGeobatchPassword(){
+public String getGeobatchPassword() {
     return geobatchClient.getGeobatchPassword();
 }
 
