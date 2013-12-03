@@ -44,4 +44,12 @@ body{
 	text-align: right;
 }
 
+/** files.jsp **/
+.runResume{
+	height: 30px;
+}
+.its_first_false{
+	padding-top: 8px;
+}
+
 /* FOOTER on jquery-mapstore-footer.css*/

@@ -16,6 +16,10 @@
     <bean id="roadRunnerOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
         <property name="path" value="roadRunnerOp"/>
     </bean>
+  
+    <bean id="migrationRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="migrationRunnerOp"/>
+    </bean>
 
 	<bean id="fileBrowserTarget" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})[_-]([A-Z]{2,3})[_-]([A-Z]+)([_-][C|I])?[_-]([0-9]{8})[_-]([0-9]{2}).zip$" />
@@ -29,6 +33,7 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>targetRunnerOp</value>
+	     <value>migrationRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>
@@ -45,6 +50,7 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>roadRunnerOp</value>
+	     <value>migrationRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>

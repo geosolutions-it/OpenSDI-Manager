@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!-- Extra information for destination -->
 <div class="container resume">
 	<h3>Errors details</h3>

@@ -168,7 +168,7 @@ public static String getRunDir(String defaultDirectory, String userName) {
     // Add separator if needed
     if (defaultDirectory != null
             && defaultDirectory.lastIndexOf(SEPARATOR) < defaultDirectory
-                    .length()) {
+                    .length() - 1) {
         defaultDirectory += SEPARATOR;
     }
     // get user directory
