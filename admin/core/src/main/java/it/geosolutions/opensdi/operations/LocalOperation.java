@@ -22,5 +22,10 @@ package it.geosolutions.opensdi.operations;
 
 
 public interface LocalOperation extends GeoBatchOperation {
+
+/**
+ * @return the defaultBaseDir
+ */
+public abstract String getDefaultBaseDir();
 	
 }

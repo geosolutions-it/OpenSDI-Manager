@@ -316,7 +316,8 @@ public GeobatchRunInfo saveRunInfo(Object[] parameters,
  */
 public GeobatchRunInfo saveRunInfo(String runUid, LocalOperation operation,
         RESTRunInfo runInfo) {
-    return saveRunInfo(runUid, runInfo.getFileList().get(0),
+    return saveRunInfo(runUid,
+            operation.getVirtualPath(runInfo.getFileList().get(0)),
             operation.getName());
 }
 
