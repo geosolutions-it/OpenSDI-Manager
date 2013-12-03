@@ -162,7 +162,7 @@ public Object getBlob(Object inputParam, HttpServletRequest postRequest) {
             // Update run Info
             GeobatchRunInfo runInfo = geobatchClient.updateRunInfo(id,
                     status.name(), true);
-            if(Boolean.TRUE.equals(showRunInformation)){
+            if (Boolean.TRUE.equals(showRunInformation)) {
                 // put in model
                 model.addAttribute("runInfo", runInfo);
             }

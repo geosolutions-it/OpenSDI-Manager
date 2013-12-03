@@ -6,10 +6,21 @@
 
 <c:set var="thisUrl" value="${requestScope['javax.servlet.forward.context_path']}${requestScope['javax.servlet.forward.servlet_path']}"/>
 
+<c:choose>
+	<c:when test="${not empty param['d']}">
+		<c:set var="refreshUrl">${thisUrl}?d=${param['d']}&update=true</c:set>
+		<c:set var="thisUrl">${thisUrl}?d=${param['d']}</c:set>
+	</c:when>
+	<c:otherwise>
+		<c:set var="refreshUrl">${thisUrl}?update=true</c:set>
+	</c:otherwise>
+</c:choose>
+
 <c:set var="pageName">File Browser</c:set>
 <c:if test="${showRunInformation}">
 	<c:set var="refreshButton"><div class="pull-right"><span>
-		<a class="btn btn-success" href="./?update=true">
+		<a class="btn btn-success" 
+			href="${refreshUrl}">
 			<i class="icon-refresh icon-white" title="Refresh status of each run"></i>
 		</a>
 	</span></div></c:set>

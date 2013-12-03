@@ -21,6 +21,7 @@
 package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.opensdi.service.GeoBatchClient;
+import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -53,6 +54,21 @@ public String getGeobatchUsername() {
  */
 public String getGeobatchPassword() {
     return geobatchClient.getGeobatchPassword();
+}
+
+/**
+ * Obtain a virtual path for a file managed from this operation
+ * 
+ * @param originalPath
+ * @return virtual path for the operation
+ */
+public String getVirtualPath(String originalPath){
+    String path = GeoBatchRunInfoUtils.SEPARATOR
+            + GeoBatchRunInfoUtils.getVirtualPath(originalPath,
+                    getDefaultBaseDir(), false);
+    if(!path.endsWith(GeoBatchRunInfoUtils.SEPARATOR))
+        path += GeoBatchRunInfoUtils.SEPARATOR;
+    return GeoBatchRunInfoUtils.cleanDuplicateSeparators(path);
 }
 
 }

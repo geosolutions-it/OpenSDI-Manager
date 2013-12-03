@@ -61,19 +61,32 @@ public Object getBlob(Object inputParam, HttpServletRequest request) {
         fileName = (String) inputParam;
     }
     fileName = ControllerUtils.preventDirectoryTrasversing(fileName);
+    
+    return getRunInfo(fileName);
+}
+
+/**
+ * Obtain run information for a file
+ * 
+ * @param fileName located in our directory
+ * 
+ * @return run information with the correct file path
+ */
+protected RESTRunInfo getRunInfo(String fileName){
+
     RESTRunInfo runInfo = new RESTRunInfo();
     List<String> flist = new ArrayList<String>();
 
     String basedirString = getRunTimeDir();
     String fullPath = basedirString + fileName;
     flist.add(fullPath);
-    LOGGER.info("request full path:" + fullPath);
+    LOGGER.info("File full path:" + fullPath);
     runInfo.setFileList(flist);
 
     // if it's confirmed, we're going to remove old information
     if (Boolean.TRUE.equals(cleanLogInformation)) {
         geobatchClient.cleanRunInformation(
-                basedirString.substring(0, basedirString.length() - 1),
+                getVirtualPath(basedirString),
                 fileName, getName());
     }
 
@@ -149,7 +162,7 @@ public void prepareGetJsp(ModelMap model, String fileName) {
     if (Boolean.TRUE.equals(cleanLogInformation) && fileName != null) {
         // obtain last run info
         GeobatchRunInfo runInfo = geobatchClient.getLastRunInfo(false,
-                getRunTimeDir(), fileName, getName());
+                getVirtualPath(getRunTimeDir()), fileName, getName());
         model.addAttribute("runInfo", runInfo);
     }
 }

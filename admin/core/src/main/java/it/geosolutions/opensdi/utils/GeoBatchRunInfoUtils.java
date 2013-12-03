@@ -159,6 +159,70 @@ public static String getFileName(GeobatchRunInfo runInfo,
 }
 
 /**
+ * Obtain file name of a path
+ * 
+ * @param filePath absolute or remote path
+ * @param removeExtension flag to remove the extension
+ * @return fileName without extension if <code>removeExtension</code> it's true
+ *         or complete fileName otherwise
+ */
+public static String getFileName(String filePath, boolean removeExtension) {
+    String fileName = filePath;
+
+    // remove path
+    if (fileName != null && fileName.contains(SEPARATOR)) {
+        fileName = fileName.substring(fileName.lastIndexOf(SEPARATOR) + 1);
+    }
+
+    // we need to remove the extension
+    if (fileName != null && removeExtension && fileName.contains(".")) {
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+    }
+
+    return fileName;
+}
+
+/**
+ * Obtain a virtual path for a file
+ * 
+ * @param filePath absolute or remote path
+ * @param basePath original base path to be used as root
+ * @param removeExtension flag to remove the extension
+ * @return virtual file path without extension if <code>removeExtension</code>
+ *         it's true or complete fileName otherwise
+ */
+public static String getVirtualPath(String filePath, String basePath,
+        boolean removeExtension) {
+
+    // Remove basePath
+    if (basePath != null) {
+        if (basePath.endsWith(SEPARATOR)) {
+            basePath = basePath.substring(0, basePath.length() - 1);
+        }
+        if (filePath.startsWith(basePath)) {
+            filePath = filePath.replace(basePath, "");
+        }
+    }
+
+    // we need to remove the extension
+    if (filePath != null && removeExtension && filePath.contains(".")) {
+        filePath = filePath.substring(0, filePath.lastIndexOf("."));
+    }
+
+    // if ends with a SEPARTOR, remove it:
+    if (filePath.endsWith(SEPARATOR)) {
+        filePath = filePath.substring(0, filePath.length() - 1);
+    }
+
+    // if starts with a SEPARTOR, remove it:
+    if (filePath.startsWith(SEPARATOR)) {
+        filePath = filePath.substring(1, filePath.length());
+    }
+
+    return filePath;
+}
+
+/**
  * Obtain run time directory
  * 
  * @return default directory if userName it's null or user directory otherwise
@@ -184,6 +248,61 @@ public static String getRunDir(String defaultDirectory, String userName) {
     }
     return dir;
 
+}
+
+/**
+ * Clean duplicate (or more) separators for a string
+ * 
+ * @param origin
+ * @return replaced with simple separators
+ */
+public static String cleanDuplicateSeparators(String origin) {
+    String result = origin;
+    if (result != null) {
+        while (result.contains(SEPARATOR + SEPARATOR)) {
+            result = result.replaceAll(SEPARATOR + SEPARATOR, SEPARATOR);
+        }
+    }
+    return result;
+}
+
+/**
+ * Get a virtual path for a file
+ * 
+ * @param originalPath of the file
+ * @param basePath original to be handled for the virtual '/'
+ * @param extensionReplacement replace file extension with this option (needs
+ *        '.')
+ * @return virtual root path
+ */
+public static String getRunInfoPath(String originalPath, String basePath,
+        String extensionReplacement) {
+    // obtain virtual path
+    String finalPath = SEPARATOR
+            + getVirtualPath(originalPath, basePath, false);
+    // replace run extension
+    finalPath = replaceExtension(finalPath, extensionReplacement);
+    return GeoBatchRunInfoUtils.cleanDuplicateSeparators(finalPath);
+}
+
+/**
+ * Replace the file extension
+ * 
+ * @param fileName original file name
+ * @param extensionReplacement target extension
+ * @return file name with the extension replacement
+ */
+public static String replaceExtension(String fileName,
+        String extensionReplacement) {
+    // replace run extension
+    String withoutExt = null;
+    if (fileName != null) {
+        withoutExt = ControllerUtils.removeExtension(fileName);
+        if (!fileName.equals(withoutExt)) {
+            fileName = withoutExt + extensionReplacement;
+        }
+    }
+    return GeoBatchRunInfoUtils.cleanDuplicateSeparators(fileName);
 }
 
 }

@@ -26,6 +26,7 @@ import it.geosolutions.opensdi.mvc.model.statistics.InputSelectorConfig;
 import it.geosolutions.opensdi.mvc.model.statistics.StatisticsConfigList;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.DekadUtils;
+import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -390,6 +391,12 @@ public String getGeobatchUsername() {
  */
 public String getGeobatchPassword() {
     return geobatchClient.getGeobatchPassword();
+}
+
+public String getVirtualPath(String originalPath){
+    return GeoBatchRunInfoUtils.SEPARATOR
+            + GeoBatchRunInfoUtils.getVirtualPath(originalPath,
+                    getDefaultBaseDir(), false);
 }
 
 }

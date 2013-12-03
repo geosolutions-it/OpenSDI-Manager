@@ -30,51 +30,61 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lorenzo Pini
- *
+ * @author adiaz add virtualPath function
  */
 public interface GeoBatchOperation extends Operation {
 
-	/**
-	 * @return the geobatch flow ID associated to this Operation
-	 */
-	public String getFlowID();
+/**
+ * @return the geobatch flow ID associated to this Operation
+ */
+public String getFlowID();
 
-	/**
-	 * @return the geobatchRestUrl
-	 */
-	public String getGeobatchRestUrl();
+/**
+ * @return the geobatchRestUrl
+ */
+public String getGeobatchRestUrl();
 
-	/**
-	 * @return the geostoreUsername
-	 */
-	public String getGeobatchUsername();
+/**
+ * @return the geostoreUsername
+ */
+public String getGeobatchUsername();
 
-	/**
-	 * @return the geostorePassword
-	 */
-	public String getGeobatchPassword();
+/**
+ * @return the geostorePassword
+ */
+public String getGeobatchPassword();
 
-	
-	/**
-	 * Create Object to be sent to GeoBatchRESTClient
-	 * @param request TODO
-	 * @return Object 
-	 */
-	public Object getBlob(Object inputParam, HttpServletRequest request);
-	
-	/**
-	 * List of Strings representing all the extensions this Operation can work on.
-	 * Extensions can be specified multiple times if isMultiple == true,
-	 * meaning that this Operation needs more than one file to run.
-	 * IE: {'shp', 'shp', 'dxf'}
-	 * @return 
-	 */
-	public List<String> getExtensions();
-	
-	/**
-	 * Tells if all the specified Extensions are necessary to run
-	 * @return
-	 */
-	public boolean isMultiple();
+/**
+ * Create Object to be sent to GeoBatchRESTClient
+ * 
+ * @param request TODO
+ * @return Object
+ */
+public Object getBlob(Object inputParam, HttpServletRequest request);
+
+/**
+ * List of Strings representing all the extensions this Operation can work on.
+ * Extensions can be specified multiple times if isMultiple == true, meaning
+ * that this Operation needs more than one file to run. IE: {'shp', 'shp',
+ * 'dxf'}
+ * 
+ * @return
+ */
+public List<String> getExtensions();
+
+/**
+ * Tells if all the specified Extensions are necessary to run
+ * 
+ * @return
+ */
+public boolean isMultiple();
+
+/**
+ * Obtain a virtual path for a file managed from this operation
+ * 
+ * @param originalPath
+ * @return virtual path for the operation
+ */
+public String getVirtualPath(String originalPath);
 
 }

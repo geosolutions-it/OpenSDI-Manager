@@ -21,6 +21,7 @@
 package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
+import it.geosolutions.opensdi.config.RunCleanerPostProcessor;
 import it.geosolutions.opensdi.utils.ControllerUtils;
 import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
@@ -42,10 +43,14 @@ import org.springframework.ui.ModelMap;
  * @author adiaz
  */
 @Controller
-public class RunOperation extends SingleFileLocalOperation implements
-        RefactorFileOperation {
+public class RunOperation extends SingleFileLocalOperation {
 
 private final static Logger LOGGER = Logger.getLogger(RunOperation.class);
+
+/**
+ * Flag to indicate that RunCleanerPostProcessor needed has been registred
+ */
+private Boolean POST_PROCESSOR_REGISTRED = Boolean.FALSE;
 
 /**
  * The name of this Operation
@@ -73,10 +78,27 @@ private String gbinputdirString;
 private String executeExtension = ".run";
 
 /**
+ * Auxiliary function to register a post processor to remove files after the execution
+ */
+public void init(){
+    if(!POST_PROCESSOR_REGISTRED){
+        RunCleanerPostProcessor postProcessor =  new RunCleanerPostProcessor();
+        String [] cleanExtensions = {getExecuteExtension()};
+        postProcessor.setCleanExtensions(cleanExtensions);
+        postProcessor.setWorkPath(getBasedirString());
+        geobatchClient.registerPostProcessor(postProcessor);
+        POST_PROCESSOR_REGISTRED = Boolean.TRUE;
+    }
+}
+
+/**
  * Create a temporal empty file inside getGbinputdirString with the same name of
  * the gotParam, but with getExecuteExtension instead the default extension
  */
 public Object getBlob(Object inputParam, HttpServletRequest request) {
+    
+    // register post processor if needed
+    init();
 
     String fileName = request.getParameter("fileName");
     RESTRunInfo runInfo = null;
@@ -86,15 +108,19 @@ public Object getBlob(Object inputParam, HttpServletRequest request) {
             fileName = (String) inputParam;
         }
         fileName = ControllerUtils.preventDirectoryTrasversing(fileName);
-        fileName = ControllerUtils.removeExtension(fileName)
-                + getExecuteExtension();
         runInfo = new RESTRunInfo();
         List<String> flist = new ArrayList<String>();
 
-        String basedirString = getDefaultBaseDir();
+        // create an empty file
         File outputFile;
-        outputFile = new File(getGbinputdirString()
-                + GeoBatchRunInfoUtils.SEPARATOR + fileName);
+        String runTimeDir = getRunTimeDir();
+        // Files should be removed after run @see init function
+        String outputPath = GeoBatchRunInfoUtils
+                .cleanDuplicateSeparators(runTimeDir
+                        + GeoBatchRunInfoUtils.SEPARATOR
+                        + GeoBatchRunInfoUtils.replaceExtension(fileName,
+                                getExecuteExtension()));
+        outputFile = new File(outputPath);
         outputFile.createNewFile();
         String fullPath = outputFile.getAbsolutePath();
         flist.add(fullPath);
@@ -103,9 +129,7 @@ public Object getBlob(Object inputParam, HttpServletRequest request) {
 
         // if it's confirmed, we're going to remove old information
         if (Boolean.TRUE.equals(cleanLogInformation)) {
-            String runTimeDir = getRunTimeDir();
-            geobatchClient.cleanRunInformation(
-                    runTimeDir.substring(0, runTimeDir.length() - 1),
+            geobatchClient.cleanRunInformation(getVirtualPath(runTimeDir),
                     fileName, getName());
         }
     } catch (Exception e) {
@@ -151,9 +175,6 @@ public List<String> getExtensions() {
 public boolean isMultiple() {
     return false;
 }
-
-// TODO: This jsp should be placed in a common folder, set in the
-// OperationManager (OperationMapping)
 
 /**
  * @param path the path to set
@@ -204,29 +225,21 @@ public void setExecuteExtension(String executeExtension) {
     this.executeExtension = executeExtension;
 }
 
-public String getFinalFileName(String original) {
-    return getFinalFilePath(ControllerUtils.removeExtension(original)
-            + getExecuteExtension());
-}
-
-public String getFinalFilePath(String original) {
-
-    String finalPath = original;
-    if (original.contains(GeoBatchRunInfoUtils.SEPARATOR)) {
-        finalPath = getGbinputdirString()
-                + original.substring(original
-                        .lastIndexOf(GeoBatchRunInfoUtils.SEPARATOR));
-    }
-    return finalPath;
-}
-
 /**
- * The default directory it's the gb input run
+ * Obtain a virtual path for a file managed from this operation. Also remove
+ * file ext and replace with the correctly {@link RunOperation#executeExtension}
+ * 
+ * @param originalPath
+ * @return virtual path for the operation
  */
-public String getDefaultBaseDir() {
-    return getGbinputdirString();
+public String getVirtualPath(String original) {
+    return GeoBatchRunInfoUtils.getRunInfoPath(original, getDefaultBaseDir(),
+            getExecuteExtension());
 }
 
-
+private String getFinalFileName(String fileName) {
+    return GeoBatchRunInfoUtils.replaceExtension(fileName,
+            getExecuteExtension());
+}
 
 }

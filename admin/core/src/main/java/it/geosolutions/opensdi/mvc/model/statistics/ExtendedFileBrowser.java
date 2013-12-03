@@ -2,8 +2,8 @@ package it.geosolutions.opensdi.mvc.model.statistics;
 
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.model.JSPFile;
+import it.geosolutions.opensdi.operations.LocalOperation;
 import it.geosolutions.opensdi.operations.Operation;
-import it.geosolutions.opensdi.operations.RefactorFileOperation;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 
 import java.util.HashMap;
@@ -71,9 +71,9 @@ protected JSPFile getJSPFile(String path) {
             if (path.endsWith(operation)) {
                 for (Operation op : availableOperations.get(operation)) {
                     String filePath = path;
-                    // Rename operation if needed
-                    if (op instanceof RefactorFileOperation) {
-                        filePath = ((RefactorFileOperation) op).getFinalFileName(path);
+                    // Virtualize path
+                    if (op instanceof LocalOperation) {
+                        filePath = ((LocalOperation) op).getVirtualPath(filePath);
                     }
                     runStatus.put(op.getName(), geoBatchClient.getLastRunInfo(
                             updateStatus, filePath, op.getName()));
