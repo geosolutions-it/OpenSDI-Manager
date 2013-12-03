@@ -50,64 +50,103 @@
 			<c:if test="${not empty fileBrowser.files }">
 				<c:forEach items="${fileBrowser.files}" var="file">
 					<tr>
-						<c:if test="${not file.isDirectory}">
-						<td>${file.name}</td>
-						</c:if>
-						<c:if test="${file.isDirectory}">
-						<td><a href="?d=${directory}${file.name}">${file.name}/</a></td>
-						</c:if>
-						<td>
-							<c:if test="${file.isDirectory}">
-								<a class="btn" href="?d=${directory}${file.name}">Open folder</a>
-							</c:if>
-							<c:forEach items="${operations}" var="entry">
-								<c:set var="fileext" value=".${entry.key}" /> 
-								<c:if test="${fn:endsWith(file.name, fileext)}">
-								<c:forEach items="${entry.value}" var="op">
-									<button data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
-										data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}?d=${directory == '/'?'': osdim:encodeURIComponent(directory)}">${op.name}</button>
-									</c:forEach>
+						<c:set var="nameCol" value="" />
+						<c:set var="opCol" value="" />
+						<c:set var="thirdCol" value="" />
+						<c:set var="deleteCol" value="" />
+						<c:set var="runDates" value="" />
+						<c:set var="runStatus" value="" />
+						<c:set var="runHistories" value="" />
+						<c:choose>
+							<c:when test="${not file.isDirectory}">
+								<c:set var="nameCol">${file.name}</c:set>
+								<c:set var="thirdCol">${file.size} Bytes</c:set>
+								<c:if test="${canDelete}">
+									<c:set var="deleteCol">
+										<button class="btn btn-mini btn-danger" 
+											data-confirm="are you sure to delete the file '${file.name}'" 
+											data-filename="${file.name}" 
+											onClick="confirmDelete('${file.name}')">
+											Delete
+										</button> 
+									</c:set>
 								</c:if>
-							</c:forEach>
-						</td>
-						<c:if test="${not file.isDirectory }"><td>${file.size} Bytes</td></c:if>
-						<c:if test="${file.isDirectory }"><td>Folder</td></c:if>
-						<td>${file.lastModified}</td>
-						<td>
-							<c:if test="${(not file.isDirectory) and canDelete }">
-								<button class="btn btn-mini btn-danger" data-confirm="are you sure to delete the file '${file.name}'" data-filename="${file.name}" onClick="confirmDelete('${file.name}')">Delete</button> 
-							</c:if>
-						</td>
-						<c:if test="${showRunInformation}">
-							<!--${file.runInfo}-->
-							<c:forEach items="${operations}" var="entry">
-								<c:set var="fileext" value=".${entry.key}" /> 
-								<c:if test="${fn:endsWith(file.name, fileext)}">
-								<c:forEach items="${file.runInfo}" var="op">
-									<c:choose>
-										<c:when test="${not empty op.value}">
-											<td><span class="fileRunDate">${op.value.lastExecution}</span></td>
-											<td><span class="fileStatus status_${op.value.flowStatus}"><a class="btn btn-${(op.value.flowStatus == 'FAIL') ? 'danger' 
-												: ((op.value.flowStatus == 'RUNNING') ? 'warning' : 'success')}" 
-												href="../../operationManager/flowstatus/?id=${op.value.flowUid}">${op.value.flowStatus}</a></span></td>
-											<c:if test="${showRunInformationHistory}">
-											<td>
-												<a class="btn btn-history" href="../../operationManager/flowlog/?id=${op.value.internalUid}&returnUrl=${thisUrl}" 
+							</c:when>
+							<c:otherwise>
+								<c:set var="nameCol"><a href="?d=${directory}${file.name}">${file.name}/</a></c:set>
+								<c:set var="opCol"><a class="btn" href="?d=${directory}${file.name}">Open folder</a></c:set>
+								<c:set var="thirdCol">Folder</c:set>
+							</c:otherwise>
+						</c:choose>
+						<c:forEach items="${operations}" var="entry" varStatus="stat">
+							<c:set var="fileext" value=".${entry.key}" /> 
+							<c:if test="${fn:endsWith(file.name, fileext)}">
+								<c:forEach items="${entry.value}" var="op">
+									<c:set var="opCol">
+										${opCol}
+										<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
+											<button data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
+												data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}?d=${directory == '/'?'': osdim:encodeURIComponent(directory)}">${op.name}</button>
+										</div>
+									</c:set>
+									<c:if test="${showRunInformation and not empty file.runInfo}">
+										<!--${file.runInfo}-->
+										<c:choose>
+										<c:when test="${not empty file.runInfo[op.name]}">
+											<c:set var="runDates">
+												${runDates}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}"><span class="fileRunDate">${file.runInfo[op.name].lastExecution}</span></div>
+											</c:set>
+											<c:set var="runStatus">
+												${runStatus}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
+													<span class="fileStatus status_${file.runInfo[op.name].flowStatus}">
+														<a class="btn btn-${(file.runInfo[op.name].flowStatus == 'FAIL') ? 'danger'  : ((file.runInfo[op.name].flowStatus == 'RUNNING') ? 'warning' : 'success')}" 
+															href="../../operationManager/flowstatus/?id=${file.runInfo[op.name].flowUid}"><!--${file.runInfo[op.name].compositeId[2]}:-->${file.runInfo[op.name].flowStatus}</a>
+													</span>
+												</div>
+											</c:set>
+											<c:set var="runHistories">
+												${runHistories}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
+													<a class="btn btn-history" 
+													href="../../operationManager/flowlog/?id=${file.runInfo[op.name].internalUid}&returnUrl=${thisUrl}" 
 													title="Show file history"><i class="icon-time"></i></a>
-											</td>
-											</c:if>
+												</div>
+											</c:set>
 										</c:when>
 										<c:otherwise>
-											<td><span class="fileRunDate">-</span></td>
-											<td><span class="fileStatus status_none">-</span></td>
-											<c:if test="${showRunInformationHistory}">
-											<td><span class="emptyHistory">-</span></td>
-											</c:if>
+											<c:set var="runDates">
+												${runDates}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}"><span class="fileRunDate">-</span></div>
+											</c:set>
+											<c:set var="runStatus">
+												${runStatus}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
+													<span class="fileStatus status_none">-</span>
+												</div>
+											</c:set>
+											<c:set var="runHistories">
+												${runHistories}
+												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
+													<span class="emptyHistory">-</span>
+												</div>
+											</c:set>
 										</c:otherwise>
 									</c:choose>
+									</c:if>
 								</c:forEach>
-								</c:if>
-							</c:forEach>
+							</c:if>
+						</c:forEach>
+						<td>${nameCol}</td>
+						<td>${opCol}</td>
+						<td>${thirdCol}</td>
+						<td>${file.lastModified}</td>
+						<td>${deleteCol}</td>
+						<td>${runDates}</td>
+						<td>${runStatus}</td>
+						<c:if test="${showRunInformationHistory}">
+						<td>${runHistories}</td>
 						</c:if>
 					</tr>
 				</c:forEach>
