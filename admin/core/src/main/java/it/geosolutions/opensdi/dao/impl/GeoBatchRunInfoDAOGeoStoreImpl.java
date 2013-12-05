@@ -77,6 +77,7 @@ protected RESTCategory geobatchExecutionCategory = null;
 /**
  * GeoStore client autowired
  */
+@Autowired
 protected GeoStoreClient geostoreClient;
 
 /**
@@ -104,13 +105,20 @@ public void setCATEGORY_NAME(String name) {
 }
 
 /**
- * Initialize DAO implementation with GeoStore client configured
- * 
- * @param geostoreClient
+ * @return the geobatchExecutionCategory
  */
-@Autowired
-private void init(GeoStoreClient geostoreClient) {
-    this.geostoreClient = geostoreClient;
+private RESTCategory getGeobatchExecutionCategory() {
+    if (geobatchExecutionCategory == null) {
+        geobatchExecutionCategory = initCategory();
+    }
+    return geobatchExecutionCategory;
+}
+
+/**
+ * Initialize GeoBatch category for GeoStore. The category is identified by
+ * {@link GeoBatchRunInfoDAOGeoStoreImpl#CATEGORY_NAME}.
+ */
+private RESTCategory initCategory() {
     // Read all categories looking for CATEGORY_NAME
     Long geobatchExecutionCategoryId = null;
     for (Category category : this.geostoreClient.getCategories().getList()) {
@@ -128,6 +136,7 @@ private void init(GeoStoreClient geostoreClient) {
     } else {
         geobatchExecutionCategory.setId(geobatchExecutionCategoryId);
     }
+    return geobatchExecutionCategory;
 }
 
 /**
@@ -370,7 +379,7 @@ private GeobatchRunInfo saveRunInfo(String runUid, String... compositeId) {
     // Mapping og run status
     RESTResource resource = new RESTResource();
     // Category it's our category for geobatch execution
-    resource.setCategory(geobatchExecutionCategory);
+    resource.setCategory(getGeobatchExecutionCategory());
     // Name it's the run UID for the execution
     resource.setName(runUid);
     // Description it's the composite id
@@ -415,7 +424,7 @@ private RESTResource getRestResource(GeobatchRunInfo runInfo) {
     // Mapping og run status
     RESTResource resource = new RESTResource();
     // Category it's our category for geobatch execution
-    resource.setCategory(geobatchExecutionCategory);
+    resource.setCategory(getGeobatchExecutionCategory());
     // Name it's the run UID for the execution
     resource.setName(runInfo.getFlowUid());
     // Description it's the composite id
