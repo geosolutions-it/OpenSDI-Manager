@@ -21,76 +21,29 @@
 package it.geosolutions.opensdi.operations;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 
+/**
+ * Generalize in file operation and configure it in constructor
+ * 
+ * @author adiaz
+ */
 @Controller
-public class Zip2pgOperation extends SingleFileLocalOperation {
+public class Zip2pgOperation extends FileOperation {
 
-/**
- * The name of this Operation
- */
-public String name = "Zip2pg";
-
-/**
- * The path were to GET the form and POST the request Typically all lower case
- */
-private String path = "zip2pg";
-
-/**
- * File extension this Operation will work on
- */
-private String[] extensions = { "zip" };
-
-/**
- * @return the path
- */
-public String getPath() {
-    return path;
-}
-
-@Override
-public String getRESTPath() {
-    return getPath();
-}
-
-@Override
-public List<String> getExtensions() {
-    List<String> l = new ArrayList<String>();
-    for (String s : extensions) {
-        l.add(s);
-    }
-    return l;
+public Zip2pgOperation(){
+    super();
+    // Default configuration
+    this.name = "Zip2pg";
+    this.path = "zip2pg";
+    this.extensions = new ArrayList<String>();
+    this.extensions.add("zip");
 }
 
 @Override
 public boolean isMultiple() {
     return false;
-}
-
-// TODO: This jsp should be placed in a common folder, set in the
-// OperationManager (OperationMapping)
-
-/**
- * @param path the path to set
- */
-public void setPath(String path) {
-    this.path = path;
-}
-
-/**
- * @return the name
- */
-public String getName() {
-    return name;
-}
-
-/**
- * @param name the name to set
- */
-public void setName(String name) {
-    this.name = name;
 }
 
 }

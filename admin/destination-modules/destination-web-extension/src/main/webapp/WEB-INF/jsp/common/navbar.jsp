@@ -24,6 +24,7 @@
            <li class="${context=='users'?'active':'' }"><a href="<c:url value="/users/"/>">Users</a></li>
            <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserTarget/ZIP"/>">Target File Browser</a></li>
            <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserRoad/ZIP"/>">Road File Browser</a></li>
+           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserGate/XML"/>">Gate Ingestion</a></li>
            <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/activeOpListOp/"/>">Operations List</a></li>
            <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/operationManager/flowstatus/"/>">Check Flow Status</a></li>
            <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/flowlog/"/>">Run history</a></li>
