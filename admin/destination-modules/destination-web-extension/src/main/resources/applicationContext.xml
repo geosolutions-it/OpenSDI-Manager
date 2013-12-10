@@ -20,6 +20,32 @@
     <bean id="migrationRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
         <property name="path" value="migrationRunnerOp"/>
     </bean>
+  
+    <bean id="gateRunnerOp" class="it.geosolutions.opensdi.operations.FileOperation">
+        <property name="name" value="XMLOperation"/>
+        <property name="path" value="gateRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>xml</value>
+        	</list>
+        </property>
+    </bean>
+
+	<bean id="fileBrowserGate" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
+	   <property name="fileRegex" value="^([A-Z])([0-9]{2})[_-]([0-9]{8})[_-]([0-9]{6}).xml$" />
+	   <property name="RESTPath" value="fileBrowserGate"/>
+	   <property name="operationName" value="XMLBrowser"/>
+	   <property name="canNavigate" value="true"/>
+	   <property name="canUpload" value="true"/>
+	   <property name="canDelete" value="true"/>
+	   <property name="defaultBaseDir" value="/home/geosolutions/admin/test_xml/"/>
+	   <property name="accept" value="application/xml"/>
+	   <property name="allowedOperations">
+	    <list>
+	     <value>gateRunnerOp</value>
+	    </list>
+	   </property>
+	</bean>
 
 	<bean id="fileBrowserTarget" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})[_-]([A-Z]{2,3})[_-]([A-Z]+)([_-][C|I])?[_-]([0-9]{8})[_-]([0-9]{2}).zip$" />
