@@ -51,5 +51,8 @@ body{
 .its_first_false{
 	padding-top: 8px;
 }
+.clear-rigth{
+	clear: right;
+}
 
 /* FOOTER on jquery-mapstore-footer.css*/

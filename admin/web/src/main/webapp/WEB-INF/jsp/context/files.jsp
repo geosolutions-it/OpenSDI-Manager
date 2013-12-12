@@ -6,6 +6,25 @@
 
 <c:set var="thisUrl" value="${requestScope['javax.servlet.forward.context_path']}${requestScope['javax.servlet.forward.servlet_path']}"/>
 
+
+<div id="createFolder" class="modal hide fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">x</button>
+		<h3 id="myModalLabel">Create Folder</h3>
+	</div>
+	<div class="modal-body">
+		<input type="hidden" name="folderOperation" value="create" />
+ 		<label class="control-label" for="fileName">Folder Name</label>
+		<input type="text" name="fileName" id="newFolderName" data-required/>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<a class="btn btn-primary" onclick="uploadFolder();">Create</a>
+	</div>
+</div>
+
 <c:choose>
 	<c:when test="${not empty param['d']}">
 		<c:set var="refreshUrl">${thisUrl}?d=${param['d']}&update=true</c:set>
@@ -17,8 +36,17 @@
 </c:choose>
 
 <c:set var="pageName">File Browser</c:set>
+
+<!-- Create folder operation -->
+<c:if test="${canManageFolders}">
+	<c:set var="createFolderButton"><div class="pull-right clear-rigth"><span>
+		<a data-toggle="modal" class="btn btn-success pull-right"
+			data-target="#createFolder">Create Directory</a>
+	</span></div></c:set>
+</c:if>
+
 <c:if test="${showRunInformation}">
-	<c:set var="refreshButton"><div class="pull-right"><span>
+	<c:set var="refreshButton"><div class="pull-right clear-rigth"><span>
 		<a class="btn btn-success" 
 			href="${refreshUrl}">
 			<i class="icon-refresh icon-white" title="Refresh status of each run"></i>
@@ -26,10 +54,11 @@
 	</span></div></c:set>
 </c:if>
 
-<c:set var="pageTitle">${pageName}${refreshButton}</c:set>
+<c:set var="pageTitle">${pageName}</c:set>
 
 <div class="container" id="${containerId}">
 	<h2>${pageTitle}</h2>
+	${createFolderButton}${refreshButton}
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -37,7 +66,10 @@
 				<th>Actions</th>
 				<th>Size</th>
 				<th>LastModified</th>
-				<th>Delete File</th>
+				<th>Delete</th>
+				<c:if test="${canDownloadFiles}">
+				<th>Download</th>
+				</c:if>
 				<c:if test="${showRunInformation}">
 				<th>Last execution</th>
 				<th>Status</th>
@@ -65,11 +97,20 @@
 						<c:set var="opCol" value="" />
 						<c:set var="thirdCol" value="" />
 						<c:set var="deleteCol" value="" />
+						<c:set var="downloadCol" value="" />
 						<c:set var="runDates" value="" />
 						<c:set var="runStatus" value="" />
 						<c:set var="runHistories" value="" />
 						<c:choose>
 							<c:when test="${not file.isDirectory}">
+								<c:if test="${canDownloadFiles}">
+									<c:set var="downloadCol">
+										<button class="btn" 
+											onClick="downloadFile('${file.name}')">
+											Download
+										</button>
+									</c:set>
+								</c:if>
 								<c:set var="nameCol">${file.name}</c:set>
 								<c:set var="thirdCol">${file.size} Bytes</c:set>
 								<c:if test="${canDelete}">
@@ -84,6 +125,16 @@
 								</c:if>
 							</c:when>
 							<c:otherwise>
+								<c:if test="${canManageFolders}">
+									<c:set var="deleteCol">
+										<button class="btn btn-mini btn-danger" 
+											data-confirm="are you sure to delete the file '${file.name}'" 
+											data-filename="${file.name}" 
+											onClick="confirmDelete('${file.name}', true)">
+											Delete
+										</button> 
+									</c:set>
+								</c:if>
 								<c:set var="nameCol"><a href="?d=${directory}${file.name}">${file.name}/</a></c:set>
 								<c:set var="opCol"><a class="btn" href="?d=${directory}${file.name}">Open folder</a></c:set>
 								<c:set var="thirdCol">Folder</c:set>
@@ -154,6 +205,9 @@
 						<td>${thirdCol}</td>
 						<td>${file.lastModified}</td>
 						<td>${deleteCol}</td>
+						<c:if test="${canDownloadFiles}">
+						<td>${downloadCol}</td>
+						</c:if>
 						<td>${runDates}</td>
 						<td>${runStatus}</td>
 						<c:if test="${showRunInformationHistory}">
@@ -258,18 +312,80 @@
     	});
 	});
 
-<c:if test="${canDelete}">
-	function delFile(fileName){
+function uploadFolder(){
+	var url = "../../operation/${operationRESTPath}Manager/";
+	var folderName = $('#newFolderName').val();
+	if(!!folderName && folderName != ''){
 		var data = {
-				"action": "delete", 
-				"toDel" : fileName
-			};
+			"folderOperation": "create", 
+			"fileName" : folderName
+		};
 <c:if test="${not empty directory}">
 		data["d"] = "${directory}";
 </c:if>
 		$.ajax({
 			type : 'POST',
-			url : "../../operation/${operationRESTPath}/",
+			url : url,
+			data : data,
+			success : function(response) {
+				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
+				$('#newFolderName').val("");
+				$("#createFolder").modal("hide");
+			},
+			error : function(response) {
+				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
+				$('#newFolderName').val("");
+				$("#createFolder").modal("hide");
+			}
+		});
+	}else{
+		//TODO: handle incorrect name
+	}
+}
+
+function downloadFile(fileName){
+	var downloadURL = function downloadURL(url) {
+	    var hiddenIFrameID = 'hiddenDownloader',
+	        iframe = document.getElementById(hiddenIFrameID);
+	    if (iframe === null) {
+	        iframe = document.createElement('iframe');
+	        iframe.id = hiddenIFrameID;
+	        iframe.style.display = 'none';
+	        document.body.appendChild(iframe);
+	    }
+	    iframe.src = url;
+	};
+	var url = "../../download/${operationRESTPath}Manager/?folderOperation=download&fileName="+fileName;
+<c:if test="${not empty directory}">
+	url += "&d=${directory}";
+</c:if>
+	downloadURL(url);
+}
+
+<c:if test="${canDelete}">
+	function delFile(fileName, folderOperation){
+		var data = null;
+		var url = "../../operation/${operationRESTPath}";
+		if(folderOperation){
+			// @see ManageFolderOperationController
+			url += "Manager/";
+			data = {
+				"folderOperation": "delete", 
+				"fileName" : fileName, 
+			};
+		}else{
+			url += "/";
+			data = {
+				"action": "delete", 
+				"toDel" : fileName
+			};
+		}
+<c:if test="${not empty directory}">
+		data["d"] = "${directory}";
+</c:if>
+		$.ajax({
+			type : 'POST',
+			url : url,
 			data : data,
 			success : function(response) {
 				$("#${containerId}").replaceWith($('#${containerId}', $(response)));
@@ -281,14 +397,15 @@
 	}
 </c:if>
 
-	function confirmDelete(filename) {
+	function confirmDelete(filename, isFolder) {
+		var folderOperation = !!isFolder;
 		if (!$('#deleteFileConfirmModal').length) {
-			$('body').append('<div id="deleteFileConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" data-dismiss="modal" id="dataConfirmOK">OK</a></div></div>');
+			$('body').append('<div id="deleteFileConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" data-dismiss="modal" id="dataConfirmOK">OK</a></div></div>');
 		} 
 		$('#deleteFileConfirmModal').find('.modal-body').text("Are you sure that you want to delete '"+filename+"'?");
 		
 		$('#dataConfirmOK').on('click', function(){
-			delFile(filename);
+			delFile(filename, folderOperation);
 		} );
 		$('#deleteFileConfirmModal').modal({show:true});
 		return false;

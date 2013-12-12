@@ -39,8 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.support.AbstractRefreshableApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,6 +53,16 @@ public class FileBrowserOperationController extends UserOperation implements
         ApplicationContextAware, Operation {
 private final static Logger LOGGER = Logger
         .getLogger(FileBrowserOperationController.class);
+
+/**
+ * Key for the sub folder open
+ */
+public static final String DIRECTORY_KEY = "d";
+
+/**
+ * Manager Suffix. Linked to files.jsp
+ */
+private static final String MANAGER_SUFFIX = "Manager";
 
 private ApplicationContext applicationContext;
 
@@ -79,6 +91,10 @@ private String accept;
 private String fileRegex;
 
 private List<String> allowedOperations;
+
+private Boolean canManageFolders;
+
+private Boolean canDownloadFiles;
 
 @Autowired
 GeoBatchClient geoBatchClient;
@@ -192,7 +208,23 @@ private HashMap<String, List<Operation>> getAvailableOperations() {
 public void setApplicationContext(ApplicationContext arg0)
         throws BeansException {
     this.applicationContext = arg0;
+}
 
+/**
+ * Register a manager a file manager if needed
+ */
+private void registerManager(){
+    if((Boolean.TRUE.equals(this.canManageFolders) || Boolean.TRUE.equals(this.canDownloadFiles)) 
+            && this.applicationContext != null
+            && this.applicationContext instanceof AbstractRefreshableApplicationContext){
+        String managerName = this.operationRestPath + MANAGER_SUFFIX;
+        if(!this.applicationContext.containsBean(managerName)){
+            // Register manager singleton
+            FolderManagerOperationController manageFolderOperation = new FolderManagerOperationController(managerName, this);
+            ConfigurableListableBeanFactory beanFactory = ((AbstractRefreshableApplicationContext)this.applicationContext).getBeanFactory();
+            beanFactory.registerSingleton(managerName, manageFolderOperation);
+        }
+    }
 }
 
 @Override
@@ -238,6 +270,8 @@ public String getJsp() {
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
         List<MultipartFile> files) {
+    
+    registerManager();
 
     LOGGER.debug("getJSP di FileBrowser");
 
@@ -269,7 +303,7 @@ public String getJsp(ModelMap model, HttpServletRequest request,
         for (String val : vals)
             // debug
             LOGGER.debug(" -> " + val); // debug
-        if (key.equalsIgnoreCase("d")) {
+        if (key.equalsIgnoreCase(DIRECTORY_KEY)) {
             String dirString = parameters.get(key)[0].trim();
 
             dirString = ControllerUtils.preventDirectoryTrasversing(dirString);
@@ -349,6 +383,8 @@ public String getJsp(ModelMap model, HttpServletRequest request,
     model.addAttribute("showRunInformation", this.showRunInformation);
     model.addAttribute("showRunInformationHistory",
             this.showRunInformationHistory);
+    model.addAttribute("canManageFolders", this.canManageFolders);
+    model.addAttribute("canDownloadFiles", this.canDownloadFiles);
 
     model.addAttribute("containerId", uniqueKey.toString().substring(0, 8));
     model.addAttribute("formId", uniqueKey.toString().substring(27, 36));
@@ -506,6 +542,34 @@ public Boolean getShowRunInformationHistory() {
  */
 public void setShowRunInformationHistory(Boolean showRunInformationHistory) {
     this.showRunInformationHistory = showRunInformationHistory;
+}
+
+/**
+ * @return the canManageFolders
+ */
+public Boolean getCanManageFolders() {
+    return canManageFolders;
+}
+
+/**
+ * @param canManageFolders the canManageFolders to set
+ */
+public void setCanManageFolders(Boolean canManageFolders) {
+    this.canManageFolders = canManageFolders;
+}
+
+/**
+ * @return the canDownloadFiles
+ */
+public Boolean getCanDownloadFiles() {
+    return canDownloadFiles;
+}
+
+/**
+ * @param canDownloadFiles the canDownloadFiles to set
+ */
+public void setCanDownloadFiles(Boolean canDownloadFiles) {
+    this.canDownloadFiles = canDownloadFiles;
 }
 
 }

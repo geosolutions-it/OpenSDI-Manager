@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
@@ -80,6 +81,63 @@ public String issueGetToTemplate(
 }
 
 /**
+ * Obtain a file from a ResponseManagerOperation
+ * 
+ * @param operationId
+ * @param request
+ * @param model
+ * @param response
+ */
+@RequestMapping(value = "/download/{operationId}", method = RequestMethod.GET)
+public void issueGetFile(
+        @PathVariable(value = "operationId") String operationId,
+        HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+    issueGetFile(operationId, null, request, model, response);
+}
+
+/**
+ * Obtain a file from a ResponseManagerOperation
+ * 
+ * @param operationId
+ * @param gotParam
+ * @param request
+ * @param model
+ * @param response
+ */
+@RequestMapping(value = "/download/{operationId}/{gotParam:.+}", method = RequestMethod.GET)
+public void issueGetFile(
+        @PathVariable(value = "operationId") String operationId,
+        @PathVariable(value = "gotParam") String gotParam,
+        HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+    if (LOGGER.isInfoEnabled()) {
+        LOGGER.info("Handling by issueGetFile : OperationEngine GET");
+        LOGGER.info("Operation:" + operationId);
+        LOGGER.info("Path parameter:" + gotParam);
+    }
+    // TODO: check gotParam for security
+
+    if (applicationContext.containsBean(operationId)
+            && applicationContext.isTypeMatch(operationId, Operation.class)) {
+
+        Operation op = (Operation) applicationContext.getBean(operationId);
+
+        if (gotParam != null) {
+            model.addAttribute("gotParam", gotParam);
+        }
+        
+        if (op instanceof ResponseManagerOperation) {
+            ((ResponseManagerOperation) op).getFile(model,
+                    request, null, response);
+        } else {
+            LOGGER.error("Incorrect call. The operation can handle the response");
+        }
+
+    } else {
+        LOGGER.error("Operation:" + operationId + " not found");
+    }
+}
+
+/**
  * Proxy operationManager requests without params
  * 
  * @param operationId
@@ -122,6 +180,7 @@ public String issueGetToOperation(
         if (gotParam != null) {
             model.addAttribute("gotParam", gotParam);
         }
+
         String operationJsp = op.getJsp(model, request, null);
 
         // model.addAttribute("context", operationJsp);
