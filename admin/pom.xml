@@ -604,10 +604,8 @@
         <module>core</module>
         <module>web</module>
         <module>opensdi-log-operation</module>
-        <module>nrl-core</module>
-        <module>nrl-mvc</module>
-        <module>nrl-web-extension</module>
         <module>fileBrowserSHP-web-extension</module>
+        <module>nrl-modules</module>
         <module>destination-modules</module>
   </modules>
   <build>
