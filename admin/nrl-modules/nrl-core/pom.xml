@@ -4,16 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>it.geosolutions.opensdi</groupId>
-        <artifactId>portal-root</artifactId>
+        <artifactId>nrl-modules</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
   
     <groupId>it.geosolutions.opensdi</groupId>
     <artifactId>nrl-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
   
-    <name>Crop Information Portal - core</name>
+    <name>OpenSDI Manager - Crop Information Portal - core</name>
   
     <dependencies>
         <!-- Test -->
