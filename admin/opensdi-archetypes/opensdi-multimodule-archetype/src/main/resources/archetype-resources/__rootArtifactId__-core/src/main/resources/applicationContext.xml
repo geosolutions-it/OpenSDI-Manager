@@ -12,7 +12,7 @@
 			http://www.springframework.org/schema/aop       http://www.springframework.org/schema/aop/spring-aop.xsd"
        default-autowire="byName">
   
-    <bean id="custom" class="it.geosolutions.opensdi.operations.CustomOperation">
+    <bean id="custom" class="${package}.operations.CustomOperation">
         <property name="path" value="custom"/>
     </bean>
 

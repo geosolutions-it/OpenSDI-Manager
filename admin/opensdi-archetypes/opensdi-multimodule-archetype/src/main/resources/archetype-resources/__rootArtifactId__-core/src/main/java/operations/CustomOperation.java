@@ -21,7 +21,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.geosolutions.opensdi.operations;
+package ${package}.operations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +44,12 @@ public class CustomOperation extends GeoBatchOperationImpl implements
 /**
  * The name of this Operation
  */
-public static String name = "FlowLog";
+public static String name = "Custom";
 
 /**
  * The path were to GET the form and POST the request Typically all lower case
  */
-private String path = "flowlog";
+private String path = "custom";
 
 /**
  * File extension this Operation will work on
