@@ -19,11 +19,25 @@
   
     <bean id="migrationRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
         <property name="path" value="migrationRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>zip</value>
+        	</list>
+        </property>
     </bean>
   
     <bean id="gateRunnerOp" class="it.geosolutions.opensdi.operations.FileOperation">
         <property name="name" value="XMLOperation"/>
         <property name="path" value="gateRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>xml</value>
+        	</list>
+        </property>
+    </bean>
+  
+    <bean id="statisticsRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="statisticsRunnerOp"/>
         <property name="extensions">
         	<list>
         		<value>xml</value>
@@ -43,6 +57,8 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>gateRunnerOp</value>
+	     <!-- Uncomment if you want to execute Statistics action from the gate ingestion view -->
+	     <!-- <value>statisticsRunnerOp</value> -->
 	    </list>
 	   </property>
 	</bean>
