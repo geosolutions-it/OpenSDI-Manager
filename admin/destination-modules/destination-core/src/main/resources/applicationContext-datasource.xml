@@ -39,7 +39,38 @@
         </property>
     </bean>
 
+    <bean id="opensdiDataSource2" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="url" value="jdbc:h2:mem:destination2" />
+        <property name="username" value="h2" />
+        <property name="password" value="h2" />
+    </bean>
+
+    <bean id="opensdiTransactionManager2" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
+    <bean id="sessionFactory2" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="opensdiDataSource2"/>
+        <property name="packagesToScan">
+                <list>
+                <value>it.geosolutions.opensdi.destination.model</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+            </props>
+        </property>
+    </bean>
+
     <tx:annotation-driven transaction-manager="opensdiTransactionManager" />
+
+    <tx:annotation-driven transaction-manager="opensdiTransactionManager2" />
 
 
 </beans>

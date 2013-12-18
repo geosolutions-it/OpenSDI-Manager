@@ -47,4 +47,6 @@ public List<TraceLine> searchByTrace(BigInteger idTrace);
  */
 public void deleteByTrace(BigInteger idTrace);
 
+
+
 }
