@@ -52,13 +52,13 @@
         <property name="order" value="10"/>
         <property name="locations">
             <list>
-                <!-- used for overriding props during maven tests -->
                 <value>classpath*:opensdi-config-ovr.properties</value>
                 <!-- used for externalized override -->
-                <value>${opensdi-ovr}</value>
+                <value>${opensdi-ovr}</value>    
+                <!-- used for externalized override -->
+                <value>file:///${OPENSDI_CONFIG_FILE}</value>    
             </list>
         </property>
     </bean>
-    
 
 </beans>
