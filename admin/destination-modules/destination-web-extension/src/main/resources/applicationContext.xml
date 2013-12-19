@@ -46,7 +46,7 @@
     </bean>
 
 	<bean id="fileBrowserGate" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
-	   <property name="fileRegex" value="^([A-Z])([0-9]{2})[_-]([0-9]{8})[_-]([0-9]{6}).xml$" />
+	   <property name="fileRegex" value="^([0-9]{2})[_-]([0-9]{8})[_-]([0-9]{6}).xml$" />
 	   <property name="RESTPath" value="fileBrowserGate"/>
 	   <property name="operationName" value="XMLBrowser"/>
 	   <property name="canNavigate" value="true"/>
