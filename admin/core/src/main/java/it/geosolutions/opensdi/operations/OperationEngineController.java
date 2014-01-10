@@ -27,6 +27,7 @@ import it.geosolutions.opensdi.model.FileUpload;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.ControllerUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -212,6 +214,30 @@ public String issueGetToOperation(
         @PathVariable(value = "operationId") String operationId,
         HttpServletRequest request, ModelMap model) {
     return issueGetToOperation(operationId, null, request, model);
+}
+
+/**
+ * Handler for plupload files
+ * 
+ * @param operationId
+ * @param gotHeaders
+ * @param file uploaded
+ * @param request
+ * @param model
+ * @return
+ */
+@RequestMapping(value = "/operation/{operationId}/upload", method = RequestMethod.POST)
+public String issuePostToOperation(
+        @PathVariable(value = "operationId") String operationId,
+        @RequestHeader HttpHeaders gotHeaders,
+        @RequestParam MultipartFile file,
+        HttpServletRequest request, ModelMap model) {
+    List<MultipartFile> files = new LinkedList<MultipartFile>();
+    FileUpload uploadFile = new FileUpload();
+    files.add(file);
+    uploadFile.setFiles(files);
+    return issuePostToOperation(operationId, null, gotHeaders, uploadFile,
+            request, model);
 }
 
 @RequestMapping(value = "/operation/{operationId}", method = RequestMethod.POST)

@@ -227,21 +227,88 @@
 		</tbody>
 	</table>
 <c:if test="${ canUpload }">
-	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
-	    <p>Select files to upload. Press Add button to add more file inputs.</p>
-	    <table id="fileTable">
-	    	<tr>
-	            <td><div class="input-append">
-					<input  name="files[0]" type="file" accept="${not empty accept ?accept :''}" />
-					</div>
-				</td>
-	        </tr>
-	    </table>
-	    <br/>
-	    <input id="basedir" type="hidden" name="d" value="${directory}" />
-	    <input id="addFile" type="button" value="Add File" class="btn" />
-		<input type="submit" value="Upload" class="btn btn-primary "/>
-	</form:form>
+
+	<div id="uploader_${formId}">
+		<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
+		    <p>Your browser doesn't have Flash, Silverlight or HTML5 support. Select files to upload. Press Add button to add more file inputs.</p>
+		    <table id="fileTable">
+		    	<tr>
+		            <td><div class="input-append">
+						<input  name="files[0]" type="file" accept="${not empty accept ?accept :''}" />
+						</div>
+					</td>
+		        </tr>
+		    </table>
+		    <br/>
+		    <input id="basedir" type="hidden" name="d" value="${directory}" />
+		    <input id="addFile" type="button" value="Add File" class="btn" />
+			<input type="submit" value="Upload" class="btn btn-primary "/>
+		</form:form>
+	</div>
+	 
+	<script type="text/javascript">
+	// Initialize the widget when the DOM is ready
+	$(function() {
+	    var uploader_${formId} = $("#uploader_${formId}").plupload({
+	        // General settings
+	        runtimes : 'html5,flash,silverlight,html4',
+	        url : "../../../operation/${operationRESTPath}/upload",
+
+	        // adding this for redirecting to page once upload complete
+	        preinit: function (Uploader) {
+				Uploader.bind('FileUploaded', function(Up, File, Response) {
+					if( (Uploader.total.uploaded + 1) == Uploader.files.length){
+						// TODO: Should only add the new file(s) in the files table
+						window.location= '${thisUrl}';
+					}
+				});
+			},
+	 
+	        // Maximum file size
+	        max_file_size : '2mb',
+	 
+	        chunk_size: '1mb',
+	 
+	        // Resize images on clientside if we can
+	        resize : {
+	            width : 200,
+	            height : 200,
+	            quality : 90,
+	            crop: true // crop to exact dimensions
+	        },
+	 
+	        // Specify what files to browse for
+	        filters : [
+	            {title : "Image files", extensions : "jpeg,jpg,gif,png"},
+	            {title : "Zip files", extensions : "zip,avi"},
+	            {title : "XML files", extensions : "xml"}
+	        ],
+	 
+	        // Rename files by clicking on their titles
+	        rename: true,
+	         
+	        // Sort files
+	        sortable: true,
+	 
+	        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+	        dragdrop: true,
+	 
+	        // Views to activate
+	        views: {
+	            list: true,
+	            thumbs: true, // Show thumbs
+	            active: 'thumbs'
+	        },
+	 
+	        // Flash settings
+	        flash_swf_url : '<c:url value="/js/Moxie.cdn.swf"/>',
+	 
+	        // Silverlight settings
+	        silverlight_xap_url : '<c:url value="/js/Moxie.cdn.xap"/>'
+	    });
+	});
+	</script>
+	</div>
 </c:if>
 
 <c:forEach items="${operations}" var="entry">
