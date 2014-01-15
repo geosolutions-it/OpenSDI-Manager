@@ -27,13 +27,20 @@ import it.geosolutions.opensdi.model.FileUpload;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.ControllerUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +56,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Controller
 public class OperationEngineController implements ApplicationContextAware {
@@ -60,6 +68,11 @@ private final static Logger LOGGER = Logger
 
 @Autowired
 private GeoBatchClient geoBatchClient;
+
+/**
+ * Map to handle file uploading chunked
+ */
+private Map<String, List<byte[]>> uploadedChunks = new ConcurrentHashMap<String, List<byte[]>>();
 
 /**
  * Encapsulate operation Jsp into the template
@@ -230,14 +243,86 @@ public String issueGetToOperation(
 public String issuePostToOperation(
         @PathVariable(value = "operationId") String operationId,
         @RequestHeader HttpHeaders gotHeaders,
-        @RequestParam MultipartFile file,
+        @RequestParam MultipartFile file, @RequestParam String name,
+        @RequestParam(required = false, defaultValue = "-1") int chunks,
+        @RequestParam(required = false, defaultValue = "-1") int chunk,
         HttpServletRequest request, ModelMap model) {
-    List<MultipartFile> files = new LinkedList<MultipartFile>();
+
     FileUpload uploadFile = new FileUpload();
-    files.add(file);
-    uploadFile.setFiles(files);
+    List<MultipartFile> files = new LinkedList<MultipartFile>();
+    if (chunks > 0) {
+        List<byte[]> uploadedChunks = this.uploadedChunks.get(name);
+        if (uploadedChunks == null) {
+            // init bytes for the chunk upload
+            uploadedChunks = new LinkedList<byte[]>();
+        }
+        try {
+            // add chunk on its position
+            uploadedChunks.add(chunk, file.getBytes());
+            this.uploadedChunks.put(name, uploadedChunks);
+        } catch (IOException e) {
+            LOGGER.error("Error on file upload", e);
+        }
+        if (chunk == chunks - 1) {
+            // Create the upload file to be handled
+            MultipartFile composedUpload = new CommonsMultipartFile(
+                    getFileItem(file, uploadedChunks, name));
+            files.add(composedUpload);
+            uploadFile.setFiles(files);
+        }
+    } else {
+        // Create the upload file to be handled
+        files.add(file);
+        uploadFile.setFiles(files);
+    }
+    
     return issuePostToOperation(operationId, null, gotHeaders, uploadFile,
             request, model);
+}
+
+/**
+ * Obtain a temporal file item with chunked bytes
+ * 
+ * @param file
+ * @param chunkedBytes
+ * @param name
+ * @return
+ */
+private FileItem getFileItem(MultipartFile file, List<byte[]> chunkedBytes, String name) {
+    // Temporal file to write chunked bytes
+    File outFile = FileUtils.getFile(FileUtils.getTempDirectory(),
+            name);
+
+    // total file size
+    int sizeThreshold = 0;
+    for (byte[] bytes : chunkedBytes) {
+        sizeThreshold += bytes.length;
+    }
+
+    // Get file item
+    FileItem fileItem = new DiskFileItem("tmpFile", file.getContentType(),
+            false, name, sizeThreshold, outFile);
+    try {
+
+        OutputStream outputStream;
+        outputStream = fileItem.getOutputStream();
+
+        // write bytes
+        for (byte[] readedBytes : chunkedBytes) {
+            outputStream.write(readedBytes, 0, readedBytes.length);
+        }
+
+        // close the file
+        outputStream.flush();
+        outputStream.close();
+    } catch (IOException e) {
+        LOGGER.error("Error writing final file", e);
+    } finally {
+        // Remove bytes from memory
+        uploadedChunks.remove(file.getName());
+    }
+
+    return fileItem;
 }
 
 @RequestMapping(value = "/operation/{operationId}", method = RequestMethod.POST)

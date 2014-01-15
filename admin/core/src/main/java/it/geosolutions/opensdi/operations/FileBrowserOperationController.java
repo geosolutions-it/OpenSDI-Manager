@@ -96,6 +96,26 @@ private Boolean canManageFolders;
 
 private Boolean canDownloadFiles;
 
+/**
+ * Default method to upload is OLD
+ */
+private UploadMethod uploadMethod = UploadMethod.OLD;
+
+/**
+ * Max chunk size for PLUPLOAD. Default is '1mb'
+ */
+private String chunkSize = "1mb";
+
+/**
+ * Max file size for PLUPLOAD. Default is '100mb'
+ */
+private String maxFileSize = "100mb";
+
+/**
+ * Extension filter for PLUPLOAD
+ */
+private String extensionFilter = null;
+
 @Autowired
 GeoBatchClient geoBatchClient;
 
@@ -380,6 +400,10 @@ public String getJsp(ModelMap model, HttpServletRequest request,
 
     model.addAttribute("canDelete", this.canDelete);
     model.addAttribute("canUpload", this.canUpload);
+    model.addAttribute("uploadMethod", this.uploadMethod.name());
+    model.addAttribute("maxFileSize", this.maxFileSize);
+    model.addAttribute("chunkSize", this.chunkSize);
+    model.addAttribute("extensionFilter", this.extensionFilter);
     model.addAttribute("showRunInformation", this.showRunInformation);
     model.addAttribute("showRunInformationHistory",
             this.showRunInformationHistory);
@@ -570,6 +594,74 @@ public Boolean getCanDownloadFiles() {
  */
 public void setCanDownloadFiles(Boolean canDownloadFiles) {
     this.canDownloadFiles = canDownloadFiles;
+}
+
+/**
+ * @return the uploadMethod
+ */
+public UploadMethod getUploadMethod() {
+    return uploadMethod;
+}
+
+/**
+ * @param uploadMethod the uploadMethod to set
+ */
+public void setUploadMethod(UploadMethod uploadMethod) {
+    this.uploadMethod = uploadMethod;
+}
+
+/**
+ * Upload method used on file browser
+ * 
+ * @author adiaz
+ * 
+ * @see files.jsp
+ *
+ */
+public enum UploadMethod{
+    OLD, PLUPLOAD
+}
+
+/**
+ * @return the chunkSize
+ */
+public String getChunkSize() {
+    return chunkSize;
+}
+
+/**
+ * @return the maxFileSize
+ */
+public String getMaxFileSize() {
+    return maxFileSize;
+}
+
+/**
+ * @return the extensionFilter
+ */
+public String getExtensionFilter() {
+    return extensionFilter;
+}
+
+/**
+ * @param chunkSize the chunkSize to set
+ */
+public void setChunkSize(String chunkSize) {
+    this.chunkSize = chunkSize;
+}
+
+/**
+ * @param maxFileSize the maxFileSize to set
+ */
+public void setMaxFileSize(String maxFileSize) {
+    this.maxFileSize = maxFileSize;
+}
+
+/**
+ * @param extensionFilter the extensionFilter to set
+ */
+public void setExtensionFilter(String extensionFilter) {
+    this.extensionFilter = extensionFilter;
 }
 
 }
