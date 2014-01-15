@@ -13,11 +13,22 @@
     <import resource="applicationContext-datasource.xml"/>
 
     <!--  DAO  -->
-    <bean id="traceDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceDAOImpl">
+    <bean id="develTraceDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
       <!-- <property name="maxDiferenceInMilliseconds" value="5000000000" /> -->
       <!-- <property name="maxDiferenceInMilliseconds" value="5000000000000000000" /> -->
     </bean>
-    <bean id="traceLineDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceLineDAOImpl" />
+    <bean id="develTraceLineDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceLineDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="prodTraceDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory2"/>
+      <!-- <property name="maxDiferenceInMilliseconds" value="5000000000" /> -->
+      <!-- <property name="maxDiferenceInMilliseconds" value="5000000000000000000" /> -->
+    </bean>
+    <bean id="prodTraceLineDao" class="it.geosolutions.opensdi.destination.dao.impl.TraceLineDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
 
     <!-- Service -->
     <bean id="traceService" class="it.geosolutions.opensdi.destination.service.impl.TraceServiceImpl" />

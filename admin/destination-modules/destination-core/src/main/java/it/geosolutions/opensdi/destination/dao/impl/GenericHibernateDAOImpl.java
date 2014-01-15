@@ -27,12 +27,10 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -43,11 +41,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public abstract class GenericHibernateDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport implements GenericDAO<T, ID> {
 
         protected Class<T> persistentClass;
-
-        @Autowired
-    public void init(SessionFactory sessionFactory) {
-        setSessionFactory(sessionFactory);
-    }
 
     @SuppressWarnings({"unchecked"})
     public GenericHibernateDAOImpl() {

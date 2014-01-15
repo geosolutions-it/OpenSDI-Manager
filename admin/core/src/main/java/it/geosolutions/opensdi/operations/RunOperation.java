@@ -43,7 +43,7 @@ import org.springframework.ui.ModelMap;
  * @author adiaz
  */
 @Controller
-public class RunOperation extends SingleFileLocalOperation {
+public class RunOperation extends FileOperation {
 
 private final static Logger LOGGER = Logger.getLogger(RunOperation.class);
 
@@ -51,21 +51,6 @@ private final static Logger LOGGER = Logger.getLogger(RunOperation.class);
  * Flag to indicate that RunCleanerPostProcessor needed has been registred
  */
 private Boolean POST_PROCESSOR_REGISTRED = Boolean.FALSE;
-
-/**
- * The name of this Operation
- */
-public String name = "Run";
-
-/**
- * The path were to GET the form and POST the request Typically all lower case
- */
-private String path = "run";
-
-/**
- * File extension this Operation will work on
- */
-private String[] extensions = { "zip" };
 
 /**
  * GeoBatch input run directory
@@ -150,51 +135,9 @@ public void prepareGetJsp(ModelMap model, String fileName) {
     super.prepareGetJsp(model, getFinalFileName(fileName));
 }
 
-/**
- * @return the path
- */
-public String getPath() {
-    return path;
-}
-
-@Override
-public String getRESTPath() {
-    return getPath();
-}
-
-@Override
-public List<String> getExtensions() {
-    List<String> l = new ArrayList<String>();
-    for (String s : extensions) {
-        l.add(s);
-    }
-    return l;
-}
-
 @Override
 public boolean isMultiple() {
     return false;
-}
-
-/**
- * @param path the path to set
- */
-public void setPath(String path) {
-    this.path = path;
-}
-
-/**
- * @return the name
- */
-public String getName() {
-    return name;
-}
-
-/**
- * @param name the name to set
- */
-public void setName(String name) {
-    this.name = name;
 }
 
 /**

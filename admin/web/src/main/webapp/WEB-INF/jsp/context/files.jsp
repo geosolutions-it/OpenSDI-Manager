@@ -227,21 +227,91 @@
 		</tbody>
 	</table>
 <c:if test="${ canUpload }">
-	<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
-	    <p>Select files to upload. Press Add button to add more file inputs.</p>
-	    <table id="fileTable">
-	    	<tr>
-	            <td><div class="input-append">
-					<input  name="files[0]" type="file" accept="${not empty accept ?accept :''}" />
-					</div>
-				</td>
-	        </tr>
-	    </table>
-	    <br/>
-	    <input id="basedir" type="hidden" name="d" value="${directory}" />
-	    <input id="addFile" type="button" value="Add File" class="btn" />
-		<input type="submit" value="Upload" class="btn btn-primary "/>
-	</form:form>
+	<div id="uploader_${formId}">
+		<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
+		    <table id="fileTable">
+		    	<tr>
+		            <td><div class="input-append">
+						<input  name="files[0]" type="file" accept="${not empty accept ?accept :''}" />
+						</div>
+					</td>
+		        </tr>
+		    </table>
+		    <br/>
+		    <input id="basedir" type="hidden" name="d" value="${directory}" />
+		    <input id="addFile" type="button" value="Add File" class="btn" />
+			<input type="submit" value="Upload" class="btn btn-primary "/>
+		</form:form>
+	</div>
+	<c:if test="${uploadMethod == 'PLUPLOAD'}">
+		<script type="text/javascript">
+		var max_file_size = "${maxFileSize}", chunk_size = "${chunkSize}", filters = [];
+		<c:if test="${extensionFilter != null}">
+		filters.push({title: "Allowed files", extensions: "${extensionFilter}"});
+		</c:if>
+		// Initialize the widget when the DOM is ready
+		$(function() {
+		    var uploader_${formId} = $("#uploader_${formId}").plupload({
+		        // General settings
+		        runtimes : 'html5,flash,silverlight,html4',
+		        url : "../../../operation/${operationRESTPath}/upload",
+
+		        // adding this for redirecting to page once upload complete
+		        preinit: function (Uploader) {
+					Uploader.bind('FileUploaded', function(Up, File, Response) {
+						if( (Uploader.total.uploaded + 1) == Uploader.files.length){
+							// TODO: Should only add the new file(s) in the files table
+							window.location= '${thisUrl}';
+						}
+					});
+					<c:if test="${not empty directory}">
+					Uploader.bind('BeforeUpload', function (up, file) {
+					    up.settings.multipart_params = {d: "${directory}"};
+					});
+					</c:if>
+				},
+		 
+		        // Maximum file size
+		        max_file_size : max_file_size,
+		 
+		        chunk_size: chunk_size,
+		 
+		        // Resize images on clientside if we can
+		        resize : {
+		            width : 200,
+		            height : 200,
+		            quality : 90,
+		            crop: true // crop to exact dimensions
+		        },
+		 
+		        // Specify what files to browse for
+		        filters : filters,
+		 
+		        // Rename files by clicking on their titles
+		        rename: true,
+		         
+		        // Sort files
+		        sortable: true,
+		 
+		        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+		        dragdrop: true,
+		 
+		        // Views to activate
+		        views: {
+		            list: true,
+		            thumbs: true, // Show thumbs
+		            active: 'list'
+		        },
+		 
+		        // Flash settings
+		        flash_swf_url : '<c:url value="/js/Moxie.swf"/>',
+		 
+		        // Silverlight settings
+		        silverlight_xap_url : '<c:url value="/js/Moxie.xap"/>'
+		    });
+		});
+		</script>
+	</c:if>
 </c:if>
 
 <c:forEach items="${operations}" var="entry">

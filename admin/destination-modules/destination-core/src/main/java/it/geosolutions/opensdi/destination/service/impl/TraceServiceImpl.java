@@ -33,7 +33,8 @@ import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -44,11 +45,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TraceServiceImpl implements TraceService {
 
-@Autowired
-private TraceDAO traceDao;
+@Resource(name="develTraceDao")
+private TraceDAO develTraceDao;
 
-@Autowired
-private TraceLineDAO traceLineDao;
+@Resource(name="develTraceLineDao")
+private TraceLineDAO develTraceLineDao;
+
+@Resource(name="prodTraceDao")
+private TraceDAO prodTraceDao;
+
+@Resource(name="prodTraceLineDao")
+private TraceLineDAO prodTraceLineDao;
 
 /**
  * Remove all run information for file contained in run information
@@ -57,11 +64,20 @@ private TraceLineDAO traceLineDao;
  */
 public void cleanByRun(GeobatchRunInfo runInfo) {
     String fileName = GeoBatchRunInfoUtils.getFileName(runInfo, true);
-    List<Trace> traces = traceDao.searchTraceByFile(fileName);
+    // develop instances
+    List<Trace> traces = develTraceDao.searchTraceByFile(fileName);
     if (traces != null) {
         for (Trace trace : traces) {
-            traceLineDao.deleteByTrace(trace.getId_tracciamento());
-            traceDao.makeTransient(trace);
+            develTraceLineDao.deleteByTrace(trace.getId_tracciamento());
+            develTraceDao.makeTransient(trace);
+        }
+    }
+    // production instances
+    traces = prodTraceDao.searchTraceByFile(fileName);
+    if (traces != null) {
+        for (Trace trace : traces) {
+            prodTraceLineDao.deleteByTrace(trace.getId_tracciamento());
+            prodTraceDao.makeTransient(trace);
         }
     }
 }
@@ -76,12 +92,19 @@ public void cleanByRun(GeobatchRunInfo runInfo) {
 public TraceDto searchClosestTraceByRun(GeobatchRunInfo runInfo) {
     TraceDto traceDto = null;
     if (runInfo != null) {
-        Trace trace = traceDao.searchClosestTraceByFile(
+        Trace trace = develTraceDao.searchClosestTraceByFile(
                 GeoBatchRunInfoUtils.getFileName(runInfo, true),
                 runInfo.getLastExecutionDate());
         List<TraceLine> lines = null;
         if (trace != null) {
-            lines = traceLineDao.searchByTrace(trace.getId_tracciamento());
+            lines = develTraceLineDao.searchByTrace(trace.getId_tracciamento());
+        }else{
+            trace = prodTraceDao.searchClosestTraceByFile(
+                    GeoBatchRunInfoUtils.getFileName(runInfo, true),
+                    runInfo.getLastExecutionDate());
+            if (trace != null) {
+                lines = prodTraceLineDao.searchByTrace(trace.getId_tracciamento());
+            }
         }
         traceDto = getTrace(trace, lines);
     }
@@ -98,18 +121,18 @@ public TraceDto saveTrace(TraceDto trace) {
     Trace traceEntity = getTrace(trace);
     if (traceEntity.getId_tracciamento() != null) {
         // Clean old lines
-        traceLineDao.deleteByTrace(traceEntity.getId_tracciamento());
+        develTraceLineDao.deleteByTrace(traceEntity.getId_tracciamento());
     }
     List<TraceLine> lines = getTraceLines(trace);
     List<TraceLine> lineEntities = null;
     // save trace
-    traceEntity = traceDao.makePersistent(traceEntity);
+    traceEntity = develTraceDao.makePersistent(traceEntity);
     // save lines
     if (lines != null) {
         lineEntities = new LinkedList<TraceLine>();
         for (TraceLine line : lines) {
             line.setId_tracciamento(traceEntity.getId_tracciamento());
-            lineEntities.add(traceLineDao.makePersistent(line));
+            lineEntities.add(develTraceLineDao.makePersistent(line));
         }
     }
     return getTrace(traceEntity, lineEntities);
@@ -124,16 +147,30 @@ public TraceDto saveTrace(TraceDto trace) {
 public List<TraceDto> searchByRun(GeobatchRunInfo runInfo) {
     List<TraceDto> list = new LinkedList<TraceDto>();
     if (runInfo != null) {
-        List<Trace> traces = traceDao.searchTraceByFile(GeoBatchRunInfoUtils
+        List<Trace> traces = develTraceDao.searchTraceByFile(GeoBatchRunInfoUtils
                 .getFileName(runInfo, true));
         if (traces != null) {
             for (Trace trace : traces) {
                 List<TraceLine> lines = null;
                 if (trace != null) {
-                    lines = traceLineDao.searchByTrace(trace
+                    lines = develTraceLineDao.searchByTrace(trace
                             .getId_tracciamento());
                 }
                 list.add(getTrace(trace, lines));
+            }
+        }else{
+            // prod instances
+            traces = prodTraceDao.searchTraceByFile(GeoBatchRunInfoUtils
+                    .getFileName(runInfo, true));
+            if (traces != null) {
+                for (Trace trace : traces) {
+                    List<TraceLine> lines = null;
+                    if (trace != null) {
+                        lines = prodTraceLineDao.searchByTrace(trace
+                                .getId_tracciamento());
+                    }
+                    list.add(getTrace(trace, lines));
+                }
             }
         }
     }

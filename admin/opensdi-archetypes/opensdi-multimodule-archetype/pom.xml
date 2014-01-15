@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+      <groupId>it.geosolutions.opensdi</groupId>
+    <artifactId>opensdi-archetypes</artifactId>
+      <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>it.geosolutions.opensdi</groupId>
+  <artifactId>opensdi-multimodule-archetype</artifactId>
+  <packaging>maven-archetype</packaging>
+
+  <name>OpenSDI Manager - archetypes - Multimodule</name>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>2.2</version>
+      </extension>
+    </extensions>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <developers>
+    <developer>
+      <id>ETj</id>
+      <name>Emanuele Tajariol</name>
+      <organization>GeoSolutions</organization>
+    </developer>
+    <developer>
+      <id>offtherailz</id>
+      <name>Lorenzo Natali</name>
+      <organization>GeoSolutions</organization>
+    </developer>
+    <developer>
+      <id>Gnafu</id>
+      <name>Lorenzo Pini</name>
+      <organization>GeoSolutions</organization>
+    </developer>
+    <developer>
+      <id>alediator</id>
+      <name>Alejandro Diaz</name>
+      <organization>GeoSolutions</organization>
+    </developer>
+  </developers>
+</project>
