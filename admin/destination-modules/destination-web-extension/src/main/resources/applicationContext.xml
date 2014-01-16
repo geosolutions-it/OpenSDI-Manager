@@ -16,6 +16,10 @@
     <bean id="roadRunnerOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
         <property name="path" value="roadRunnerOp"/>
     </bean>
+    
+    <bean id="roadSegmentationOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
+        <property name="path" value="roadSegmentationOp"/>
+    </bean>
   
     <bean id="migrationRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
         <property name="path" value="migrationRunnerOp"/>
@@ -36,8 +40,21 @@
         </property>
     </bean>
   
+    <bean id="pterRunnerOp" class="it.geosolutions.opensdi.operations.Zip2pgOperation">
+        <property name="path" value="pterRunnerOp"/>
+    </bean>
+  
     <bean id="statisticsRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
         <property name="path" value="statisticsRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>xml</value>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="gateImportOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="gateImportOp"/>
         <property name="extensions">
         	<list>
         		<value>xml</value>
@@ -93,6 +110,39 @@
 	    <list>
 	     <value>roadRunnerOp</value>
 	     <value>migrationRunnerOp</value>
+	    </list>
+	   </property>
+	</bean>
+    
+    <bean id="fileBrowserPter" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
+	   <property name="fileRegex" value="^([A-Z]{2})_PTER_([0-9]{8}).zip$" />
+	   <property name="RESTPath" value="fileBrowserPter"/>
+	   <property name="operationName" value="SHPBrowser3"/>
+	   <property name="canNavigate" value="true"/>
+	   <property name="canUpload" value="true"/>
+	   <property name="canDelete" value="true"/>
+	   <property name="defaultBaseDir" value="/home/geosolutions/admin/test_shp/"/>
+	   <property name="accept" value="application/zip"/>
+	   <property name="allowedOperations">
+	    <list>
+	     <value>pterRunnerOp</value>
+	    </list>
+	   </property>
+	</bean>
+    
+    <bean id="fileBrowserRoadSegmentation" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
+	   <property name="fileRegex" value="^([A-Z]{2})_([A-Z]{1})_([A-Za-z]+)_([0-9]{8})_ORIG.zip$" />
+	   <property name="RESTPath" value="fileBrowserRoadSegmentation"/>
+	   <property name="operationName" value="SHPBrowser4"/>
+	   <property name="canNavigate" value="true"/>
+	   <property name="canUpload" value="true"/>
+	   <property name="canDelete" value="true"/>
+	   <property name="defaultBaseDir" value="/home/geosolutions/admin/test_shp/"/>
+	   <property name="accept" value="application/zip"/>
+	   <property name="allowedOperations">
+	    <list>
+	     <value>roadSegmentationOp</value>
+         <value>migrationRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>

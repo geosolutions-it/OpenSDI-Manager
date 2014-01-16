@@ -606,7 +606,7 @@
         <module>opensdi-archetypes</module>
         <module>opensdi-log-operation</module>
         <module>fileBrowserSHP-web-extension</module>
-        <module>nrl-modules</module>
+        <!--module>nrl-modules</module-->
         <module>destination-modules</module>
   </modules>
   <build>
