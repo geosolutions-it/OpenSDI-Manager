@@ -21,6 +21,9 @@
 package it.geosolutions.opensdi.model;
 
 import static org.junit.Assert.assertEquals;
+
+import java.io.File;
+
 import it.geosolutions.opensdi.utils.ControllerUtils;
 import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
@@ -44,36 +47,40 @@ public void testRemoveExtensions() {
 
 @Test
 public void testFileNames() {
-    assertEquals(GeoBatchRunInfoUtils.getFileName("/ererer/test.ext", false),
+    assertEquals(GeoBatchRunInfoUtils.getFileName(normalizePath("/ererer/test.ext"), false),
             "test.ext");
-    assertEquals(GeoBatchRunInfoUtils.getFileName("/ererer/34/34nsas/test.ext",
+    assertEquals(GeoBatchRunInfoUtils.getFileName(normalizePath("/ererer/34/34nsas/test.ext"),
             true), "test");
-    assertEquals(GeoBatchRunInfoUtils.getFileName(".././../test.ext", false),
+    assertEquals(GeoBatchRunInfoUtils.getFileName(normalizePath(".././../test.ext"), false),
             "test.ext");
 }
 
 @Test
 public void testFilePaths() {
-    assertEquals(GeoBatchRunInfoUtils.getVirtualPath("/ererer/test.ext",
-            "/ererer", false), "test.ext");
-    assertEquals(GeoBatchRunInfoUtils.getVirtualPath("/ererer/test.ext",
-            "/ererer", true), "test");
+    assertEquals(GeoBatchRunInfoUtils.getVirtualPath(normalizePath("/ererer/test.ext"),
+    		normalizePath("/ererer"), false), "test.ext");
+    assertEquals(GeoBatchRunInfoUtils.getVirtualPath(normalizePath("/ererer/test.ext"),
+    		normalizePath("/ererer"), true), "test");
     assertEquals(GeoBatchRunInfoUtils.getVirtualPath(
-            "/ererer/asdasdasdas/test/", "/ererer/asdasdasdas", false), "test");
+    		normalizePath("/ererer/asdasdasdas/test/"), normalizePath("/ererer/asdasdasdas"), false), "test");
     assertEquals(GeoBatchRunInfoUtils.getVirtualPath(
-            "/ererer/asdasdasdas/test", "/ererer/asdasdasdas/", false), "test");
+    		normalizePath("/ererer/asdasdasdas/test"), normalizePath("/ererer/asdasdasdas/"), false), "test");
     assertEquals(GeoBatchRunInfoUtils.getVirtualPath(
-            "/ererer/asdasdasdas/test/", "/ererer/asdasdasdas/", false), "test");
+    		normalizePath("/ererer/asdasdasdas/test/"), normalizePath("/ererer/asdasdasdas/"), false), "test");
 }
 
 @Test
 public void testRunInfoPaths() {
     assertEquals(GeoBatchRunInfoUtils.getRunInfoPath(
     // originalPath
-            "/origin/testDir/test.zip",
+    		normalizePath("/origin/testDir/test.zip"),
             // basePath
-            "/origin",
+    		normalizePath("/origin"),
             // extensionReplacement
-            ".run"), "/testDir/test.run");
+            ".run"), normalizePath("/testDir/test.run"));
 }
+private String normalizePath(String path) {
+	return ControllerUtils.normalizeSeparator(path);
+}
+
 }
