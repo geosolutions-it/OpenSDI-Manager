@@ -518,9 +518,10 @@ private GeobatchRunInfo updateRunInfoStatus(GeobatchRunInfo runInfo) {
     } catch (Exception e) {
         // status it's FAIL
     }
-    runInfo.setFlowStatus(status != null ? status.getStatus().name()
-            : "FAIL");
-    runInfo = updateRunInfo(runInfo);
+    if(status != null) {
+    	runInfo.setFlowStatus(status.getStatus().name());
+    	runInfo = updateRunInfo(runInfo);
+    }
     return runInfo;
 }
 
