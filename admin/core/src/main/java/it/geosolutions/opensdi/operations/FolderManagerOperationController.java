@@ -24,19 +24,24 @@ import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
@@ -166,19 +171,82 @@ private void downloadFile(String fileName, String subFolder,
         HttpServletResponse response) {
     try {
         String filePath = getFilePath(fileName, subFolder);
-        // get your file as InputStream
-        InputStream is = new FileInputStream(filePath);
-        // copy it to response's OutputStream
-        IOUtils.copy(is, response.getOutputStream());
-        response.setContentType("application/x-msdownload");
-        response.setHeader("Content-Disposition", "attachment; filename="
-                + fileName);
-        response.flushBuffer();
+        download(response, fileName, filePath);
     } catch (Exception ex) {
         LOGGER.info("Error writing file to output stream. Filename was '"
                 + fileName + "'");
         throw new RuntimeException("IOError writing file to output stream");
     }
+}
+
+/**
+ * Download a file with a stream
+ * 
+ * @param resp
+ * @param fileName
+ * @param filePath
+ * @return
+ */
+@SuppressWarnings("resource")
+private ResponseEntity<byte[]> download(HttpServletResponse resp,
+        String fileName, String filePath) {
+
+    final HttpHeaders headers = new HttpHeaders();
+    File toServeUp = new File(filePath);
+    InputStream inputStream = null;
+
+    try {
+        inputStream = new FileInputStream(toServeUp);
+    } catch (FileNotFoundException e) {
+
+        // Also useful, this is a good was to serve down an error message
+        String msg = "ERROR: Could not find the file specified.";
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return new ResponseEntity<byte[]>(msg.getBytes(), headers,
+                HttpStatus.NOT_FOUND);
+
+    }
+
+    resp.setContentType("application/octet-stream");
+    resp.setHeader("Content-Disposition", "attachment; filename=\"" + fileName
+            + "\"");
+
+    Long fileSize = toServeUp.length();
+    resp.setContentLength(fileSize.intValue());
+
+    OutputStream outputStream = null;
+
+    try {
+        outputStream = resp.getOutputStream();
+    } catch (IOException e) {
+        String msg = "ERROR: Could not generate output stream.";
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return new ResponseEntity<byte[]>(msg.getBytes(), headers,
+                HttpStatus.NOT_FOUND);
+    }
+
+    byte[] buffer = new byte[1024];
+
+    int read = 0;
+    try {
+
+        while ((read = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, read);
+        }
+
+        // close the streams to prevent memory leaks
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+
+    } catch (Exception e) {
+        String msg = "ERROR: Could not read file.";
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return new ResponseEntity<byte[]>(msg.getBytes(), headers,
+                HttpStatus.NOT_FOUND);
+    }
+
+    return null;
 }
 
 /**
