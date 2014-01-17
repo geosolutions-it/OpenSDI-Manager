@@ -264,6 +264,11 @@
 							window.location= '${thisUrl}';
 						}
 					});
+					<c:if test="${not empty directory}">
+					Uploader.bind('BeforeUpload', function (up, file) {
+					    up.settings.multipart_params = {d: "${directory}"};
+					});
+					</c:if>
 				},
 		 
 		        // Maximum file size
@@ -299,10 +304,10 @@
 		        },
 		 
 		        // Flash settings
-		        flash_swf_url : '<c:url value="/js/Moxie.cdn.swf"/>',
+		        flash_swf_url : '<c:url value="/js/Moxie.swf"/>',
 		 
 		        // Silverlight settings
-		        silverlight_xap_url : '<c:url value="/js/Moxie.cdn.xap"/>'
+		        silverlight_xap_url : '<c:url value="/js/Moxie.xap"/>'
 		    });
 		});
 		</script>
