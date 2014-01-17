@@ -165,7 +165,7 @@ public class CSVIngestAction extends BaseAction<EventObject> implements Initiali
                 + "\n* Records inserted: "+ processor.getInsertCount()
                 + "\n* Records updated: "+ processor.getUpdateCount()
                 + "\n* Records removed: "+ processor.getRemoveCount()
-                + "\n* Falied records: "+ processor.getFailCount()
+                + "\n* Failed records: "+ processor.getFailCount()
                 + "\n***************************************************\n";
             LOGGER.info(successMsg);
             listenerForwarder.progressing(99, successMsg);
