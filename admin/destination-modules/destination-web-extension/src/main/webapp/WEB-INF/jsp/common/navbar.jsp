@@ -21,15 +21,15 @@
           <a class="brand" href="#">${PageTitle}</a>
         </c:if>
          <ul class="nav">
-           <li class="${context=='users'?'active':'' }"><a href="<c:url value="/users/"/>">Users</a></li>
-           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserTarget/ZIP"/>">Target Ingestion</a></li>
-           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserPter/ZIP"/>">PTER Ingestion</a></li>
-           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserRoadSegmentation/ZIP"/>">Road Segmentation</a></li>
-           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserRoad/ZIP"/>">Road Ingestion</a></li>
-           <li class="${context=='files'?(operationName=='zip2pgOp'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserGate/XML"/>">Gate Ingestion</a></li>
-           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/activeOpListOp/"/>">Operations List</a></li>
+           <li class="${context=='context/users'?'active':'' }"><a href="<c:url value="/users/"/>">Users</a></li>
+           <li class="${context=='context/files'?(operationName=='fileBrowserTarget'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserTarget/ZIP"/>">Target Ingestion</a></li>
+           <li class="${context=='context/files'?(operationName=='fileBrowserPter'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserPter/ZIP"/>">PTER Ingestion</a></li>
+           <li class="${context=='context/files'?(operationName=='fileBrowserRoadSegmentation'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserRoadSegmentation/ZIP"/>">Road Segmentation</a></li>
+           <li class="${context=='context/files'?(operationName=='fileBrowserRoad'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserRoad/ZIP"/>">Road Ingestion</a></li>
+           <li class="${context=='context/files'?(operationName=='fileBrowserGate'?'active':''):'' }"><a href="<c:url value="/operationManager/fileBrowserGate/XML"/>">Gate Ingestion</a></li>
+           <!--li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/activeOpListOp/"/>">Operations List</a></li>
            <li class="${context=='flowstatus'?'active':'' }"><a href="<c:url value="/operationManager/flowstatus/"/>">Check Flow Status</a></li>
-           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/flowlog/"/>">Run history</a></li>
+           <li class="${context=='operations'?'active':'' }"><a href="<c:url value="/operationManager/flowlog/"/>">Run history</a></li-->
          </ul>
    
          <ul class="nav pull-right">

@@ -21,8 +21,26 @@
         <property name="path" value="roadSegmentationOp"/>
     </bean>
   
-    <bean id="migrationRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
-        <property name="path" value="migrationRunnerOp"/>
+    <bean id="migrationTargetsRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="migrationTargetsRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>zip</value>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="migrationArcsRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="migrationArcsRunnerOp"/>
+        <property name="extensions">
+        	<list>
+        		<value>zip</value>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="migrationOriginalArcsRunnerOp" class="it.geosolutions.opensdi.operations.RunOperation">
+        <property name="path" value="migrationOriginalArcsRunnerOp"/>
         <property name="extensions">
         	<list>
         		<value>zip</value>
@@ -65,7 +83,7 @@
 	<bean id="fileBrowserGate" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([0-9]{2})[_-]([0-9]{8})[_-]([0-9]{6}).xml$" />
 	   <property name="RESTPath" value="fileBrowserGate"/>
-	   <property name="operationName" value="XMLBrowser"/>
+	   <property name="operationName" value="fileBrowserGate"/>
 	   <property name="canNavigate" value="true"/>
 	   <property name="canUpload" value="true"/>
 	   <property name="canDelete" value="true"/>
@@ -83,7 +101,7 @@
 	<bean id="fileBrowserTarget" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})[_-]([A-Z]{2,3})[_-]([A-Z]+)([_-][C|I])?[_-]([0-9]{8})[_-]([0-9]{2}).zip$" />
 	   <property name="RESTPath" value="fileBrowserTarget"/>
-	   <property name="operationName" value="SHPBrowser"/>
+	   <property name="operationName" value="fileBrowserTarget"/>
 	   <property name="canNavigate" value="true"/>
 	   <property name="canUpload" value="true"/>
 	   <property name="canDelete" value="true"/>
@@ -92,7 +110,7 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>targetRunnerOp</value>
-	     <value>migrationRunnerOp</value>
+	     <value>migrationTargetsRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>
@@ -100,7 +118,7 @@
 	<bean id="fileBrowserRoad" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})_([A-Z]{1})_([A-Za-z]+)_([0-9]{8}).zip$" />
 	   <property name="RESTPath" value="fileBrowserRoad"/>
-	   <property name="operationName" value="SHPBrowser2"/>
+	   <property name="operationName" value="fileBrowserRoad"/>
 	   <property name="canNavigate" value="true"/>
 	   <property name="canUpload" value="true"/>
 	   <property name="canDelete" value="true"/>
@@ -109,7 +127,7 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>roadRunnerOp</value>
-	     <value>migrationRunnerOp</value>
+	     <value>migrationArcsRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>
@@ -117,7 +135,7 @@
     <bean id="fileBrowserPter" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})_PTER_([0-9]{8}).zip$" />
 	   <property name="RESTPath" value="fileBrowserPter"/>
-	   <property name="operationName" value="SHPBrowser3"/>
+	   <property name="operationName" value="fileBrowserPter"/>
 	   <property name="canNavigate" value="true"/>
 	   <property name="canUpload" value="true"/>
 	   <property name="canDelete" value="true"/>
@@ -133,7 +151,7 @@
     <bean id="fileBrowserRoadSegmentation" class="it.geosolutions.opensdi.operations.FileBrowserOperationController">
 	   <property name="fileRegex" value="^([A-Z]{2})_([A-Z]{1})_([A-Za-z]+)_([0-9]{8})_ORIG.zip$" />
 	   <property name="RESTPath" value="fileBrowserRoadSegmentation"/>
-	   <property name="operationName" value="SHPBrowser4"/>
+	   <property name="operationName" value="fileBrowserRoadSegmentation"/>
 	   <property name="canNavigate" value="true"/>
 	   <property name="canUpload" value="true"/>
 	   <property name="canDelete" value="true"/>
@@ -142,7 +160,7 @@
 	   <property name="allowedOperations">
 	    <list>
 	     <value>roadSegmentationOp</value>
-         <value>migrationRunnerOp</value>
+         <value>migrationOriginalArcsRunnerOp</value>
 	    </list>
 	   </property>
 	</bean>
