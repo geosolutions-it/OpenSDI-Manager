@@ -25,6 +25,7 @@ import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * Utilities class for GeoBatchRunInfo operations
@@ -82,7 +83,7 @@ public static String generateDecription(String... compositeId) {
 public static String[] getCompositeId(String description) {
     String[] compositeId = null;
     if (description != null) {
-        String[] splitted = description.split(SEPARATOR);
+        String[] splitted = description.split(Pattern.quote(SEPARATOR));
         if (splitted.length > 3) {
             // Common compositeId it's {path, fileName, operation}
             compositeId = new String[3];
@@ -260,7 +261,7 @@ public static String cleanDuplicateSeparators(String origin) {
     String result = origin;
     if (result != null) {
         while (result.contains(SEPARATOR + SEPARATOR)) {
-            result = result.replaceAll(SEPARATOR + SEPARATOR, SEPARATOR);
+            result = result.replace(SEPARATOR + SEPARATOR, SEPARATOR);
         }
     }
     return result;

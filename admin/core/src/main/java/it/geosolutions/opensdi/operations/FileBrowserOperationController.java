@@ -427,11 +427,7 @@ public String getDefaultBaseDir() {
  * @param defaultBaseDir the defaultBaseDir to set
  */
 public void setDefaultBaseDir(String defaultBaseDir) {
-    if (!defaultBaseDir.endsWith("/")) {
-        LOGGER.debug("[WARN] defaultBaseDir not ending with slash \"\\\", appending one");
-        defaultBaseDir = defaultBaseDir.concat("/");
-    }
-    this.defaultBaseDir = defaultBaseDir;
+	this.defaultBaseDir = ControllerUtils.normalizePath(defaultBaseDir);
 }
 
 /**

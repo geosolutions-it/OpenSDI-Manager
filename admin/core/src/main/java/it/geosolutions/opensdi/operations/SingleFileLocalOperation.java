@@ -20,6 +20,7 @@ import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.utils.ControllerUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,11 +133,7 @@ public String getBasedirString() {
 }
 
 public final void setBasedirString(String basedirString) {
-    if (!basedirString.endsWith("/")) {
-        LOGGER.warn("basedirString not ending with slash \"/\", appending one");
-        basedirString = basedirString.concat("/");
-    }
-    this.basedirString = basedirString;
+	this.basedirString = ControllerUtils.normalizePath(basedirString);
 }
 
 public String getJspName() {
