@@ -264,9 +264,9 @@
 							window.location= '${thisUrl}';
 						}
 					});
-					<c:if test="${not empty directory}">
+					<c:if test="${not empty jsDirectory}">
 					Uploader.bind('BeforeUpload', function (up, file) {
-					    up.settings.multipart_params = {d: "${directory}"};
+					    up.settings.multipart_params = {d: "${jsDirectory}"};
 					});
 					</c:if>
 				},
@@ -390,8 +390,8 @@ function uploadFolder(){
 			"folderOperation": "create", 
 			"fileName" : folderName
 		};
-<c:if test="${not empty directory}">
-		data["d"] = "${directory}";
+<c:if test="${not empty jsDirectory}">
+		data["d"] = "${jsDirectory}";
 </c:if>
 		$.ajax({
 			type : 'POST',
@@ -426,8 +426,8 @@ function downloadFile(fileName){
 	    iframe.src = url;
 	};
 	var url = "../../download/${operationRESTPath}Manager/?folderOperation=download&fileName="+fileName;
-<c:if test="${not empty directory}">
-	url += "&d=${directory}";
+<c:if test="${not empty jsDirectory}">
+	url += "&d=${jsDirectory}";
 </c:if>
 	downloadURL(url);
 }
@@ -450,8 +450,8 @@ function downloadFile(fileName){
 				"toDel" : fileName
 			};
 		}
-<c:if test="${not empty directory}">
-		data["d"] = "${directory}";
+<c:if test="${not empty jsDirectory}">
+		data["d"] = "${jsDirectory}";
 </c:if>
 		$.ajax({
 			type : 'POST',
