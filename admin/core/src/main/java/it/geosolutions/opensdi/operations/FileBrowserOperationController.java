@@ -25,6 +25,7 @@ import it.geosolutions.opensdi.mvc.model.statistics.ExtendedFileBrowser;
 import it.geosolutions.opensdi.mvc.model.statistics.FileBrowser;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.ControllerUtils;
+import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +54,11 @@ public class FileBrowserOperationController extends UserOperation implements
         ApplicationContextAware, Operation {
 private final static Logger LOGGER = Logger
         .getLogger(FileBrowserOperationController.class);
+
+/**
+ * Separator for file system
+ */
+public static final String SEPARATOR = GeoBatchRunInfoUtils.SEPARATOR;
 
 /**
  * Key for the sub folder open
@@ -328,29 +334,30 @@ public String getJsp(ModelMap model, HttpServletRequest request,
 
             dirString = ControllerUtils.preventDirectoryTrasversing(dirString);
 
-            if (dirString.startsWith("/")) {
+            if (dirString.startsWith(SEPARATOR)) {
                 dirString = dirString.substring(1);
             }
 
             // remove last slash
 
-            if (dirString.lastIndexOf("/") >= 0
-                    && dirString.lastIndexOf("/") == (dirString.length() - 1)) {
+            if (dirString.lastIndexOf(SEPARATOR) >= 0
+                    && dirString.lastIndexOf(SEPARATOR) == (dirString.length() - 1)) {
                 LOGGER.debug("stripping last slash"); // debug
                 dirString = dirString.substring(0, dirString.length() - 1);
             }
 
             // second check
-            if (dirString.lastIndexOf("/") >= 0) {
+            if (dirString.lastIndexOf(SEPARATOR) >= 0) {
                 model.addAttribute("directoryBack",
-                        dirString.substring(0, dirString.lastIndexOf("/")));
+                        dirString.substring(0, dirString.lastIndexOf(SEPARATOR)));
             } else {
                 model.addAttribute("directoryBack", "");
             }
 
-            dirString = dirString.concat("/");
+            dirString = dirString.concat(SEPARATOR);
             baseDir = baseDir + dirString;
             model.addAttribute("directory", dirString);
+            model.addAttribute("jsDirectory", dirString.replace(SEPARATOR, "/"));
 
         }
     }
