@@ -93,6 +93,11 @@ import com.vividsolutions.jts.geom.Geometry;
 @Action(configurationClass = NDVIStatsConfiguration.class)
 public class NDVIStatsAction extends BaseAction<EventObject> {
 
+/**
+ * Separator for file system
+ */
+public static final String SEPARATOR = System.getProperty("file.separator");
+
 private static ROIGeometry defaultROIMask;
 
 private NDVIStatsConfiguration configuration;
@@ -297,7 +302,7 @@ private void processXMLFile(File file) throws Exception {
  */
 private String getCSVFullPath(CLASSIFIER_TYPE classifier, MASK_TYPE mask,
         String ndviFileName) {
-    return configuration.getOutputDirectory() + "/" + "pak_NDVI_"
+    return configuration.getOutputDirectory() + SEPARATOR + "pak_NDVI_"
             + classifier.toString().toLowerCase() + "_"
             + mask.toString().toLowerCase() + "_"
             + ndviFileName.replaceAll("dv_", "").replaceAll(".tif", "")
@@ -569,7 +574,7 @@ private List<String> getHeader(CLASSIFIER_TYPE classifier) {
  * @throws IOException
  */
 private GridCoverage2D getNdviTiff(String ndviFileName) throws IOException {
-    File file = new File(configuration.getTiffDirectory() + "/" + ndviFileName);
+    File file = new File(configuration.getTiffDirectory() + SEPARATOR + ndviFileName);
 
     GeoTiffReader reader = new GeoTiffReader(file, new Hints(
             Hints.FORCE_LONGITUDE_FIRST_AXIS_ORDER, Boolean.TRUE));
