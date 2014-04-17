@@ -23,6 +23,7 @@ package it.geosolutions.opensdi.operations;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Flow log operation. Obtain log of a selected file or of all runs on GeoBatch
@@ -105,7 +105,7 @@ public void setPath(String path) {
 
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
+        List<File> files) {
 
     String id = request.getParameter("id");
     String returnUrl = request.getParameter("returnUrl");

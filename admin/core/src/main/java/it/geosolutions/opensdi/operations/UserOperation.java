@@ -29,7 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * 
  * @author adiaz
  */
-public abstract class UserOperation implements Operation{
+public abstract class UserOperation extends AbstractOperationController implements Operation{
 
 /**
  * Use different directory by user

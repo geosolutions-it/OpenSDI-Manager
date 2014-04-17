@@ -21,8 +21,8 @@
 package it.geosolutions.opensdi.operations;
 
 import it.geosolutions.opensdi.utils.ControllerUtils;
-import it.geosolutions.opensdi.operations.Operation;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +35,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 /**
  * Operation that shows a list of every available Operation
  * @author Lorenzo Pini
  *
  */
 @Controller
-public class ActiveOperationsListOperation implements ApplicationContextAware, Operation{
+public class ActiveOperationsListOperation extends AbstractOperationController implements ApplicationContextAware, Operation{
 	
 	private ApplicationContext applicationContext;
 
@@ -114,7 +113,7 @@ public class ActiveOperationsListOperation implements ApplicationContextAware, O
 	}
 
 	@Override
-	public String getJsp(ModelMap model, HttpServletRequest request, List<MultipartFile> files) {
+	public String getJsp(ModelMap model, HttpServletRequest request, List<File> files) {
 		
 		System.out.println("getJSP di ActiveOperations");
 		model.addAttribute("operations", getAvailableOperations()); 

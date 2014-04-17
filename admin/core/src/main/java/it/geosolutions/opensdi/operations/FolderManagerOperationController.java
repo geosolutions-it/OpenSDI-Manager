@@ -137,7 +137,7 @@ public void getFile(ModelMap model, HttpServletRequest request,
  * this.fileBrowserOperationController
  */
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
+        List<File> files) {
 
     String folderOperation = request.getParameter(FOLDER_OPERATION_KEY);
     String folderName = request.getParameter(FILE_NAME_KEY);

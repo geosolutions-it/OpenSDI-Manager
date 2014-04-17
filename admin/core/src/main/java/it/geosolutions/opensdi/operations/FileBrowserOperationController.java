@@ -28,9 +28,9 @@ import it.geosolutions.opensdi.utils.ControllerUtils;
 import it.geosolutions.opensdi.utils.GeoBatchRunInfoUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,7 +47,6 @@ import org.springframework.context.support.AbstractRefreshableApplicationContext
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class FileBrowserOperationController extends UserOperation implements
@@ -131,6 +130,56 @@ public FileBrowserOperationController() {
 }
 
 /**
+ * @return the JSON response on file upload. Root key will contain all file names uploaded
+ */
+public Map<String, Object> getRestResponse(ModelMap model, HttpServletRequest request, List<File> files){
+
+    Map<String, Object> response = new HashMap<String, Object>();
+    try{
+        
+        // get target folder on the request
+        String targetFolder = (String) request.getParameterMap().get(DIRECTORY_KEY);
+        String baseDir =  getRunTimeDir();
+        if(targetFolder != null){
+            baseDir +=  GeoBatchRunInfoUtils.SEPARATOR + targetFolder;
+        }
+        baseDir =  ControllerUtils.normalizeSeparator(baseDir);
+
+        if(LOGGER.isTraceEnabled()){
+            LOGGER.trace("Target folder is: '" + baseDir + "'");
+        }
+        
+        List<String> completeFiles = new LinkedList<String>();
+        if (null != files && files.size() > 0) {
+            List<String> fileNames = new ArrayList<String>();
+            for (File multipartFile : files) {
+                if (multipartFile == null)
+                    continue;
+                String fileName = multipartFile.getName();
+                if (!"".equalsIgnoreCase(fileName)) {
+                    String targetPath = baseDir + fileName;
+                    multipartFile.renameTo(new File(targetPath));
+                    completeFiles.add(fileName);
+                    fileNames.add(fileName);
+                    if(LOGGER.isTraceEnabled()){
+                        LOGGER.trace("succesfully uploaded file on: '" + targetPath + "'");
+                    }
+                }
+                if(LOGGER.isDebugEnabled())
+                    LOGGER.debug("filename: " + fileName); // debug
+            }
+        }
+        response.put(ControllerUtils.SUCCESS, true);
+        response.put(ControllerUtils.ROOT, completeFiles);
+    }catch (Exception e){
+        LOGGER.error("Error uploading files", e);
+        response.put(ControllerUtils.SUCCESS, false);
+        response.put(ControllerUtils.ROOT, e.getLocalizedMessage());
+    }
+    return response;
+}
+
+/**
  * Shows the list of files inside the selected folder after a file upload
  * 
  * @param model
@@ -140,25 +189,24 @@ public FileBrowserOperationController() {
 public String saveFileAndList(
         @ModelAttribute("uploadFile") FileUpload uploadFile, ModelMap model) {
 
-    List<MultipartFile> files = uploadFile.getFiles();
+    List<File> files = uploadFile.getFiles();
 
     List<String> fileNames = new ArrayList<String>();
 
     HashMap<String, List<Operation>> availableOperations = getAvailableOperations();
 
     if (null != files && files.size() > 0) {
-        for (MultipartFile multipartFile : files) {
+        for (File multipartFile : files) {
 
-            String fileName = multipartFile.getOriginalFilename();
+            String fileName = multipartFile.getName();
             if (!"".equalsIgnoreCase(fileName)) {
                 // Handle file content - multipartFile.getInputStream()
                 try {
-                    multipartFile.transferTo(new File(getRunTimeDir()
-                            + fileName));
+                    multipartFile.renameTo(new File(getRunTimeDir() + fileName));
                 } catch (IllegalStateException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error uploading files", e);
+                } catch (Exception e) {
+                    LOGGER.error("Error uploading files", e);
                 }
                 fileNames.add(fileName);
             }
@@ -295,7 +343,7 @@ public String getJsp() {
 
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
+        List<File> files) {
     
     registerManager();
 
@@ -383,17 +431,17 @@ public String getJsp(ModelMap model, HttpServletRequest request,
 
     if (null != files && files.size() > 0) {
         List<String> fileNames = new ArrayList<String>();
-        for (MultipartFile multipartFile : files) {
+        for (File multipartFile : files) {
             if (multipartFile == null)
                 continue;
-            String fileName = multipartFile.getOriginalFilename();
+            String fileName = multipartFile.getName();
             if (!"".equalsIgnoreCase(fileName)) {
                 try {
-                    multipartFile.transferTo(new File(baseDir + fileName));
+                    multipartFile.renameTo(new File(baseDir + fileName));
                 } catch (IllegalStateException e) {
                     LOGGER.error(e.getMessage());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    LOGGER.error("Error uploading files", e);
                 }
                 fileNames.add(fileName);
             }

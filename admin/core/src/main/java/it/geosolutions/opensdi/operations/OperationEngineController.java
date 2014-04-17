@@ -24,23 +24,21 @@ import it.geosolutions.geobatch.services.rest.GeoBatchRESTClient;
 import it.geosolutions.geobatch.services.rest.RESTFlowService;
 import it.geosolutions.geobatch.services.rest.model.RESTRunInfo;
 import it.geosolutions.opensdi.model.FileUpload;
+import it.geosolutions.opensdi.service.FileUploadService;
 import it.geosolutions.opensdi.service.GeoBatchClient;
 import it.geosolutions.opensdi.utils.ControllerUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +53,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Controller
 public class OperationEngineController implements ApplicationContextAware {
@@ -69,10 +67,8 @@ private final static Logger LOGGER = Logger
 @Autowired
 private GeoBatchClient geoBatchClient;
 
-/**
- * Map to handle file uploading chunked
- */
-private Map<String, List<byte[]>> uploadedChunks = new ConcurrentHashMap<String, List<byte[]>>();
+@Autowired
+private FileUploadService fileUploadService;
 
 /**
  * Encapsulate operation Jsp into the template
@@ -230,7 +226,7 @@ public String issueGetToOperation(
 }
 
 /**
- * Handler for plupload files
+ * Handler for rest operations
  * 
  * @param operationId
  * @param gotHeaders
@@ -238,91 +234,111 @@ public String issueGetToOperation(
  * @param request
  * @param model
  * @return
+ * @throws IOException
+ */
+@RequestMapping(value = "/operation/{operationId}/rest", method = {
+        RequestMethod.POST, RequestMethod.GET })
+public @ResponseBody
+Map<String, Object> upload(
+        @PathVariable(value = "operationId") String operationId,
+        @RequestHeader HttpHeaders gotHeaders,
+        @RequestParam(required = false) MultipartFile file,
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false, defaultValue = "-1") int chunks,
+        @RequestParam(required = false, defaultValue = "-1") int chunk,
+        HttpServletRequest request, ModelMap model) throws IOException {
+    Map<String, Object> response = new HashMap<String, Object>();
+    try {
+        if (applicationContext.containsBean(operationId)
+                && applicationContext.isTypeMatch(operationId, Operation.class)) {
+            Operation operation = (Operation) applicationContext
+                    .getBean(operationId);
+            response = operation.getRestResponse(
+                    model,
+                    request,
+                    getFileUpload(operationId, gotHeaders, file, name, chunks,
+                            chunk, request, model).getFiles());
+        } else {
+            response.put(ControllerUtils.SUCCESS, false);
+            response.put(ControllerUtils.ROOT, "Unknown operation ["
+                    + operationId + "]");
+        }
+    } catch (Exception e) {
+        LOGGER.error("Error uploading files", e);
+        response.put(ControllerUtils.SUCCESS, false);
+        response.put(ControllerUtils.ROOT, e.getLocalizedMessage());
+    }
+    return response;
+}
+
+/**
+ * Handler for upload files
+ * 
+ * @param operationId
+ * @param gotHeaders
+ * @param file uploaded
+ * @param request
+ * @param model
+ * @return
+ * @throws IOException 
  */
 @RequestMapping(value = "/operation/{operationId}/upload", method = RequestMethod.POST)
-public String issuePostToOperation(
+public String uploadAndRefresh(
         @PathVariable(value = "operationId") String operationId,
         @RequestHeader HttpHeaders gotHeaders,
         @RequestParam MultipartFile file, @RequestParam String name,
         @RequestParam(required = false, defaultValue = "-1") int chunks,
         @RequestParam(required = false, defaultValue = "-1") int chunk,
-        HttpServletRequest request, ModelMap model) {
-
-    FileUpload uploadFile = new FileUpload();
-    List<MultipartFile> files = new LinkedList<MultipartFile>();
-    if (chunks > 0) {
-        List<byte[]> uploadedChunks = this.uploadedChunks.get(name);
-        if (uploadedChunks == null) {
-            // init bytes for the chunk upload
-            uploadedChunks = new LinkedList<byte[]>();
-        }
-        try {
-            // add chunk on its position
-            uploadedChunks.add(chunk, file.getBytes());
-            this.uploadedChunks.put(name, uploadedChunks);
-        } catch (IOException e) {
-            LOGGER.error("Error on file upload", e);
-        }
-        if (chunk == chunks - 1) {
-            // Create the upload file to be handled
-            MultipartFile composedUpload = new CommonsMultipartFile(
-                    getFileItem(file, uploadedChunks, name));
-            files.add(composedUpload);
-            uploadFile.setFiles(files);
-        }
-    } else {
-        // Create the upload file to be handled
-        files.add(file);
-        uploadFile.setFiles(files);
-    }
+        HttpServletRequest request, ModelMap model) throws IOException {
     
-    return issuePostToOperation(operationId, null, gotHeaders, uploadFile,
+    return issuePostToOperation(operationId, null, gotHeaders, getFileUpload(operationId, gotHeaders, file, name, chunks, chunk, request, model),
             request, model);
 }
 
 /**
- * Obtain a temporal file item with chunked bytes
+ * Get FileUpload on the request
  * 
- * @param file
- * @param chunkedBytes
- * @param name
+ * @param operationId
+ * @param gotHeaders
+ * @param file uploaded
+ * @param request
+ * @param model
  * @return
+ * @throws IOException
  */
-private FileItem getFileItem(MultipartFile file, List<byte[]> chunkedBytes, String name) {
-    // Temporal file to write chunked bytes
-    File outFile = FileUtils.getFile(FileUtils.getTempDirectory(),
-            name);
+public FileUpload getFileUpload(String operationId, HttpHeaders gotHeaders,
+        MultipartFile file, String name, int chunks, int chunk,
+        HttpServletRequest request, ModelMap model) throws IOException {
 
-    // total file size
-    int sizeThreshold = 0;
-    for (byte[] bytes : chunkedBytes) {
-        sizeThreshold += bytes.length;
+    if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("upload (name, chunks, chunk) --> " + name + "," + chunks
+                + "," + chunk);
+        LOGGER.debug("Uploading " + fileUploadService.size() + " files");
     }
 
-    // Get file item
-    FileItem fileItem = new DiskFileItem("tmpFile", file.getContentType(),
-            false, name, sizeThreshold, outFile);
-    try {
-
-        OutputStream outputStream;
-        outputStream = fileItem.getOutputStream();
-
-        // write bytes
-        for (byte[] readedBytes : chunkedBytes) {
-            outputStream.write(readedBytes, 0, readedBytes.length);
+    FileUpload uploadFile = new FileUpload();
+    List<File> files = new LinkedList<File>();
+    if (chunks > 0) {
+        // init bytes for the chunk upload
+        Entry<String, ?> entry = fileUploadService.addChunk(name, chunks,
+                chunk, file);
+        if (entry == null) {
+            String msg = "Expired file upload dor file " + name;
+            LOGGER.error(msg);
+            throw new IOException(msg);
         }
-
-        // close the file
-        outputStream.flush();
-        outputStream.close();
-    } catch (IOException e) {
-        LOGGER.error("Error writing final file", e);
-    } finally {
-        // Remove bytes from memory
-        uploadedChunks.remove(file.getName());
+        if (chunk == chunks - 1) {
+            // Create the upload file to be handled
+            files.add(fileUploadService.getCompletedFile(name, entry));
+            uploadFile.setFiles(files);
+        }
+    } else {
+        // Create the upload file to be handled
+        files.add(fileUploadService.getCompletedFile(name, file));
+        uploadFile.setFiles(files);
     }
 
-    return fileItem;
+    return uploadFile;
 }
 
 @RequestMapping(value = "/operation/{operationId}", method = RequestMethod.POST)
@@ -450,20 +466,33 @@ public String issuePostToOperation(
 
         }
 
-        List<MultipartFile> files = uploadFile.getFiles();
+        // Get file(s)
+        List<File> files = uploadFile.getFiles();
+        if ((files == null 
+                || files.size() == 0) 
+                && uploadFile.getFile() != null) {
+            try {
+                files = new LinkedList<File>();
+                files.add(fileUploadService.getCompletedFile(uploadFile.getFile().getOriginalFilename(), uploadFile.getFile()));
+            } catch (Exception e) {
+                LOGGER.error("Error uploading file", e);
+            }
+        }
 
         @SuppressWarnings("unchecked")
         Map<String, String[]> parameters = request.getParameterMap();
 
-        for (String key : parameters.keySet()) {
-            System.out.println(key);
-            String[] vals = parameters.get(key);
-            for (String val : vals)
-                System.out.println(" -> " + val);
+        if(LOGGER.isTraceEnabled()){
+            for (String key : parameters.keySet()) {
+                LOGGER.trace(key);
+                String[] vals = parameters.get(key);
+                for (String val : vals)
+                    LOGGER.trace(" -> " + val);
+            }
         }
 
         if (null != files && files.size() > 0) {
-            for (MultipartFile multipartFile : files) {
+            for (File multipartFile : files) {
                 if (multipartFile == null) {
                     continue;
                 }
