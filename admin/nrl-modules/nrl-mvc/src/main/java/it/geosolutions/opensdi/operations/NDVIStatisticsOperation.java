@@ -42,7 +42,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class NDVIStatisticsOperation extends FileBrowserOperationController
@@ -83,7 +82,7 @@ private final static Logger LOGGER = LoggerFactory
 
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
+        List<File> files) {
 
     // Copy file browser files
     String fileBrowser = super.getJsp(model, request, files);

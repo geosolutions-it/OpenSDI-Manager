@@ -14,8 +14,10 @@ public class ControllerUtils {
  */
 public final static String DOT = ".";
 
-private final static Logger LOGGER = Logger
-	.getLogger(ControllerUtils.class);
+public static String SUCCESS = "success";
+public static String ROOT = "root";
+
+private final static Logger LOGGER = Logger.getLogger(ControllerUtils.class);
 
 public static void setCommonModel(ModelMap model) {
     Authentication auth = SecurityContextHolder.getContext()
@@ -55,18 +57,18 @@ public static String removeExtension(String fileName) {
 }
 
 public static String normalizePath(String folderPath) {
-	folderPath = normalizeSeparator(folderPath);
+    folderPath = normalizeSeparator(folderPath);
     if (!folderPath.endsWith(File.separator)) {
-			LOGGER.debug("[WARN] path not ending with file name separator ("
-					+ File.separator + "), appending one");
-			folderPath = folderPath.concat(File.separator);
+        LOGGER.debug("[WARN] path not ending with file name separator ("
+                + File.separator + "), appending one");
+        folderPath = folderPath.concat(File.separator);
     }
     return folderPath;
 }
 
-
 public static String normalizeSeparator(String folderPath) {
-	return folderPath.replace("/", File.separator).replace("\\", File.separator);
+    return folderPath.replace("/", File.separator)
+            .replace("\\", File.separator);
 }
 
 }

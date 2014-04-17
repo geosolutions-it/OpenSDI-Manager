@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Lorenzo Natali an abstract implementation of <LocalOperation> that
@@ -95,7 +94,7 @@ protected RESTRunInfo getRunInfo(String fileName){
 }
 
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
+        List<File> files) {
 
     if (model.containsKey("gotParam")) {
         String gotParam = (String) model.get("gotParam");

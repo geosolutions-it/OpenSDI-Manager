@@ -77,6 +77,13 @@
         <dependency>
             <groupId>it.geosolutions.geostore</groupId>
             <artifactId>geostore-rest-client</artifactId>
+            <!-- it brakes sl4j 1.7.2 -->
+            <exclusions>
+              <exclusion>
+                <groupId>org.apache.directory.server</groupId>
+                <artifactId>apacheds-all</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <!-- GeoBatch Client  -->
         <dependency>

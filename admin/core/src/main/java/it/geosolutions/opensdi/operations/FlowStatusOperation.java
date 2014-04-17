@@ -24,6 +24,7 @@ import it.geosolutions.geobatch.services.rest.RESTFlowService;
 import it.geosolutions.geobatch.services.rest.exception.NotFoundRestEx;
 import it.geosolutions.opensdi.dto.GeobatchRunInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class FlowStatusOperation extends GeoBatchOperationImpl implements
@@ -129,9 +129,7 @@ public void setPath(String path) {
 
 @Override
 public String getJsp(ModelMap model, HttpServletRequest request,
-        List<MultipartFile> files) {
-
-    System.out.println("getJSP di flowStatus");
+        List<File> files) {
 
     String id = request.getParameter("id");
     if (id != null) {
