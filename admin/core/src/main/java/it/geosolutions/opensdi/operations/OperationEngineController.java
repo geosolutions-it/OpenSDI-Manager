@@ -186,7 +186,8 @@ public String issueGetToOperation(
         LOGGER.info("Path parameter:" + gotParam);
     }
     // TODO: check gotParam for security
-
+    setPageUrl(operationId, gotParam, request, model);
+        
     if (applicationContext.containsBean(operationId)
             && applicationContext.isTypeMatch(operationId, Operation.class)) {
 
@@ -212,6 +213,16 @@ public String issueGetToOperation(
         return "common/messages";
     }
 
+}
+
+private void setPageUrl(String operationId, String gotParam,
+        HttpServletRequest request, ModelMap model) {
+    String thisUrl = request.getContextPath() + "/operationManager/" + operationId;
+    if(gotParam != null && !gotParam.equals("")) {
+        thisUrl +=  "/" + gotParam;
+    }
+    model.addAttribute("thisUrl", thisUrl);
+    model.addAttribute("contextPath", request.getContextPath());
 }
 
 /**
@@ -355,7 +366,7 @@ public String issuePostToOperation(
         HttpServletRequest request, ModelMap model) {
 
     LOGGER.info("Handling by issuePostToOperation : OperationEngine POST");
-
+    setPageUrl(operationId, gotParam, request, model);
     if (applicationContext.containsBean(operationId)
             && applicationContext.isTypeMatch(operationId, Operation.class)) {
 

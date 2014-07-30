@@ -4,9 +4,6 @@
 <%@ taglib prefix="osdim" uri="../../tld/osdim.tld"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 
-<c:set var="thisUrl" value="${requestScope['javax.servlet.forward.context_path']}${requestScope['javax.servlet.forward.servlet_path']}"/>
-
-
 <div id="createFolder" class="modal hide fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
@@ -148,7 +145,7 @@
 										${opCol}
 										<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
 											<button data-toggle="modal" class="btn ${fn:toLowerCase(op.name)}" data-target="#${fn:toLowerCase(op.name)}"
-												data-fileid="${file.name}" href="../../operation/${op.RESTPath}/${file.name}?d=${directory == '/'?'': osdim:encodeURIComponent(directory)}">${op.name}</button>
+												data-fileid="${file.name}" href="${contextPath}/operation/${op.RESTPath}/${file.name}?d=${directory == '/'?'': osdim:encodeURIComponent(directory)}">${op.name}</button>
 										</div>
 									</c:set>
 									<c:if test="${showRunInformation and not empty file.runInfo}">
@@ -164,7 +161,7 @@
 												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
 													<span class="fileStatus status_${file.runInfo[op.name].flowStatus}">
 														<a class="btn btn-${(file.runInfo[op.name].flowStatus == 'FAIL') ? 'danger'  : ((file.runInfo[op.name].flowStatus == 'RUNNING') ? 'warning' : 'success')}" 
-															href="../../operationManager/flowstatus/?id=${file.runInfo[op.name].flowUid}"><!--${file.runInfo[op.name].compositeId[2]}:-->${file.runInfo[op.name].flowStatus}</a>
+															href="${contextPath}/operationManager/flowstatus/?id=${file.runInfo[op.name].flowUid}"><!--${file.runInfo[op.name].compositeId[2]}:-->${file.runInfo[op.name].flowStatus}</a>
 													</span>
 												</div>
 											</c:set>
@@ -172,7 +169,7 @@
 												${runHistories}
 												<div class="runResume its_first_${stat.index eq 0} row_${stat.index}">
 													<a class="btn btn-history" 
-													href="../../operationManager/flowlog/?id=${file.runInfo[op.name].internalUid}&returnUrl=${thisUrl}" 
+													href="${contextPath}/operationManager/flowlog/?id=${file.runInfo[op.name].internalUid}&returnUrl=${thisUrl}" 
 													title="Show file history"><i class="icon-time"></i></a>
 												</div>
 											</c:set>
@@ -228,7 +225,7 @@
 	</table>
 <c:if test="${ canUpload }">
 	<div id="uploader_${formId}">
-		<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="../../operation/${operationRESTPath}/">
+		<form:form method="post" modelAttribute="uploadFile" id="${formId}" enctype="multipart/form-data" action="${contextPath}/operation/${operationRESTPath}/">
 		    <table id="fileTable">
 		    	<tr>
 		            <td><div class="input-append">
@@ -254,7 +251,7 @@
 		    var uploader_${formId} = $("#uploader_${formId}").plupload({
 		        // General settings
 		        runtimes : 'html5,flash,silverlight,html4',
-		        url : "../../../operation/${operationRESTPath}/upload",
+		        url : "${contextPath}/operation/${operationRESTPath}/upload",
 
 		        // adding this for redirecting to page once upload complete
 		        preinit: function (Uploader) {
@@ -338,7 +335,7 @@
 		formUtils.initModalForm('#${fn:toLowerCase(op.name)}');
 		$('.${fn:toLowerCase(op.name)}').on('click', function() {
 			var fileId = $(this).data('fileid');
-			formUtils.changeAction('#${fn:toLowerCase(op.name)}', '../../operation/${op.RESTPath}/' + fileId);
+			formUtils.changeAction('#${fn:toLowerCase(op.name)}', '${contextPath}/operation/${op.RESTPath}/' + fileId);
 		})
 	</c:forEach>
 	</c:forEach>
@@ -383,7 +380,7 @@
 	});
 
 function uploadFolder(){
-	var url = "../../operation/${operationRESTPath}Manager/";
+	var url = "${contextPath}/operation/${operationRESTPath}Manager/";
 	var folderName = $('#newFolderName').val();
 	if(!!folderName && folderName != ''){
 		var data = {
@@ -425,7 +422,7 @@ function downloadFile(fileName){
 	    }
 	    iframe.src = url;
 	};
-	var url = "../../download/${operationRESTPath}Manager/?folderOperation=download&fileName="+fileName;
+	var url = "${contextPath}/download/${operationRESTPath}Manager/?folderOperation=download&fileName="+fileName;
 <c:if test="${not empty directory}">
 	url += "&d=${directory}";
 </c:if>
@@ -435,7 +432,7 @@ function downloadFile(fileName){
 <c:if test="${canDelete}">
 	function delFile(fileName, folderOperation){
 		var data = null;
-		var url = "../../operation/${operationRESTPath}";
+		var url = "${contextPath}/operation/${operationRESTPath}";
 		if(folderOperation){
 			// @see ManageFolderOperationController
 			url += "Manager/";

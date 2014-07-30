@@ -142,4 +142,26 @@ private long getTimeBreak(Date date1, Date date2) {
     return Math.abs(date1.getTime() - date2.getTime());
 }
 
+/**
+ * Delete a process for a trace
+ * 
+ * @param idTrace identifier
+ */
+public void deleteProcess(BigInteger idProcess) {
+    getSession().createSQLQuery(
+            "delete from siig_t_processo where id_processo = " + idProcess)
+            .executeUpdate();
+}
+
+/**
+ * Delete a trace
+ * 
+ * @param idTrace identifier
+ */
+public void deleteTrace(BigInteger idTrace) {
+    getSession().createSQLQuery(
+            "delete from siig_t_tracciamento where id_tracciamento = " + idTrace)
+            .executeUpdate();
+}
+
 }

@@ -363,8 +363,8 @@ public String getJsp(ModelMap model, HttpServletRequest request,
     if (gotAction != null && gotAction.equalsIgnoreCase("delete")
             && fileToDel != null) {
         String deleteFileString = baseDir + fileToDel;
-        boolean res = deleteFile(deleteFileString);
-        LOGGER.debug("Deletted " + deleteFileString + ": " + res); // debug
+        boolean res = deleteFile(baseDir, fileToDel);
+        LOGGER.debug("Deleted " + deleteFileString + ": " + res); // debug
     }
 
     model.addAttribute("operationName", this.operationName);
@@ -444,11 +444,23 @@ public void setCanNavigate(Boolean canNavigate) {
     this.canNavigate = canNavigate;
 }
 
-private boolean deleteFile(String fileName) {
-    if (fileName != null) {
-        File toDel = new File(fileName);
+private boolean deleteFile(String baseDir, String fileToDel) {
+    if (baseDir != null && fileToDel != null) {
+        File toDel = new File(baseDir + fileToDel);
         if (toDel.exists() && toDel.isFile()) {
-            return toDel.delete();
+            boolean result= toDel.delete();
+            for(List<Operation> operations : getAvailableOperations().values()) {
+                for(Operation operation : operations) {
+                    if(operation instanceof GeoBatchOperation) {
+                        GeoBatchOperation geobatchOperation = (GeoBatchOperation) operation;
+                        geoBatchClient.cleanRunInformation(geobatchOperation.getVirtualPath(getRunTimeDir()),
+                                fileToDel, geobatchOperation.getName());
+                        
+                    }
+                }
+            }
+            
+            return result;
         }
     }
     return false;

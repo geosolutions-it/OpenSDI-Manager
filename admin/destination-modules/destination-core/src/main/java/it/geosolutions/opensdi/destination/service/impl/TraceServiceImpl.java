@@ -69,7 +69,8 @@ public void cleanByRun(GeobatchRunInfo runInfo) {
     if (traces != null) {
         for (Trace trace : traces) {
             develTraceLineDao.deleteByTrace(trace.getId_tracciamento());
-            develTraceDao.makeTransient(trace);
+            develTraceDao.deleteTrace(trace.getId_tracciamento());
+            develTraceDao.deleteProcess(trace.getFk_processo());
         }
     }
     // production instances
@@ -77,7 +78,8 @@ public void cleanByRun(GeobatchRunInfo runInfo) {
     if (traces != null) {
         for (Trace trace : traces) {
             prodTraceLineDao.deleteByTrace(trace.getId_tracciamento());
-            prodTraceDao.makeTransient(trace);
+            prodTraceDao.deleteTrace(trace.getId_tracciamento());
+            prodTraceDao.deleteProcess(trace.getFk_processo());
         }
     }
 }

@@ -70,6 +70,8 @@ private Date data_elab;
 
 private Date data_imp_siig;
 
+private BigInteger fk_processo;
+
 @GenericGenerator(name = "BigIntGenerator", strategy = "it.geosolutions.opensdi.destination.hibernate.BigIntGenerator")
 /**
  * @return the id_tracciamento
@@ -79,6 +81,20 @@ private Date data_imp_siig;
 public BigInteger getId_tracciamento() {
     return id_tracciamento;
 }
+
+
+
+public BigInteger getFk_processo() {
+    return fk_processo;
+}
+
+
+
+public void setFk_processo(BigInteger fk_processo) {
+    this.fk_processo = fk_processo;
+}
+
+
 
 /**
  * @param id_tracciamento the id_tracciamento to set

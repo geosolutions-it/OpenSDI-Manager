@@ -52,4 +52,17 @@ public Trace searchClosestTraceByFile(String fileName, Date executionDate);
  */
 public List<Trace> searchTraceByFile(String fileName);
 
+/**
+ * Delete a trace
+ * 
+ * @param idTrace identifier
+ */
+public void deleteTrace(BigInteger idTrace);
+
+/**
+ * Delete a process for a trace
+ * 
+ * @param idTrace identifier
+ */
+public void deleteProcess(BigInteger idProcess);
 }
